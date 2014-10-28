@@ -1,0 +1,143 @@
+[2014-10-27 17:57:56] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 /srv/http/test/server.php(19): require_once('/srv/http/test/...')
+#12 {main} [] []
+[2014-10-27 17:58:35] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 {main} [] []
+[2014-10-27 18:03:45] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 {main} [] []
+[2014-10-27 18:27:39] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 {main} [] []
+[2014-10-27 18:31:56] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 {main} [] []
+[2014-10-27 18:34:12] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 {main} [] []
+[2014-10-27 18:42:23] production.ERROR: exception 'InvalidArgumentException' with message 'There are no commands defined in the "make" namespace.' in /srv/http/test/vendor/symfony/console/Symfony/Component/Console/Application.php:516
+Stack trace:
+#0 /srv/http/test/vendor/symfony/console/Symfony/Component/Console/Application.php(550): Symfony\Component\Console\Application->findNamespace('make')
+#1 /srv/http/test/vendor/symfony/console/Symfony/Component/Console/Application.php(190): Symfony\Component\Console\Application->find('make:controler')
+#2 /srv/http/test/vendor/symfony/console/Symfony/Component/Console/Application.php(124): Symfony\Component\Console\Application->doRun(Object(Symfony\Component\Console\Input\ArgvInput), Object(Symfony\Component\Console\Output\ConsoleOutput))
+#3 /srv/http/test/artisan(59): Symfony\Component\Console\Application->run()
+#4 {main} [] []
+[2014-10-27 18:49:45] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'syntax error, unexpected '');' (T_ENCAPSED_AND_WHITESPACE)' in /srv/http/test/app/routes.php:14
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2014-10-27 19:35:17] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to undefined function view()' in /srv/http/test/app/controllers/PagesController.php:12
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2014-10-27 19:38:39] production.ERROR: exception 'Symfony\Component\Debug\Exception\FatalErrorException' with message 'Call to undefined function view()' in /srv/http/test/app/controllers/PagesController.php:22
+Stack trace:
+#0 [internal function]: Illuminate\Exception\Handler->handleShutdown()
+#1 {main} [] []
+[2014-10-27 20:12:26] production.ERROR: exception 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException' in /srv/http/test/bootstrap/compiled.php:5680
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(5004): Illuminate\Routing\RouteCollection->match(Object(Illuminate\Http\Request))
+#1 /srv/http/test/bootstrap/compiled.php(4992): Illuminate\Routing\Router->findRoute(Object(Illuminate\Http\Request))
+#2 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#3 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#4 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#5 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#6 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#7 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#8 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#9 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#10 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#11 {main} [] []
+[2014-10-27 23:21:40] production.ERROR: exception 'InvalidArgumentException' with message 'View [root] not found.' in /srv/http/test/bootstrap/compiled.php:9429
+Stack trace:
+#0 /srv/http/test/bootstrap/compiled.php(9402): Illuminate\View\FileViewFinder->findInPaths('root', Array)
+#1 /srv/http/test/vendor/laravel/framework/src/Illuminate/View/Factory.php(124): Illuminate\View\FileViewFinder->find('root')
+#2 /srv/http/test/bootstrap/compiled.php(3236): Illuminate\View\Factory->make('root')
+#3 /srv/http/test/app/controllers/PagesController.php(12): Illuminate\Support\Facades\Facade::__callStatic('make', Array)
+#4 /srv/http/test/app/controllers/PagesController.php(12): Illuminate\Support\Facades\View::make('root')
+#5 [internal function]: PagesController->index()
+#6 /srv/http/test/vendor/laravel/framework/src/Illuminate/Routing/Controller.php(231): call_user_func_array(Array, Array)
+#7 /srv/http/test/bootstrap/compiled.php(5776): Illuminate\Routing\Controller->callAction('index', Array)
+#8 /srv/http/test/bootstrap/compiled.php(5764): Illuminate\Routing\ControllerDispatcher->call(Object(PagesController), Object(Illuminate\Routing\Route), 'index')
+#9 /srv/http/test/bootstrap/compiled.php(4971): Illuminate\Routing\ControllerDispatcher->dispatch(Object(Illuminate\Routing\Route), Object(Illuminate\Http\Request), 'PagesController', 'index')
+#10 [internal function]: Illuminate\Routing\Router->Illuminate\Routing\{closure}()
+#11 /srv/http/test/bootstrap/compiled.php(5329): call_user_func_array(Object(Closure), Array)
+#12 /srv/http/test/bootstrap/compiled.php(4996): Illuminate\Routing\Route->run(Object(Illuminate\Http\Request))
+#13 /srv/http/test/bootstrap/compiled.php(4984): Illuminate\Routing\Router->dispatchToRoute(Object(Illuminate\Http\Request))
+#14 /srv/http/test/bootstrap/compiled.php(715): Illuminate\Routing\Router->dispatch(Object(Illuminate\Http\Request))
+#15 /srv/http/test/bootstrap/compiled.php(696): Illuminate\Foundation\Application->dispatch(Object(Illuminate\Http\Request))
+#16 /srv/http/test/bootstrap/compiled.php(7744): Illuminate\Foundation\Application->handle(Object(Illuminate\Http\Request), 1, true)
+#17 /srv/http/test/bootstrap/compiled.php(8351): Illuminate\Session\Middleware->handle(Object(Illuminate\Http\Request), 1, true)
+#18 /srv/http/test/bootstrap/compiled.php(8298): Illuminate\Cookie\Queue->handle(Object(Illuminate\Http\Request), 1, true)
+#19 /srv/http/test/bootstrap/compiled.php(10961): Illuminate\Cookie\Guard->handle(Object(Illuminate\Http\Request), 1, true)
+#20 /srv/http/test/bootstrap/compiled.php(657): Stack\StackedHttpKernel->handle(Object(Illuminate\Http\Request))
+#21 /srv/http/test/public/index.php(49): Illuminate\Foundation\Application->run()
+#22 {main} [] []

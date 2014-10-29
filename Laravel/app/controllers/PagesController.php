@@ -9,14 +9,7 @@ class PagesController extends BaseController {
 	 */
 	public function index()
 	{
-		if (Auth::check())
-		{
-		    // The user is logged in...
-		}
-		else
-		{
-			$this->login();
-		}
+		
 	}
 	
 	public function register()

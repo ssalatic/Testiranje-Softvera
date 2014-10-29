@@ -11,8 +11,13 @@
 |
 */
 
-Route::get('/', 'PagesController@index');
+Route::group(array('before' => 'auth'), function()
+{
+
+	Route::get('/', 'PagesController@index');
+	
+	Route::get('register', 'PagesController@register');
+
+});
 
 Route::get('login', 'PagesController@login');
-
-Route::get('register', 'PagesController@register');

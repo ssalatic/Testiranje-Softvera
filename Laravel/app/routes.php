@@ -11,13 +11,74 @@
 |
 */
 
-Route::group(array('before' => 'auth'), function()
+Route::bind('users', function($id)
 {
-
-	Route::get('/', 'PagesController@index');
-	
-	Route::get('register', 'PagesController@register');
-
+	return App\UserModel::whereId($id)-first();
 });
 
-Route::get('login', 'PagesController@login');
+Route::bind('competitions', function($id)
+{
+	return App\CompetitionModel::whereId($id)-first();
+});
+
+Route::bind('concerts', function($id)
+{
+	return App\ConcertModel::whereId($id)-first();
+});
+
+Route::bind('coreographys', function($id)
+{
+	return App\CoreographyModel::whereId($id)-first();
+});
+
+Route::bind('Costumes', function($id)
+{
+	return App\CostumeModel::whereId($id)-first();
+});
+
+Route::bind('groups', function($id)
+{
+	return App\GroupModel::whereId($id)-first();
+});
+
+Route::bind('rhythms', function($id)
+{
+	return App\RhythmModel::whereId($id)-first();
+});
+
+Route::bind('tickets', function($id)
+{
+	return App\TicketModel::whereId($id)-first();
+});
+
+Route::bind('trainings', function($id)
+{
+	return App\TrainingModel::whereId($id)-first();
+});
+
+
+Route::group(array('before' => 'auth'), function()
+{
+	Route::get('/', 'PagesController@index');
+	
+	Route::resource('competitions', 'CompetitionController');
+	
+	Route::resource('concerts', 'ConcertController');
+	
+	Route::resource('coreographys', 'CoreographyController');
+	
+	Route::resource('costumes', 'CostumeController');
+	
+	Route::resource('groups', 'GroupController');
+	
+	Route::resource('rhythms', 'RhythmController');
+	
+	Route::resource('tickets', 'TicketController');
+	
+	Route::resource('trainings', 'TrainingController');
+	
+	Route::resource('users', 'UserController');
+});
+
+Route::get('login', array('before' => 'secure', 'https' => true , 'uses' => 'PagesController@login'));
+

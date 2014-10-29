@@ -4,18 +4,23 @@
     <meta charset="utf-8"> 
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
-   <!-- CSS files -->
-    <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
-    <link rel="stylesheet" href="http://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+    <!-- CSS files -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/css/bootstrapValidator.min.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
 
     <!-- JS files -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery.bootstrapvalidator/0.5.2/js/bootstrapValidator.min.js"></script>
   
     <script>
         $(document).ready(function() {
+        	 function randomNumber(min, max) {
+        	        return Math.floor(Math.random() * (max - min + 1) + min);
+        	    };
+        	    $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
+        	    
             $('#registrationForm').bootstrapValidator({
                 feedbackIcons: {
                     valid: 'glyphicon glyphicon-ok',
@@ -69,6 +74,17 @@
                             }
                         }
                     },
+                    password_agn: {
+                        validators: {
+                            notEmpty: {
+                                message: 'The password is required and cannot be empty'
+                            },
+                            identical: {
+                                field: 'password',
+                                message: 'Passwords do not match'
+                            },
+                        }
+                    },
                     birthday: {
                         validators: {
                             notEmpty: {
@@ -99,6 +115,17 @@
                                 min: 0,
                                 max: 230,
                                 message: 'The height must be between 0 and 230 inclusive'
+                            }
+                        }
+                    },
+                    captcha: {
+                        validators: {
+                            callback: {
+                                message: 'Wrong answer',
+                                callback: function(value, validator) {
+                                    var items = $('#captchaOperation').html().split(' '), sum = parseInt(items[0]) + parseInt(items[2]);
+                                    return value == sum;
+                                }
                             }
                         }
                     }
@@ -136,6 +163,13 @@
                             <input type="password" class="form-control" name="password" />
                         </div>
                     </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Retype password</label>
+                        <div class="col-sm-5">
+                            <input type="password" class="form-control" name="password_agn" />
+                        </div>
+                    </div>
 
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Gender</label>
@@ -164,6 +198,13 @@
                         <label class="col-sm-3 control-label">Height</label>
                         <div class="col-sm-5">
                             <input type="number" class="form-control" name="height" />
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-lg-3 control-label" id="captchaOperation"></label>
+                        <div class="col-lg-2">
+                            <input type="text" class="form-control" name="captcha" />
                         </div>
                     </div>
                     

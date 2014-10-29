@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest())
+	if (Auth::guest() && URL::route('users.create') != URL::current())
 	{
 		if (Request::ajax())
 		{
@@ -48,6 +48,13 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('secure', function()
+{
+	if(!Request::secure())
+	{
+		return Redirect::secure(Request::getRequestUri());
+	}
+});
 
 Route::filter('auth.basic', function()
 {

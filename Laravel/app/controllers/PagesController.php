@@ -16,5 +16,10 @@ class PagesController extends BaseController {
 	{
 		return View::make('login');
 	}
+	
+	public function handleLogin()
+	{
+		return 'Some magic!!! :)';
+	}
 
 }

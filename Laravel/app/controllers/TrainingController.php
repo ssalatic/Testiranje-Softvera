@@ -8,9 +8,21 @@ class TrainingController extends \BaseController {
 	{
 		$this->training = $trn;
 		
-		$this->beforeFilter('secure', [
+		$this->beforeFilter('secure|auth', [
 					
 				'only' => ['create', 'edit']
+		
+		]);
+		
+		$this->beforeFilter('auth|csrf', [
+					
+				'only' => ['update', 'delete', 'store']
+		
+		]);
+		
+		$this->beforeFilter('auth', [
+					
+				'except' => ['create', 'store', 'update', 'delete', 'edit']
 		
 		]);
 	}

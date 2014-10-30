@@ -57,28 +57,29 @@ Route::bind('trainings', function($id)
 });
 
 
-Route::group(array('before' => 'auth'), function()
-{
-	Route::get('/', 'PagesController@index');
-	
-	Route::resource('competitions', 'CompetitionController');
-	
-	Route::resource('concerts', 'ConcertController');
-	
-	Route::resource('coreographys', 'CoreographyController');
-	
-	Route::resource('costumes', 'CostumeController');
-	
-	Route::resource('groups', 'GroupController');
-	
-	Route::resource('rhythms', 'RhythmController');
-	
-	Route::resource('tickets', 'TicketController');
-	
-	Route::resource('trainings', 'TrainingController');
-	
-	Route::resource('users', 'UserController');
-});
 
-Route::get('login', array('before' => 'secure', 'https' => true , 'uses' => 'PagesController@login'));
+Route::get('/', 'PagesController@index');
+
+Route::resource('competitions', 'CompetitionController');
+
+Route::resource('concerts', 'ConcertController');
+
+Route::resource('coreographys', 'CoreographyController');
+
+Route::resource('costumes', 'CostumeController');
+
+Route::resource('groups', 'GroupController');
+
+Route::resource('rhythms', 'RhythmController');
+
+Route::resource('tickets', 'TicketController');
+
+Route::resource('trainings', 'TrainingController');
+
+Route::resource('users', 'UserController');
+
+
+Route::get('login', array('before' => 'secure', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
+
+Route::get('login', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
 

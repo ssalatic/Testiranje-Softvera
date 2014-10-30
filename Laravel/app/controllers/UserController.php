@@ -10,8 +10,32 @@ class UserController extends \BaseController {
 		
 		$this->beforeFilter('secure', [
 			
-				'only' => ['create', 'edit']
+				'only' => ['create']
 				
+		]);
+		
+		$this->beforeFilter('secure|auth', [
+					
+				'only' => ['edit']
+		
+		]);
+		
+		$this->beforeFilter('csrf', [
+					
+				'only' => ['store']
+		
+		]);
+		
+		$this->beforeFilter('auth|csrf', [
+					
+				'only' => ['update', 'delete']
+		
+		]);
+		
+		$this->beforeFilter('auth', [
+					
+				'except' => ['create', 'store', 'update', 'delete', 'edit']
+		
 		]);
 	}
 
@@ -44,7 +68,7 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		return "More magic!!! :)";
 	}
 
 

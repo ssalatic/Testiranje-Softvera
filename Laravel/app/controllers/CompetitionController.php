@@ -8,9 +8,21 @@ class CompetitionController extends \BaseController {
 	{
 		$this->competition = $comp;
 		
-		$this->beforeFilter('secure', [
+		$this->beforeFilter('secure|auth', [
 					
 				'only' => ['create', 'edit']
+		
+		]);
+		
+		$this->beforeFilter('auth|csrf', [
+					
+				'only' => ['update', 'delete', 'store']
+		
+		]);
+		
+		$this->beforeFilter('auth', [
+					
+				'except' => ['create', 'store', 'update', 'delete', 'edit']
 		
 		]);
 	}

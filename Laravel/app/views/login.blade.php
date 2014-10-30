@@ -61,7 +61,12 @@
                     <h2>Login</h2>
                 </div>
                 
-                <form id="loginForm" role="form" method="POST" class="form-horizontal">
+                <form id="loginForm" role="form" method="POST" class="form-horizontal" action="{{ route('handle.login') }}">
+                	<ul class="errors">
+				    @foreach($errors->all() as $message)
+				        <li>{{ $message }}</li>
+				    @endforeach
+				    </ul>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="email">Email adress</label>
                         <div class="col-sm-5">
@@ -80,6 +85,7 @@
                         <div class="col-sm-3">
                             <div class="checkbox">
                                 <label><input type="checkbox" /> Remember me</label>
+                                {{ Form::token() }}
                             </div>
                         </div>
                     </div>

@@ -58,7 +58,7 @@ Route::bind('trainings', function($id)
 
 
 
-Route::get('/', 'PagesController@index');
+Route::get('/', array( 'before' => 'auth', 'using' => 'PagesController@index'));
 
 Route::resource('competitions', 'CompetitionController');
 
@@ -81,5 +81,5 @@ Route::resource('users', 'UserController');
 
 Route::get('login', array('before' => 'secure', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 
-Route::get('login', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
+Route::get('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
 

@@ -37,7 +37,7 @@
         			<div id="navbarCollapse" class="collapse navbar-collapse">
         				<ul class="nav navbar-nav">
         					<li class="active"><a href="/">Home</a></li>
-        					<li><a href="/Competitions">Competitions</a></li>
+        					<li><a href="{{ route('competitions.index') }}">Competitions</a></li>
         					<li><a href="#">Concerts</a></li>
         					<li><a href="#">Settings</a></li>
         				</ul>

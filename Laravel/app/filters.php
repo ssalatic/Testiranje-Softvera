@@ -35,7 +35,7 @@ App::after(function($request, $response)
 
 Route::filter('auth', function()
 {
-	if (Auth::guest() && URL::route('users.create') != URL::current())
+	if (Auth::guest() && URL::route('users.create') != URL::current() && false)
 	{
 		if (Request::ajax())
 		{

@@ -57,7 +57,7 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('register');
+		return View::make('pages.register');
 	}
 
 

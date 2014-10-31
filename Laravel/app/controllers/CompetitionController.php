@@ -8,7 +8,7 @@ class CompetitionController extends \BaseController {
 	{
 		$this->competition = $comp;
 		
-		$this->beforeFilter('secure|auth', [
+		/* $this->beforeFilter('secure|auth', [
 					
 				'only' => ['create', 'edit']
 		
@@ -24,7 +24,7 @@ class CompetitionController extends \BaseController {
 					
 				'except' => ['create', 'store', 'update', 'delete', 'edit']
 		
-		]);
+		]); */
 	}
 
 	/**
@@ -34,7 +34,7 @@ class CompetitionController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('pages.competitions');
 	}
 
 

@@ -22,11 +22,6 @@
         	    $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
         	    
             $('#registrationForm').bootstrapValidator({
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
                 fields: {
                     username: {
                         message: 'The username is not valid',
@@ -142,7 +137,12 @@
                     <h2>Sign up</h2>
                 </div>
 
-                <form id="registrationForm" method="POST" class="form-horizontal">
+                <form id="registrationForm" method="POST" class="form-horizontal" action="{{ route('users.store') }}">
+                	<ul class="errors">
+				    @foreach($errors->all() as $message)
+				        <li>{{ $message }}</li>
+				    @endforeach
+				    </ul>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Username</label>
                         <div class="col-sm-5">
@@ -210,7 +210,7 @@
                     
                     <div class="form-group">
                         <div> <!-- FRAME STYLE -->
-                            
+                            {{ Form::token() }}
                         </div>
                     </div>
 

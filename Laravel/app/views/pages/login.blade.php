@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <meta charset="utf-8"> 
+    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
    
     <!-- CSS files -->
@@ -19,11 +19,6 @@
         $(document).ready(function() {
             $('#loginForm').bootstrapValidator({
                 message: 'This value is not valid',
-                feedbackIcons: {
-                    valid: 'glyphicon glyphicon-ok',
-                    invalid: 'glyphicon glyphicon-remove',
-                    validating: 'glyphicon glyphicon-refresh'
-                },
                 fields: {
                     email: {
                         validators: {
@@ -39,10 +34,6 @@
                         validators: {
                             notEmpty: {
                                 message: 'The password is required and cannot be empty'
-                            },
-                            stringLength: {
-                                min: 8,
-                                message: 'The password must have at least 8 characters'
                             }
                         }
                     }
@@ -61,7 +52,12 @@
                     <h2>Login</h2>
                 </div>
                 
-                <form id="loginForm" role="form" method="POST" class="form-horizontal">
+                <form id="loginForm" role="form" method="POST" class="form-horizontal" action="{{ route('handle.login') }}">
+                	<ul class="errors">
+				    @foreach($errors->all() as $message)
+				        <li>{{ $message }}</li>
+				    @endforeach
+				    </ul>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="email">Email adress</label>
                         <div class="col-sm-5">
@@ -80,6 +76,7 @@
                         <div class="col-sm-3">
                             <div class="checkbox">
                                 <label><input type="checkbox" /> Remember me</label>
+                                {{ Form::token() }}
                             </div>
                         </div>
                     </div>

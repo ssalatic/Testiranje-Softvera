@@ -1,0 +1,8 @@
+TODO:
+	- Stilizovati kalendar
+	- Uraditi dropdown za "Groups" ispod kalendara
+	- Stilizovati sadrzaj unutar panela: dimenzije tabele, font, i slicno
+	- Dodati sliku kraj imena unutar panela
+
+	
+	

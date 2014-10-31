@@ -1,0 +1,6 @@
+TODO:
+	- Napraviti fiksirani menu
+	- Dodati provjeru da li je korisnik ulogovan
+			- U slucaju da jeste, usmjerava se na login stranicu
+	- Srediti meni za medium uredjaje
+	- Integrisati notifications bar sa navbarom

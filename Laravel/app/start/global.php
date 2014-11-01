@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+
 /*
 |--------------------------------------------------------------------------
 | Register The Laravel Class Loader
@@ -70,6 +72,16 @@ App::down(function()
 App::missing(function($exception)
 {
 	return Response::make("In soviet Russia, function defines you!", 418);
+});
+
+App::error(function(ModelNotFoundException $e)
+{
+	return Response::make('Not Found', 404);
+});
+
+App::error(function(\Illuminate\Session\TokenMismatchException $exception)
+{
+	return Redirect::route('login')->withErrors('msg','Your session has expired. Please try logging in again.');
 });
 
 /*

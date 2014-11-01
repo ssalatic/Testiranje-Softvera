@@ -26,6 +26,37 @@ class CostumeController extends \BaseController {
 		
 		]);
 	}
+	
+	
+	public function validate()
+	{
+
+		$rules = array(
+				
+				'id' =>'somethimes|required|integer|unique:costume,id',
+				'identifier' => 'sometimes|required|alpha_num|max:45',
+				'size' => 'sometimes|alpha_num:max:45',
+				'user_in_possesion' => 'sometimes|integer|exists:user,id',
+				'costume_type_id' => 'sometimes|integer|required|exists:costume_type,id',
+				'owner' => 'sometimes|integer|exists:user,id|required',
+				'costume_type.id' =>'somethimes|required|integer|unique:costume_type,id',
+				'costume_type.name' => 'sometimes|alpha_num|max:45'
+				
+		);
+		
+		return Validator::make($data, $rules);
+		
+	}
+	
+	
+	public function authorized()
+	{
+		if (Auth::user()->userType > 1)
+			return false;
+		
+		return true;
+	}
+	
 
 	/**
 	 * Display a listing of the resource.

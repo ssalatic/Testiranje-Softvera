@@ -26,6 +26,39 @@ class ConcertController extends \BaseController {
 		
 		]);
 	}
+	
+	
+	public function validate()
+	{
+
+		$rules = array(
+				
+				'id' =>'somethimes|required|integer|unique:concert,id',
+				'session_id' => 'sometimes|integer',
+				'name' => 'sometimes|alpha_num|max:45',
+				'location' => 'sometimes|alpha_num|max:45',
+				'start_time' => 'sometimes|alpha_num|max:45',
+				'end_time' => 'sometimes|alpha_num|max:45',
+				'concert_file.id' =>'somethimes|required|integer|unique:concert_file,id',
+				'concert_file.concert_id' => 'sometimes|integer|required|exists:concert,id',
+				'concert_file.file_name' => 'sometimes|required|max:45',
+				'concert_file.file_type' => 'sometimes|alpha_num|max:10'
+				
+		);
+		
+		return Validator::make($data, $rules);
+		
+	}
+	
+	
+	public function authorized()
+	{
+		if (Auth::user()->userType > 1)
+			return false;
+		
+		return true;
+	}
+	
 
 	/**
 	 * Display a listing of the resource.

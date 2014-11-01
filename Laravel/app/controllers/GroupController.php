@@ -26,6 +26,32 @@ class GroupController extends \BaseController {
 		
 		]);
 	}
+	
+	
+	public function validate()
+	{
+
+		$rules = array(
+				
+				'id' =>'somethimes|required|integer|unique:group,id',
+				'name' => 'sometimes|alpha_num|max:45',
+				'default_trainer_id' => 'sometimes|integer|exists:user,id'
+				
+		);
+		
+		return Validator::make($data, $rules);
+		
+	}
+	
+	
+	public function authorized()
+	{
+		if (Auth::user()->userType > 1)
+			return false;
+		
+		return true;
+	}
+	
 
 	/**
 	 * Display a listing of the resource.

@@ -54,6 +54,12 @@
                 
                 <form id="loginForm" role="form" method="POST" class="form-horizontal" action="{{ route('handle.login') }}">
                 	<ul class="errors">
+                	<?php 
+	                	if (isset($msg))
+	                	{
+	                		echo '<li>'.$msg.'</li>';
+	                	}
+                	?>
 				    @foreach($errors->all() as $message)
 				        <li>{{ $message }}</li>
 				    @endforeach

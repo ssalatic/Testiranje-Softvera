@@ -26,6 +26,35 @@ class TrainingController extends \BaseController {
 		
 		]);
 	}
+	
+	
+	public function validate()
+	{
+
+		$rules = array(
+				
+				'id' =>'somethimes|required|integer|unique:training,id',
+				'date' => 'sometimes|date',
+				'trainer_id' => 'sometimes|integer|exists:user,id',
+				'finished' => 'sometimes|boolean',
+				'changed_by' => 'sometimes|integer|required|exists:user,id',
+				'group_id' => 'sometimes|integer|required|exists:group,id'
+				
+		);
+		
+		return Validator::make($data, $rules);
+		
+	}
+	
+	
+	public function authorized()
+	{
+		if (Auth::user()->userType > 1)
+			return false;
+		
+		return true;
+	}
+	
 
 	/**
 	 * Display a listing of the resource.

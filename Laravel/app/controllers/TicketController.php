@@ -26,6 +26,35 @@ class TicketController extends \BaseController {
 		
 		]);
 	}
+	
+	
+	public function validate()
+	{
+
+		$rules = array(
+				
+				'id' =>'somethimes|required|integer|unique:ticket,id',
+				'type' => 'sometimes|ampha_num|max:45',
+				'price' => 'sometimes|integer',
+				'total' => 'sometimes|integer',
+				'sold' => 'sometimes|integer',
+				'concert_id' => 'sometimes|integer|required|exists:concert,id'
+				
+		);
+		
+		return Validator::make($data, $rules);
+		
+	}
+	
+	
+	public function authorized()
+	{
+		if (Auth::user()->userType > 1)
+			return false;
+		
+		return true;
+	}
+	
 
 	/**
 	 * Display a listing of the resource.

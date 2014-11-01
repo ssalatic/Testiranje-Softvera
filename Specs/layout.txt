@@ -1,6 +1,6 @@
-TODO:
-	- Napraviti fiksirani menu
-	- Dodati provjeru da li je korisnik ulogovan
-			- U slucaju da jeste, usmjerava se na login stranicu
-	- Srediti meni za medium uredjaje
-	- Integrisati notifications bar sa navbarom
+TODO flag (ignorisite, ovo je za phpstorm "precica")
+//START
+
+TODO Prikazati na meniju trenutnu stranicu na mobile uredjajima
+TODO Postaviti ispravnu stranicu kao aktivnu na medium i vecim uredjajima
+TODO Integrisati notifications bar sa navbarom (Mozda ovo i nije potrebno)

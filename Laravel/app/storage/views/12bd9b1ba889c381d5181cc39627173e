@@ -52,7 +52,7 @@
                     <h2>Login</h2>
                 </div>
                 
-                <form id="loginForm" role="form" method="POST" class="form-horizontal" action="{{ route('handle.login') }}">
+                <form id="loginForm" role="form" method="POST" class="form-horizontal" action="<?php echo route('handle.login'); ?>">
                 	<ul class="errors">
                 	<?php 
 	                	if (isset($msg))
@@ -60,9 +60,9 @@
 	                		echo '<li>'.$msg.'</li>';
 	                	}
                 	?>
-				    @foreach($errors->all() as $message)
-				        <li>{{ $message }}</li>
-				    @endforeach
+				    <?php foreach($errors->all() as $message): ?>
+				        <li><?php echo $message; ?></li>
+				    <?php endforeach; ?>
 				    </ul>
                     <div class="form-group">
                         <label class="col-sm-3 control-label" for="email">Email adress</label>
@@ -82,7 +82,8 @@
                         <div class="col-sm-3">
                             <div class="checkbox">
                                 <label><input type="checkbox" id="remember_me"/> Remember me</label>
-                                {{ Form::token() }}
+                                <?php echo Form::token(); ?>
+
                             </div>
                         </div>
                     </div>
@@ -90,7 +91,7 @@
                     <div class="form-group">
                         <div class="col-sm-3">
                             <button type="submit" class="btn btn-default">Login</button>
-                            <button class="btn btn-danger" onclick="window.location.href='{{ route('users.create') }}'">Register</button>
+                            <button class="btn btn-danger" onclick="window.location.href='<?php echo route('users.create'); ?>'">Register</button>
                         </div>
                     </div>
                 </form>

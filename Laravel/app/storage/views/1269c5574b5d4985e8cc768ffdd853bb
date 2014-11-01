@@ -16,10 +16,10 @@
   
     <script>
         $(document).ready(function() {
-        	function randomNumber(min, max) {
-        	    return Math.floor(Math.random() * (max - min + 1) + min);
-        	};
-        	$('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
+        	 function randomNumber(min, max) {
+        	        return Math.floor(Math.random() * (max - min + 1) + min);
+        	    };
+        	    $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
         	    
             $('#registrationForm').bootstrapValidator({
                 fields: {
@@ -65,7 +65,6 @@
                             },
                             stringLength: {
                                 min: 8,
-                                max: 45
                                 message: 'The password must have at least 8 characters'
                             }
                         }
@@ -78,7 +77,7 @@
                             identical: {
                                 field: 'password',
                                 message: 'Passwords do not match'
-                            }
+                            },
                         }
                     },
                     birthday: {
@@ -138,11 +137,11 @@
                     <h2>Sign up</h2>
                 </div>
 
-                <form id="registrationForm" method="POST" class="form-horizontal" action="{{ route('users.store') }}">
+                <form id="registrationForm" method="POST" class="form-horizontal" action="<?php echo route('users.store'); ?>">
                 	<ul class="errors">
-				    @foreach($errors->all() as $message)
-				        <li>{{ $message }}</li>
-				    @endforeach
+				    <?php foreach($errors->all() as $message): ?>
+				        <li><?php echo $message; ?></li>
+				    <?php endforeach; ?>
 				    </ul>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Username</label>
@@ -211,7 +210,8 @@
                     
                     <div class="form-group">
                         <div> <!-- FRAME STYLE -->
-                            {{ Form::token() }}
+                            <?php echo Form::token(); ?>
+
                         </div>
                     </div>
 

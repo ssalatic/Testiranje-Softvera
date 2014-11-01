@@ -1,0 +1,11 @@
+TODO flag (ignorisite, ovo je za phpstorm "precica")
+//START
+
+TODO Srediti dropdown dugme
+TODO Dodati level indicator (onu zelenu stvar pored tezine)
+TODO Dodati pagination kada Results tabela ima preko 20 redova
+TODO Dodati SortBy:Name, Place, Level
+TODO Silizovati checkbox u koloni "STAR" da ima oblik zvijezde
+TODO Stilizovati tabele (Ako se raja ne slaze sa ovakvim)
+TODO Dodati bordure na panele i stranice
+TODO Responsive

@@ -1,0 +1,6 @@
+REQS:
+    - "poslat vam je mail za validaciju naloga" stranica
+    - "uspesno ste validirali nalog" stranice" stranica
+    - 404, 418, Database error stranice
+    - name-ovati polja u formama da odgovaraju poljima u bazi
+           a na stranicama gde imas podatke iz vise tabela (u fazonu file za koncert itd) neka se zovu ime_tabele.ime_kolone

@@ -16,10 +16,10 @@
   
     <script>
         $(document).ready(function() {
-        	 function randomNumber(min, max) {
-        	        return Math.floor(Math.random() * (max - min + 1) + min);
-        	    };
-        	    $('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
+        	function randomNumber(min, max) {
+        	    return Math.floor(Math.random() * (max - min + 1) + min);
+        	};
+        	$('#captchaOperation').html([randomNumber(1, 100), '+', randomNumber(1, 200), '='].join(' '));
         	    
             $('#registrationForm').bootstrapValidator({
                 fields: {
@@ -65,6 +65,7 @@
                             },
                             stringLength: {
                                 min: 8,
+                                max: 45
                                 message: 'The password must have at least 8 characters'
                             }
                         }
@@ -77,7 +78,7 @@
                             identical: {
                                 field: 'password',
                                 message: 'Passwords do not match'
-                            },
+                            }
                         }
                     },
                     birthday: {

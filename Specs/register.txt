@@ -1,0 +1,5 @@
+TODO flag (ignorisite, ovo je za phpstorm "precica")
+//START
+
+TODO Ograniciti duzinu unosa
+TODO Datepicker za datum rodjenja

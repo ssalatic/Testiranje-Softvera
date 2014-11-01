@@ -1,8 +1,8 @@
-TODO:
-	- Stilizovati kalendar
-	- Uraditi dropdown za "Groups" ispod kalendara
-	- Stilizovati sadrzaj unutar panela: dimenzije tabele, font, i slicno
-	- Dodati sliku kraj imena unutar panela
+TODO flag (ignorisite, ovo je za phpstorm "precica")
+//START
+
+TODO Podesiti teme, evente, i funkcionalnost kalendara
+TODO Podesiti prelamanje teksta kraj slike u panelima
 
 	
 	

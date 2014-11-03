@@ -18,14 +18,14 @@ Poslovni sistem za plesnu skolu, namenjen kao projekat iz Testiranja Softvera.
 > May the force be with you
 
 ##user_type:
-	* 0 - admin
-	* 1 - trener
-	* 10 - user
+* 0 - admin
+* 1 - trener
+* 10 - user
 
 ##IZMENE: (za testere)
-	* DIR app/contollers
-	* DIR app/models
-	* DIR app/views
-	* app/routes.php
-	* app/fiters.php
-	* app/start/global.php <- Ovde stoje error handleri za 404 i sl. Zakomentarisite za testiranje.
+* DIR app/contollers
+* DIR app/models
+* DIR app/views
+* app/routes.php
+* app/fiters.php
+* app/start/global.php <- Ovde stoje error handleri za 404 i sl. Zakomentarisite za testiranje.

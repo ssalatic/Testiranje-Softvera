@@ -28,4 +28,4 @@ IZMENE: (za testere)
 	DIR app/views
 	app/routes.php
 	app/fiters.php
-	app/start/global.php
+	app/start/global.php // Ovde stoje error handleri za 404 i sl. Zakomentarisite za testiranje.

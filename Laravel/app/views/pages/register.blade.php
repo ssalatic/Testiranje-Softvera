@@ -65,7 +65,7 @@
                             },
                             stringLength: {
                                 min: 8,
-                                max: 45
+                                max: 45,
                                 message: 'The password must have at least 8 characters'
                             }
                         }
@@ -138,7 +138,7 @@
                     <h2>Sign up</h2>
                 </div>
 
-                <form id="registrationForm" method="POST" class="form-horizontal" action="{{ route('users.store') }}">
+                <form id="registrationForm" method="POST" class="form-horizontal" action="{{ URL::route('users.store') }}">
                 	<ul class="errors">
 				    @foreach($errors->all() as $message)
 				        <li>{{ $message }}</li>

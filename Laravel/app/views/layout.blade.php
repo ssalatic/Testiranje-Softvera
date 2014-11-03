@@ -51,7 +51,7 @@
         				    </form>
         				</div>
         				<ul class="nav navbar-nav navbar-right">
-        					<li><a href="#">Log out</a></li>
+        					<li><a href="{{ route('logout') }}">Log out</a></li>
         				</ul>
         			</div>
         		</div>

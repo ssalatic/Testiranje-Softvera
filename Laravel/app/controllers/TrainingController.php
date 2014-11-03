@@ -33,7 +33,7 @@ class TrainingController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:training,id',
+				'id' =>'sometimes|required|integer|unique:training,id',
 				'date' => 'sometimes|date',
 				'trainer_id' => 'sometimes|integer|exists:user,id',
 				'finished' => 'sometimes|boolean',

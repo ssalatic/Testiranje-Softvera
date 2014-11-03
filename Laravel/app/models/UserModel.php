@@ -1,6 +1,9 @@
 <?php
 
-class UserModel extends \Eloquent {
+use Illuminate\Auth\UserInterface;
+use Illuminate\Auth\UserProviderInterface;
+
+class UserModel extends \Eloquent implements UserInterface {
 	
 	protected $fillable = [
 			
@@ -13,22 +16,19 @@ class UserModel extends \Eloquent {
 	protected $guarded = [
 			
 			'id', 'username', 'password', 'usertype', 'social_number',
-			'created_at', 'changed_at', 'deleted_at',  'remember_token'
+			'created_at', 'changed_at', 'deleted_at',  'remember_token', 'validated'
 			
 	];
 	
 	protected $table = 'user';
 	
-	protected $hidden = array('password');
+	protected $primaryKey = 'id';
+	
+	protected $hidden = array('password', 'id', 'remember_token');
 	
 	use SoftDeletingTrait;
 	
 	protected $dates = ['deleted_at'];
-	
-	public function setPasswordAtribute($value)
-	{
-		
-	}
 	
 	public function concertChoreographyUser()
 	{
@@ -92,12 +92,7 @@ class UserModel extends \Eloquent {
 	
 	public function setPasswordAttribute($value)
 	{
-		$this->attributes['password'] = Crypt::encrypt($value);
-	}
-	
-	public function getPasswordAttribute($value)
-	{
-		return Crypt::decrypt($value);
+		$this->attributes['password'] = Hash::make($value);
 	}
 	
 	public function setFirstNameAttribute($value)
@@ -180,16 +175,6 @@ class UserModel extends \Eloquent {
 		return Crypt::decrypt($value);
 	}
 	
-	public function setEmailAttribute($value)
-	{
-		$this->attributes['email'] = Crypt::encrypt($value);
-	}
-	
-	public function getEmailAttribute($value)
-	{
-		return Crypt::decrypt($value);
-	}
-	
 	public function setSexAttribute($value)
 	{
 		$this->attributes['sex'] = Crypt::encrypt($value);
@@ -200,4 +185,30 @@ class UserModel extends \Eloquent {
 		return Crypt::decrypt($value);
 	}
 	
+	public function getAuthIdentifier()
+	{
+		
+		return $this->getKey();
+	}
+	
+	public function getAuthPassword()
+	{
+		
+		return $this->attributes['password'];
+	}
+	
+	public function getRememberToken()
+	{
+		return $this->attributes['remember_token'];
+	}
+	
+	public function setRememberToken($value)
+	{
+		$this->attributes['remember_token'] = $value;
+	}
+	
+	public function getRememberTokenName()
+	{
+		return 'remember_token';
+	}
 }

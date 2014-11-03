@@ -33,7 +33,7 @@ class ChoreographyController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:choreogrphy,id',
+				'id' =>'sometimes|required|integer|unique:choreogrphy,id',
 				'name' => 'sometimes|alpha_num|max:45',
 				'music' => 'sometimes|alpha_num|max:45',
 				// ???? 'rhythm' => 'sometimes|', ????

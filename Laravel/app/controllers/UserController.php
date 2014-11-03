@@ -45,7 +45,7 @@ class UserController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:user,id',
+				'id' =>'sometimes|required|integer|unique:user,id',
 				'username' => 'sometimes|required|alpha_num|between:6,45|unique:user,username',
 				'password' => 'sometimes|required|alpha_num|min:8',
 				'password_agn' => 'sometimes|required|min:8|alpha_num|same:password',
@@ -99,7 +99,7 @@ class UserController extends \BaseController {
 	 */
 	public function create()
 	{
-		return View::make('pages.register');
+		return View::make('pages.register', array('msg' => Session::get('msg')));
 	}
 
 
@@ -110,7 +110,35 @@ class UserController extends \BaseController {
 	 */
 	public function store()
 	{
-		return "More magic!!! :)";
+
+		$validator = $this->validate(Input::except(['di']));
+		
+		if ($validator->passes()) 
+		{
+			$user = new UserModel;
+			
+			$user->email = Input::get('email');
+			$user->sex = Input::get('gender');
+			$user->height = Input::get('height');
+			$user->birth_date = Input::get('birthday');
+			$user->password = Input::get('password');
+			$user->username = Input::get('username');
+			$user->validated = Session::token();
+			
+		    $user->save();
+		    
+		    Mail::queue('emails.welcome', array('token' => Session::token()), function($message)
+		    {
+		    	$message->to(Input::get('email'), Input::get('username'))->subject('Welcome!');
+		    });
+		    
+		    return Redirect::route('login')->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
+		} 
+		else 
+		{	
+			return Redirect::route('users.create')->withErrors($validator)->withInput();	
+		}
+		
 	}
 
 

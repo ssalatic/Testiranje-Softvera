@@ -58,7 +58,7 @@ Route::bind('trainings', function($id)
 
 
 
-Route::get('/', array( 'before' => 'auth', 'using' => 'PagesController@index'));
+Route::get('/', array( 'before' => 'auth', 'as' => 'index', 'uses' => 'PagesController@index'));
 
 Route::resource('competitions', 'CompetitionController');
 
@@ -81,5 +81,20 @@ Route::resource('users', 'UserController');
 
 Route::get('login', array('before' => 'secure', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 
-Route::get('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
+Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
+
+Route::post('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
+
+Route::get('validate', array('as' => 'validate', function()
+{
+	$token = Input::get('token');
+	
+	$user = UserModel::where('validated', '=', $token)->firstOrFail();
+	
+	$user->user_type = 3;
+	$user->validated = null;
+	$user->save();
+	
+	return Redirect::to('login')->with('msg', 'Your account is now validated!');
+}));
 

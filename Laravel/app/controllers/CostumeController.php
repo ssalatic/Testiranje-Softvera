@@ -33,7 +33,7 @@ class CostumeController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:costume,id',
+				'id' =>'sometimes|required|integer|unique:costume,id',
 				'identifier' => 'sometimes|required|alpha_num|max:45',
 				'size' => 'sometimes|alpha_num:max:45',
 				'user_in_possesion' => 'sometimes|integer|exists:user,id',

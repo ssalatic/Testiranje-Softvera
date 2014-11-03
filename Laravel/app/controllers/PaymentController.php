@@ -33,7 +33,7 @@ class PaymentController extends \BaseController {
 	
 		$rules = array(
 	
-				'id' =>'somethimes|required|integer|unique:payment,id',
+				'id' =>'sometimes|required|integer|unique:payment,id',
 				'user_id' => 'sometimes|integer|exists:user,id',
 				'date_payed' => 'sometimes|date',
 				'amount' => 'sometimes|integer',

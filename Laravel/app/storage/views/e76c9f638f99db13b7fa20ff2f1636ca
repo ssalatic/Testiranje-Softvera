@@ -4,6 +4,7 @@
     <link rel="stylesheet" type="text/css" href="styles/zabuto_calendar.min.css">
 
     <style>
+        /* Stil za kalendar */
         #schedule_span {
             font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
             font-size: 13px;
@@ -12,13 +13,29 @@
             background-color: rgb(255, 255, 255);
         }
 
-        .panel-content {
-
+        /* Sekcija za sadrzaj unutar panela, potrebno da bi se tabela razvukla preko citave sekcije */
+        .panel-content{
+            width: 100%;
         }
 
+        /* Kolona sa opisom */
+        .panel-content td.panel-content-desc{
+            color: rgb(100, 100, 100);
+            font-weight: normal;
+        }
+
+        /* Podaci unutar panela */
+        .panel-content td{
+            color: rgb(0, 0, 0);
+            font-weight: bold;
+            font-size: 10pt;
+        }
+
+        /* Zaglavlja */
         #large-header, #small-header{
             font-style: italic;
         }
+
     </style>
 
     <!-- JavaScript -->
@@ -26,7 +43,7 @@
 
     <script>
         $(document).ready(function () {
-            $("#schedule").zabuto_calendar();
+            $("#schedule").zabuto_calendar();  //Init kalendara
         });
     </script>
 <?php $__env->stopSection(); ?>
@@ -38,7 +55,7 @@
         </div>
 
         <div class="visible-xs col-sm-12" id="small-header" align="center">
-            <h2>Here's what's up</h2>
+            <h3>Here's what's up</h3>
         </div>
     </div>
     <div class="row">
@@ -49,11 +66,11 @@
                     <h3 class="panel-title">Practices</h3>
                 </div>
                 <div class="panel-body">
-                    <table>
+                    <table class="panel-content">
                         <tr>
                             <td>Trening 101</td>
-                            <td><img /> Bane Majstor</td>
-                            <td class="hidden-xs">Introduction to Irish step dancing</td>
+                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Bane Majstor</td>
+                            <td class="hidden-xs panel-content-desc">Introduction to Irish step dancing</td>
                             <td>15. Sep 2014<br/>15:00h</td>
                         </tr>
                     </table>
@@ -64,17 +81,17 @@
                     <h3 class="panel-title">Competitions</h3>
                 </div>
                 <div class="panel-body">
-                    <table>
+                    <table class="panel-content">
                         <tr>
                             <td>Irish top 100</td>
-                            <td>Petar Petrovic</td>
-                            <td class="hidden-xs">Your category is Light jig, <br/>intermediate</td>
+                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Petar Petrovic</td>
+                            <td class="hidden-xs panel-content-desc">Your category is Light jig, <br/>intermediate</td>
                             <td>5. Sep 2014<br/>20:00h</td>
                         </tr>
                         <tr>
                             <td>House cup</td>
-                            <td>Ivan Ivanovic</td>
-                            <td class="hidden-xs">Together with M.Markovic,<br/>P.Petrovic and J.Jovanovic</td>
+                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Ivan Ivanovic</td>
+                            <td class="hidden-xs panel-content-desc">Together with M.Markovic,<br/>P.Petrovic and J.Jovanovic</td>
                             <td>20. Sep 2014<br/>18:00h</td>
                         </tr>
                     </table>
@@ -85,11 +102,11 @@
                     <h3 class="panel-title">Concerts</h3>
                 </div>
                 <div class="panel-body">
-                    <table>
+                    <table class="panel-content">
                         <tr>
                             <td>Happy dance</td>
-                            <td>Main Dancer</td>
-                            <td class="hidden-xs">You will be performing in 3 coreographies</td>
+                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Main Dancer</td>
+                            <td class="hidden-xs panel-content-desc">You will be performing in 3 coreographies</td>
                             <td>22. Sep 2014<br/>21:00h</td>
                         </tr>
                     </table>
@@ -98,8 +115,17 @@
         </div>
         <div class="col-sm-5">
             <div class="hidden-xs"><h2 align="center" style="font-weight: bold;">Calendar</h2></div>
+            <div class="visible-xs"><h3 align="center" id="small-header">Or check it out on a calendar</h3></div>
             <div id="schedule"></div>
-            <label for="groups">Show me information for these groups:</label><button id="groups" class="btn btn-default">Groups</button>
+            <label for="groups">Filter groups: </label>
+            <div class="btn-group">
+                <a href="http://bootswatch.com/flatly/#" class="btn btn-primary btn-xs">Group 1</a>
+                <a href="http://bootswatch.com/flatly/#" class="btn btn-primary dropdown-toggle btn-xs" data-toggle="dropdown"><span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><a href="#">Group 2</a></li>
+                </ul>
+            </div>
+
         </div>
 
     </div>

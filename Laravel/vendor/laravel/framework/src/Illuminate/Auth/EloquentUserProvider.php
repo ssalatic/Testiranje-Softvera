@@ -91,6 +91,7 @@ class EloquentUserProvider implements UserProviderInterface {
 			if ( ! str_contains($key, 'password')) $query->where($key, $value);
 		}
 
+		
 		return $query->first();
 	}
 
@@ -102,7 +103,7 @@ class EloquentUserProvider implements UserProviderInterface {
 	 * @return bool
 	 */
 	public function validateCredentials(UserInterface $user, array $credentials)
-	{
+	{		
 		$plain = $credentials['password'];
 
 		return $this->hasher->check($plain, $user->getAuthPassword());
@@ -116,7 +117,7 @@ class EloquentUserProvider implements UserProviderInterface {
 	public function createModel()
 	{
 		$class = '\\'.ltrim($this->model, '\\');
-
+		
 		return new $class;
 	}
 

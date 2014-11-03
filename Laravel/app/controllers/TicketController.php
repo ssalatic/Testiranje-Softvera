@@ -33,7 +33,7 @@ class TicketController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:ticket,id',
+				'id' =>'sometimes|required|integer|unique:ticket,id',
 				'type' => 'sometimes|ampha_num|max:45',
 				'price' => 'sometimes|integer',
 				'total' => 'sometimes|integer',

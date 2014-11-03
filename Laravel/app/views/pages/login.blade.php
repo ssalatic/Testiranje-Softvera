@@ -81,11 +81,12 @@
                     <div class="form-group">
                         <div class="col-sm-3">
                             <div class="checkbox">
-                                <label><input type="checkbox" id="remember_me"/> Remember me</label>
-                                {{ Form::token() }}
+                                <label><input type="checkbox" id="remember_me" name="remember_me" value="yes"/> Remember me</label>
                             </div>
                         </div>
                     </div>
+                    
+                    {{ Form::token() }}
                     
                     <div class="form-group">
                         <div class="col-sm-3">

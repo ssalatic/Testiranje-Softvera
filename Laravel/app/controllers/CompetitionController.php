@@ -33,7 +33,7 @@ class CompetitionController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:competition,id',
+				'id' =>'sometimes|required|integer|unique:competition,id',
 				'name' => 'sometimes|alpha_num|max:45',
 				'date' => 'sometimes|date',
 				'judges' => 'sometimes|alpha_num|max:500',

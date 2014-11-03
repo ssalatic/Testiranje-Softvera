@@ -15,7 +15,7 @@ class ConcertChoreographyUserController extends \BaseController {
 	
 		$rules = array(
 	
-				'id' =>'somethimes|required|integer|unique:concert_choreography_user,id',
+				'id' =>'sometimes|required|integer|unique:concert_choreography_user,id',
 				'concert_choreography_id' => 'sometimes|required|integer|unique:concert_choreography,id',
 				'user_id' => 'sometimes|required|integer|unique:user,id',
 				'costume_id' => 'sometimes|integer|unique:costume,id'

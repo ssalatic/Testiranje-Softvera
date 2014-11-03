@@ -33,7 +33,7 @@ class ConcertController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:concert,id',
+				'id' =>'sometimes|required|integer|unique:concert,id',
 				'session_id' => 'sometimes|integer',
 				'name' => 'sometimes|alpha_num|max:45',
 				'location' => 'sometimes|alpha_num|max:45',

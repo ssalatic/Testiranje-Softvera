@@ -33,7 +33,7 @@ class GroupController extends \BaseController {
 
 		$rules = array(
 				
-				'id' =>'somethimes|required|integer|unique:group,id',
+				'id' =>'sometimes|required|integer|unique:group,id',
 				'name' => 'sometimes|alpha_num|max:45',
 				'default_trainer_id' => 'sometimes|integer|exists:user,id'
 				

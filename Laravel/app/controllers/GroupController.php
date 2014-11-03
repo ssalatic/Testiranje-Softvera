@@ -46,7 +46,7 @@ class GroupController extends \BaseController {
 	
 	public function authorized()
 	{
-		if (Auth::user()->userType > 1)
+		if (Auth::user()->userType >= 10)
 			return false;
 		
 		return true;

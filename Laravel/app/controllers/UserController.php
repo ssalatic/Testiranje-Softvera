@@ -74,7 +74,7 @@ class UserController extends \BaseController {
 	
 	public function authorized()
 	{
-		if (Auth::user()->userType > 1 && Auth::user()->id != Input::get('id'))
+		if (Auth::user()->userType >= 10 && Auth::user()->id != Input::get('id'))
 			return false;
 		
 		return true;

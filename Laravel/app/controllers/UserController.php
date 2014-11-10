@@ -8,13 +8,7 @@ class UserController extends \BaseController {
 	{
 		$this->user = $usr;
 		
-		$this->beforeFilter('secure', [
-			
-				'only' => ['create']
-				
-		]);
-		
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['edit']
 		

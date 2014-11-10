@@ -8,7 +8,7 @@ class CostumeController extends \BaseController {
 	{
 		$this->costume = $cost;
 		
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['create', 'edit']
 		

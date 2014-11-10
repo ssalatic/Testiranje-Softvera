@@ -57,44 +57,47 @@ Route::bind('trainings', function($id)
 });
 
 
-
-Route::get('/', array( 'before' => 'auth', 'as' => 'index', 'uses' => 'PagesController@index'));
-
-Route::resource('competitions', 'CompetitionController');
-
-Route::resource('concerts', 'ConcertController');
-
-Route::resource('coreographys', 'CoreographyController');
-
-Route::resource('costumes', 'CostumeController');
-
-Route::resource('groups', 'GroupController');
-
-Route::resource('rhythms', 'RhythmController');
-
-Route::resource('tickets', 'TicketController');
-
-Route::resource('trainings', 'TrainingController');
-
-Route::resource('users', 'UserController');
-
-
-Route::get('login', array('before' => 'secure', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
-
-Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
-
-Route::post('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
-
-Route::get('validate', array('as' => 'validate', function()
+Route::group(array('before' => 'secure'), function()
 {
-	$token = Input::get('token');
+	Route::get('/', array( 'before' => 'auth', 'as' => 'index', 'uses' => 'PagesController@index'));
 	
-	$user = UserModel::where('validated', '=', $token)->firstOrFail();
+	Route::resource('competitions', 'CompetitionController');
 	
-	$user->user_type = 3;
-	$user->validated = null;
-	$user->save();
+	Route::resource('concerts', 'ConcertController');
 	
-	return Redirect::to('login')->with('msg', 'Your account is now validated!');
-}));
+	Route::resource('coreographys', 'CoreographyController');
+	
+	Route::resource('costumes', 'CostumeController');
+	
+	Route::resource('groups', 'GroupController');
+	
+	Route::resource('rhythms', 'RhythmController');
+	
+	Route::resource('tickets', 'TicketController');
+	
+	Route::resource('trainings', 'TrainingController');
+	
+	Route::resource('users', 'UserController');
+	
+	
+	Route::get('login', array('before' => 'secure', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
+	
+	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
+	
+	Route::post('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
+	
+	Route::get('validate', array('as' => 'validate', function()
+	{
+		$token = Input::get('token');
+		
+		$user = UserModel::where('validated', '=', $token)->firstOrFail();
+		
+		$user->user_type = 3;
+		$user->validated = null;
+		$user->save();
+		
+		return Redirect::to('login')->with('msg', 'Your account is now validated!');
+	}));
+
+});
 

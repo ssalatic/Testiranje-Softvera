@@ -8,7 +8,7 @@ class ConcertController extends \BaseController {
 	{
 		$this->concert = $con;
 		
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['create', 'edit']
 		

@@ -8,7 +8,7 @@ class GroupController extends \BaseController {
 	{
 		$this->group = $grp;
 		
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['create', 'edit']
 		

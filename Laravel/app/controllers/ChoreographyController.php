@@ -8,7 +8,7 @@ class ChoreographyController extends \BaseController {
 	{
 		$this->coreography= $cor;
 		
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['create', 'edit']
 		

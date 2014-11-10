@@ -8,7 +8,7 @@ class TicketController extends \BaseController {
 	{
 		$this->ticket = $tckt;
 		
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['create', 'edit']
 		

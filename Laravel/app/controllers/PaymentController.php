@@ -8,7 +8,7 @@ class PaymentController extends \BaseController {
 	{
 		$this->payment = $comp;
 	
-		$this->beforeFilter('secure|auth', [
+		$this->beforeFilter('auth', [
 					
 				'only' => ['create', 'edit']
 	

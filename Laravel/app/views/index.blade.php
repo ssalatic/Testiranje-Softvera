@@ -1,7 +1,7 @@
 @extends('...layout')
 
 @section('head')
-
+    // moj komentar cisto da bude razlicito
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="styles/zabuto_calendar.min.css">
 

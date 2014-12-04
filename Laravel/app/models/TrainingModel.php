@@ -1,7 +1,7 @@
 <?php
 
 class TrainingModel extends \Eloquent {
-	
+	protected $x;
 	protected $fillable = [
 			'group_id', 'date', 'trainer_id', 'finished', 'changed_by'
 	];

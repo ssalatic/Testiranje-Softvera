@@ -1,7 +1,7 @@
 <?php
 
 class ConcertModel extends \Eloquent {
-	
+	protected $x;
 	protected $fillable = [
 			'session_id', 'name', 'location', 'start_time', 'end_time'
 	];

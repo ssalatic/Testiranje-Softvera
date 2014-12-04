@@ -4,7 +4,7 @@ use Illuminate\Auth\UserInterface;
 use Illuminate\Auth\UserProviderInterface;
 
 class UserModel extends \Eloquent implements UserInterface {
-	
+	protected $x;
 	protected $fillable = [
 			
 			'first_name', 'last_name', 'birth_date', 'phone_number',

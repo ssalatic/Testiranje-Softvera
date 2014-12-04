@@ -1,7 +1,7 @@
 <?php
 
 class PaymentModel extends \Eloquent {
-	
+	protected $x;
 	protected $fillable = [
 			'user_id', 'date_payed', 'amount', 'comment'
 	];

@@ -1,7 +1,7 @@
 <?php
 
 class ChoreographyModel extends \Eloquent {
-	
+	protected $x;
 	protected $fillable = [
 			'name', 'music', 'rhythm', 'tempo', 'duration', 'hard', 'soft'
 	];

@@ -1,7 +1,7 @@
 <?php
 
 class CostumeModel extends \Eloquent {
-	
+	protected $x;
 	protected $fillable = [
 			'identifier', 'size', 'user_in_posesion', 'costume_type_id', 'owner'
 	];

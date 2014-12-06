@@ -1,7 +1,7 @@
 <?php
 
 class TicketModel extends \Eloquent {
-	protected $x;
+	
 	protected $fillable = [
 			'type', 'price', 'total', 'sold', 'concert_id'
 	];

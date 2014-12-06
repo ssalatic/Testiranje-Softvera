@@ -1,7 +1,7 @@
 <?php
 
 class CompetitionLevelModel extends \Eloquent {
-	protected $x;
+	
 	protected $fillable = ['name'];
 	
 	protected $guarded = ['id'];

@@ -1,7 +1,7 @@
 <?php
 
 class CompetitionFileModel extends \Eloquent {
-	protected $x;
+	
 	protected $guarded = ['*'];
 	
 	protected $table = 'competition_file';

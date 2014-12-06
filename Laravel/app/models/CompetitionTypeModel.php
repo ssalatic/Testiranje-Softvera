@@ -1,7 +1,7 @@
 <?php
 
 class CompetitionTypeModel extends \Eloquent {
-	protected $x;
+	
 	protected $fillable = [
 			'name', 'solo'
 	];

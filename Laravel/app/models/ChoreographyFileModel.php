@@ -1,7 +1,7 @@
 <?php
 
 class ChoreographyFileModel extends \Eloquent {
-	protected $x;
+	
 	protected $guarded = ['*'];
 	
 	protected $table = 'choreography_file';

@@ -1,7 +1,7 @@
 <?php
 
 class ConcertChoreographyUserModel extends \Eloquent {
-	protected $x;
+	
 	protected $fillable = [
 			'concert_choreography_id', 'user_id', 'costume_id'
 	];

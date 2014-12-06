@@ -1,7 +1,7 @@
 <?php
 
 class GroupModel extends \Eloquent {
-	protected $x;
+	
 	protected $fillable = [
 			'name', 'default_trainer_id'
 	];

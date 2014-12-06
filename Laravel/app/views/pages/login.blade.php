@@ -20,15 +20,22 @@
             $('#loginForm').bootstrapValidator({
                 message: 'This value is not valid',
                 fields: {
-                    email: {
-                        validators: {
-                            notEmpty: {
-                                message: 'The email is required and cannot be empty'
-                            },
-                            emailAddress: {
-                                message: 'The input is not a valid email address'
-                            }
-                        }
+                	 username: {
+                         message: 'The username is not valid',
+                         validators: {
+                             notEmpty: {
+                                 message: 'The username is required and cannot be empty'
+                             },
+                             stringLength: {
+                                 min: 6,
+                                 max: 45,
+                                 message: 'The username must be more than 6 and less than 45 characters long'
+                             },
+                             regexp: {
+                                 regexp: /^[a-zA-Z0-9]+$/,
+                                 message: 'The username can only consist of alphabetical and number'
+                             }
+                         }
                     },
                      password: {
                         validators: {
@@ -65,9 +72,9 @@
 				    @endforeach
 				    </ul>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label" for="email">Email adress</label>
+                        <label class="col-sm-3 control-label" for="email">Username</label>
                         <div class="col-sm-5">
-                            <input type="email" class="form-control" id="email" name="email" placeholder="Enter your email adress" />
+                            <input type="text" class="form-control" id="username" name="username" placeholder="Enter your username" />
                         </div>
                     </div>
                     

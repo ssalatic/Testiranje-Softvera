@@ -14,9 +14,14 @@ class CompetitionModel extends \Eloquent {
 	
 	public $timestamps = false;
 	
-	public function users()
+	public function participations()
 	{
-		return $this->belongsToMany('UserModel', 'competiton_user', 'competition_id', 'user_id')->withPivot('result');
+		return $this->hasMany('ParticipationModel', 'competition_id');
+	}
+	
+	public function files()
+	{
+		return $this->hasMany('Competition_file', 'competitioin_id');
 	}
 	
 }

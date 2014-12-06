@@ -16,7 +16,7 @@ class CompetitionTypeModel extends \Eloquent {
 	
 	public function competitions()
 	{
-		return $this->hasMany('CompetitonModel', 'competition_type_id');
+		return $this->belongsToMany('ParticipationModel', 'competition_type_id');
 	}
 	
 }

@@ -12,7 +12,7 @@ class CompetitionLevelModel extends \Eloquent {
 	
 	public function competitions()
 	{
-		return $this->hasMany('CompetitionModel', 'competition_level_id');
+		return $this->belongsToMany('ParticipationModel', 'competition_level_id');
 	}
 	
 }

@@ -30,7 +30,7 @@ class PagesController extends BaseController {
     	$rules = array(
     	
     			'password' => 'required|alpha_num|min:8',
-    			'email' => 'email|exists:user,email|required',
+    			'username' => 'alpha_num|exists:user,username|required',
     	
     	);
     	
@@ -39,7 +39,7 @@ class PagesController extends BaseController {
 		if ($validator->passes()) 
 		{
 			$remember = Input::get('remember_me') === 'yes';
-			if (Auth::attempt(array('email'=>Input::get('email'), 'password'=>Input::get('password')), $remember)) 
+			if (Auth::attempt(array('username'=>Input::get('username'), 'password'=>Input::get('password')), $remember)) 
 			{
 				if (is_null(Auth::user()->validated))
 				{

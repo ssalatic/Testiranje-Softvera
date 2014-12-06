@@ -62,7 +62,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function competitions()
 	{
-		return $this->belongToMany('CompetitonModel', 'competition_user', 'user_id', 'competition_id')->withPivot('result');
+		return $this->belongToMany('ParticipationModel', 'competition_user', 'user_id', 'participation_id')->withPivot('result');
 	}
 	
 	public function payments()
@@ -80,12 +80,12 @@ class UserModel extends \Eloquent implements UserInterface {
 		return $this->hasMany('GroupModel', 'default_trainer');
 	}
 	
-	public function setUsernameAttribute($value)
+	public function setEmailAttribute($value)
 	{
-		$this->attributes['username'] = Crypt::encrypt($value);
+		$this->attributes['email'] = Crypt::encrypt($value);
 	}
 	
-	public function getUsernameAttribute($value)
+	public function getEmailAttribute($value)
 	{
 		return Crypt::decrypt($value);
 	}

@@ -24,7 +24,7 @@ class TrainingModel extends \Eloquent {
 	
 	public function group()
 	{
-		return $this->belongsTo('GroupModel', 'group_id');
+		return $this->belongsTo('GroupModel');
 	}
 	
 }

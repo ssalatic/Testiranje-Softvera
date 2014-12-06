@@ -1,7 +1,7 @@
 @extends('...layout')
 
 @section('head')
-    // moj komentar cisto da bude razlicito
+    
     <!-- CSS -->
     <link rel="stylesheet" type="text/css" href="styles/zabuto_calendar.min.css">
 
@@ -53,7 +53,7 @@
 @section('content')
     <div class="row">
         <div class="hidden-xs col-sm-12" id="large-header" align="center">
-            <h2>Welcome back Bane, bussy week ahead of you, check out what's going on</h2>
+            <h2>Welcome back <?php echo Auth::user()->username; ?>, bussy week ahead of you, check out what's going on</h2>
         </div>
 
         <div class="visible-xs col-sm-12" id="small-header" align="center">
@@ -70,10 +70,19 @@
                 <div class="panel-body">
                     <table class="panel-content">
                         <tr>
-                            <td>Trening 101</td>
-                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Bane Majstor</td>
-                            <td class="hidden-xs panel-content-desc">Introduction to Irish step dancing</td>
-                            <td>15. Sep 2014<br/>15:00h</td>
+							<?php
+							// Ovo nemamo:  '. $practice->trainer->firstName .' '.$practice->trainer->lastName .' OVO LEVO MORA SREDIMO (PROBLEMI SA ENKRIPCIJOM)
+							//<td class="hidden-xs panel-content-desc">Introduction to Irish step dancing</td>
+								foreach($practices as $practice){
+								
+									echo '
+										<td>'. $practice->group->name .'</td>
+										<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>  </td>
+										<td>'. $practice["date"] .'</td>
+									';
+								}
+							?>
+                            
                         </tr>
                     </table>
                 </div>
@@ -131,4 +140,4 @@
         </div>
 
     </div>
-@stop
+@stop	

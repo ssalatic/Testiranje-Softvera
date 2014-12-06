@@ -9,7 +9,10 @@ class PagesController extends BaseController {
      */
     public function index()
     {
-        return View::make('index');
+        return View::make('index', array('practices' => TrainingModel::where('group_id', '=', Auth::user()->groups[0]->id)->where('date', '>=', time())->paginate(10),
+        								 'competitions' => CompetitionModel::paginate(10),
+        								 'concerts' => ConcertModel::paginate(10)
+         ));
     }
 
     public function login()

@@ -67,7 +67,7 @@ class ConcertController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('pages.concerts');
 	}
 
 

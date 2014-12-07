@@ -85,7 +85,7 @@ class CompetitionController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('pages.admin_competitions');
 	}
 
 

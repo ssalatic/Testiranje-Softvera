@@ -1,12 +1,11 @@
 @extends('...layout')
 
 @section('head')
-    
-    <!-- CSS -->
-    <link rel="stylesheet" type="text/css" href="styles/zabuto_calendar.min.css">
 
+    <link rel="stylesheet" type="text/css" href="styles/zabuto_calendar.min.css">
+	
     <style>
-        /* Stil za kalendar */
+		/* Stil za kalendar */
         #schedule_span {
             font-family: Monaco, Menlo, Consolas, 'Courier New', monospace;
             font-size: 13px;
@@ -37,10 +36,8 @@
         #large-header, #small-header{
             font-style: italic;
         }
-
     </style>
-
-    <!-- JavaScript -->
+	
     <script src="jscript/zabuto_calendar.min.js"></script>
 
     <script>
@@ -48,18 +45,33 @@
             $("#schedule").zabuto_calendar();  //Init kalendara
         });
     </script>
+
 @stop
 
 @section('content')
-    <div class="row">
-        <div class="hidden-xs col-sm-12" id="large-header" align="center">
-            <h2>Welcome back <?php echo Auth::user()->username; ?>, bussy week ahead of you, check out what's going on</h2>
-        </div>
-
-        <div class="visible-xs col-sm-12" id="small-header" align="center">
-            <h3>Here's what's up</h3>
-        </div>
-    </div>
+        <div class="row">
+			<div class="hidden-xs col-sm-12" id="large-header" align="center">
+				<h2>Welcome back <?php echo Auth::user()->username; ?>, bussy week ahead of you, check out what's going on</h2>
+			</div>
+		
+			<div class="visible-xs col-sm-12" id="small-header" align="center">
+				<h3>Here's what's up</h3>
+			</div>
+			
+		</div>
+		<div class="row">
+			<div class="col-sm-4 col-sm-offset-4 updates">
+				<p>Ovo se čita iz bekenda. Probajte da horizontalno popunjavate sa table</p>
+				<div class="alert alert-dismissable alert-danger">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<strong>Petar Petrovic</strong>, has moved Training 101 to 15. Sep 2014.
+				</div>
+				<div class="alert alert-dismissable alert-warning">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<strong>Marko Markovic</strong>, hasn't played for 5 practices.
+				</div>
+			</div>
+		</div>
     <div class="row">
         <div class="col-sm-7">
             <div class="hidden-xs"><h2 align="center" style="font-weight: bold;">Agenda</h2></div>
@@ -70,7 +82,7 @@
                 <div class="panel-body">
                     <table class="panel-content">
                         <tr>
-							<?php
+                            <?php
 							// Ovo nemamo:  '. $practice->trainer->firstName .' '.$practice->trainer->lastName .' OVO LEVO MORA SREDIMO (PROBLEMI SA ENKRIPCIJOM)
 							//<td class="hidden-xs panel-content-desc">Introduction to Irish step dancing</td>
 								foreach($practices as $practice){
@@ -82,7 +94,6 @@
 									';
 								}
 							?>
-                            
                         </tr>
                     </table>
                 </div>
@@ -138,6 +149,8 @@
             </div>
 
         </div>
+
+    </div>
 
     </div>
 @stop	

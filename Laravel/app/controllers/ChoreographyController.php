@@ -80,7 +80,7 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		return View::make('pages.admin_choreography');
 	}
 
 

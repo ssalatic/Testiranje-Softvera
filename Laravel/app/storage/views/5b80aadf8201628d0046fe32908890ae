@@ -36,20 +36,15 @@
        						<span class="icon-bar"></span>
         					<span class="icon-bar"></span>
         				</button>
-        				<a href="#" class="navbar-brand">Dance</a>
+        				<a href="/" class="navbar-brand">Dance</a>
         			</div>
         			<div id="navbarCollapse" class="collapse navbar-collapse">
         				<ul class="nav navbar-nav">
         					<li class="active"><a href="/">Home</a></li>
-        					<li><a href="<?php echo route('competitions.index'); ?>">Competitions</a></li>
+							<li><a href="<?php echo route('competitions.index'); ?>">Competitions</a></li>
+							<li><a href="<?php echo route('concerts.index'); ?>">Concerts</a></li>
+							<li><a href="<?php echo route('users.index'); ?>">Profile</a></li>
         				</ul>
-        				<div class="col-sm-3">
-        				    <form role="search" class="navbar-form navbar-left">
-        					    <div class="form-group">
-        						    <input type="text" placeholder="Search" class="form-control">
-        					    </div>
-        				    </form>
-        				</div>
         				<ul class="nav navbar-nav navbar-right">
         					<li><a href="<?php echo route('logout'); ?>">Log out</a></li>
         				</ul>

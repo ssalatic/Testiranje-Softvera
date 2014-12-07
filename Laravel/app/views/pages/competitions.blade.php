@@ -1,7 +1,7 @@
 @extends('layout')
 
 @section('head')
-
+    <!-- Page specific CSS, JS, and other files in <head> -->
     <!-- CSS -->
     <style>
          /* Zaglavlja iznad panela */
@@ -15,6 +15,13 @@
             font-weight: bold;
             font-size: 12pt;
          }
+		 
+		 .label{
+			white-space: nowrap;
+			text-overflow: ellipsis;
+			display: block;
+			overflow: hidden
+		}
 
          /* U span se nalaze konkretni podaci koji se vuku iz baze */
          .comp-info td span{
@@ -22,18 +29,34 @@
             font-style: italic;
             margin: 10px;
          }
+		 
+		 thead {
+			background-color: rgb(200, 200, 200);
+		 }
+		 
+		 .btn-group-wrap {
+			text-align: center;
+		}
+		
+		div.btn-group {
+    margin: 0 auto; 
+    text-align: center;
+    width: inherit;
+    display: inline-block;
+}
     </style>
-@stop
 
-@section('content')
-    <div class="row">
+ @stop
+
+ @section('content')
+		<div class="row">
         <div class="col-sm-4">
             <div class="header"><h4>Select competition</h4></div>
-            <div class="panel panel-warning">
-                <div class="panel-heading">
+            <div class="panel panel-success">
+                <div class="panel-heading btn-group-wrap">
                     <div class="btn-group">
-                        <a href="#" class="btn btn-warning btn-lg">Irish top 100</a>
-                        <a href="#" class="btn btn-warning btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
+                        <a href="#" class="btn btn-success btn-lg" style="width:80%">Irish top 100</a>
+                        <a href="#" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <li><a href="#">Competition 2</a></li>
                         </ul>
@@ -116,35 +139,38 @@
                         <td>Open</td>
                         <td>3</td>
                         <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled=""><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                     <tr>
                         <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Michael Robinson</td>
                         <td><span class="label label-primary">Reel</span></td>
                         <td>Primary</td>
                         <td>2</td>
-                        <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+                       <td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled="" checked="true"><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                     <tr>
                         <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Alexander Robson</td>
                         <td><span class="label label-warning">2 Hand</span></td>
                         <td>Begginers</td>
                         <td>4</td>
-                        <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+                       <td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled=""><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                     <tr>
                         <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Jannifer Pinkser</td>
@@ -152,15 +178,18 @@
                         <td>Open</td>
                         <td>1</td>
                         <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled="" checked="true"><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                 </tbody>
             </table>
         </div>
+
+    </div>
 
     </div>
 @stop

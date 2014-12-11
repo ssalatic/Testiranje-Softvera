@@ -62,7 +62,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function competitions()
 	{
-		return $this->belongToMany('ParticipationModel', 'competition_user', 'user_id', 'participation_id')->withPivot('result');
+		return $this->belongsToMany('ParticipationModel', 'competition_user', 'user_id', 'participation_id')->withPivot('result');
 	}
 	
 	public function payments()

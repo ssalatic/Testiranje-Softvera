@@ -48,6 +48,14 @@ Route::filter('auth', function()
 	}
 });
 
+Route::filter('isAuth', function()
+{
+	if (!Auth::guest())
+	{
+		return Redirect::secure('/');
+	}
+});
+
 Route::filter('secure', function()
 {
 	if(!Request::secure())

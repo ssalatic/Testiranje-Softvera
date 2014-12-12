@@ -80,7 +80,7 @@ Route::group(array('before' => 'secure'), function()
 	Route::resource('users', 'UserController');
 	
 	
-	Route::get('login', array('before' => 'secure', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
+	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 	
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	

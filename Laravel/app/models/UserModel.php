@@ -211,4 +211,23 @@ class UserModel extends \Eloquent implements UserInterface {
 	{
 		return 'remember_token';
 	}
+	
+	
+		
+	public function isAdmin(){
+		return $this->attributes['user_type'] == 0;
+	}
+	
+	public function isTrainer(){
+		return $this->attributes['user_type'] == 1;
+	}
+	
+	
+	public function isDesigner(){
+		return $this->attributes['user_type'] == 2;
+	}
+	
+	public function isDancer(){
+		return $this->attributes['user_type'] == 3;
+	}
 }

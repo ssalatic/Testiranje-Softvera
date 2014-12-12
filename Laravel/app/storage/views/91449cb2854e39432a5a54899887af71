@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <!-- Page specific CSS, JS, and other files in <head> -->
-    @yield('head')
+    <?php echo $__env->yieldContent('head'); ?>
   </head>
   
   <body>
@@ -41,9 +41,9 @@
         				<ul class="nav navbar-nav">
         					<li class="active"><a href="/">Home</a></li>
 							<li><a href="#">Practices</a></li>
-							<li><a href="{{route('concerts.index')}}">Concerts</a></li>
-							<li><a href="{{route('users.index')}}">Users</a></li>
-							<li><a href="{{route('competitions.index')}}">Competitions</a></li>
+							<li><a href="<?php echo route('concerts.index'); ?>">Concerts</a></li>
+							<li><a href="<?php echo route('users.index'); ?>">Users</a></li>
+							<li><a href="<?php echo route('competitions.index'); ?>">Competitions</a></li>
 							<?php
 								if(Auth::user()->isAdmin() || Auth::user()->isDesigner()){
 									echo '<li><a href="#">Costumes</a></li>';
@@ -56,14 +56,14 @@
 							<li><a href="#">Files</a></li>
         				</ul>
         				<ul class="nav navbar-nav navbar-right">
-        					<li><a href="{{ route('logout') }}">Log out</a></li>
+        					<li><a href="<?php echo route('logout'); ?>">Log out</a></li>
         				</ul>
         			</div>
         		</div>
         	</nav>
         </div>
 
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
 
     </div>
   </body>

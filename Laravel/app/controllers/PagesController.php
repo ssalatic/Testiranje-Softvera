@@ -8,14 +8,22 @@ class PagesController extends BaseController {
      * @return Response
      */
     public function index()
-    {
-    	//$concerts = UserModel::find(Auth::user()->id)->concertChoreographyUser->concertChoreography->concert;
-    		
-        return View::make('index', array('practices' => UserModel::find(Auth::user()->id)->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->paginate(1),
-        								 'competitions' => UserModel::find(Auth::user()->id)->competitions()->where('date', '>=', date("Y-m-d H:i:s"))->paginate(10),
-        								 'concerts' => '$concerts',
+    {    	
+    	Paginator::setPageName('page_a');
+    	$pract = UserModel::find(Auth::user()->id)->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->paginate(10);
+		
+    	Paginator::setPageName('page_b');
+    	$comp = UserModel::find(Auth::user()->id)->competitions()->where('date', '>=', date("Y-m-d H:i:s"))->paginate(10);
+
+    	Paginator::setPageName('page_c');
+    	$conc = UserModel::find(Auth::user()->id)->concertChoreographyUser()->paginate(10);
+    	
+        return View::make('index', array('practices' => $pract,
+        								 'competitions' => $comp,
+        								 'concerts' => $conc,
         								 'groups' => UserModel::find(Auth::user()->id)->groups
          ));
+        
     }
 
     public function login()

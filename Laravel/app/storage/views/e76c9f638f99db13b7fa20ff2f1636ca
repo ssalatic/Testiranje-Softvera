@@ -87,7 +87,8 @@
                             <?php
 							// Ovo nemamo:  '. $practice->trainer->firstName .' '.$practice->trainer->lastName .' OVO LEVO MORA SREDIMO (PROBLEMI SA ENKRIPCIJOM)
 							//<td class="hidden-xs panel-content-desc">Introduction to Irish step dancing</td>
-
+                            // <td>'. UserModel::find($practice->trainer_id)->first_name .'</td> PROBLEM SA ENKRIPCIJOM
+                            
 							foreach($practices as $practice){
                                         echo '
                                             <tr>
@@ -97,21 +98,14 @@
                                             </tr>
                                         ';
 
-                                /*
-							         echo '
-                                         <tr>
-                                            <td>'. $practices->group->name .'</td>
-                                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>  </td>
-                                            <td>'. $practices->date .'</td>
-                                         </tr>
-                                     ';
-
-                            */
                             }
 							?>
 
                     </table>
-                    <?php echo $practices->links(); ?>
+                    <?php
+                        Paginator::setPageName('page_a');
+                        echo $practices->appends('page_b', Input::get('page_b',1))->links();;
+                    ?>
                 </div>
             </div>
             <div class="panel panel-danger">
@@ -124,9 +118,8 @@
                     <?php
                         //<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Petar Petrovic</td> NE TREBA
                         //<br/>20:00h</td>
-                        /*
-                                    <img src="img/user.jpg" width="30" height="30" class="hidden-xs"/> CIKICA
-                         * */
+                        //            <img src="img/user.jpg" width="30" height="30" class="hidden-xs"/> CIKICA
+
                         foreach($competitions as $comp){
 
                             echo '
@@ -144,7 +137,10 @@
                     ?>
 
                     </table>
-                    <?php echo $competitions->links(); ?>
+                    <?php
+                        Paginator::setPageName('page_b');
+                        echo $competitions->appends('page_a', Input::get('page_a',1))->links();
+                    ?>
                 </div>
             </div>
             <div class="panel panel-success">
@@ -153,12 +149,23 @@
                 </div>
                 <div class="panel-body">
                     <table class="panel-content">
-                        <tr>
-                            <td>Happy dance</td>
-                            <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Main Dancer</td>
-                            <td class="hidden-xs panel-content-desc">You will be performing in 3 coreographies</td>
-                            <td>22. Sep 2014<br/>21:00h</td>
-                        </tr>
+                    <?php
+                        //<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Main Dancer</td>
+                        foreach($concerts as $conc){
+
+                            if(ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->start_time >= date("Y-m-d H:i:s")){
+                                echo '
+                                    <tr>
+                                        <td>'. ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->name .'</td>
+
+                                        <td class="hidden-xs panel-content-desc">You will be performing in 3 coreographies</td>
+                                        <td>'. ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->start_time .'</td>
+                                    </tr>
+                                ';
+                            }
+
+                        }
+                    ?>
                     </table>
                 </div>
             </div>

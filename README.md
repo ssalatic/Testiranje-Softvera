@@ -20,7 +20,8 @@ Poslovni sistem za plesnu skolu, namenjen kao projekat iz Testiranja Softvera.
 ##user_type:
 * 0 - admin
 * 1 - trener
-* 10 - user
+* 2 - kostimograf
+* 3 - plesac
 
 ##IZMENE: (za testere)
 * DIR app/contollers

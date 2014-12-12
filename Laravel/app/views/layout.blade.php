@@ -45,10 +45,10 @@
 							<li><a href="{{route('users.index')}}">Users</a></li>
 							<li><a href="{{route('competitions.index')}}">Competitions</a></li>
 							<?php
-								if(Auth::user()->isAdmin() || Auth::user()->isDesigner()){
+								if(UserModel::find(Auth::user())->isAdmin() || UserModel::find(Auth::user())->isDesigner()){
 									echo '<li><a href="#">Costumes</a></li>';
 								}
-								if(Auth::user()->isAdmin() || Auth::user()->isTrainer()){
+								if(UserModel::find(Auth::user())->isAdmin() || UserModel::find(Auth::user())->isTrainer()){
 									echo '<li><a href="#">Choreographies</a></li>';
 								}
 								

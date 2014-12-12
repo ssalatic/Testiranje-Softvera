@@ -25,6 +25,7 @@ Poslovni sistem za plesnu skolu, namenjen kao projekat iz Testiranja Softvera.
 
 ##TO-DO:
 * app/config/app.php iskljuciti debug u finalnoj verziji
+*RADIIIIIIIIIIIi
 
 ##IZMENE: (za testere)
 * DIR app/contollers

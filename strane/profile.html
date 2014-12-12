@@ -17,6 +17,29 @@
     <!-- JS files -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
+	<script>
+		function showPopup(id)
+		{
+			document.getElementById(id).style.display='block';
+			document.getElementById('fade').style.display='block';
+			
+			var body = document.body,
+						html = document.documentElement;
+
+			var height = Math.max( body.scrollHeight, body.offsetHeight, 
+                       html.clientHeight, html.scrollHeight, html.offsetHeight );
+					   
+			document.getElementById('fade').style.height= height + 'px';
+		}
+		
+		function hidePopup(id)
+		{
+			document.getElementById(id).style.display='none';
+			document.getElementById('fade').style.display='none';
+		}
+	
+	</script>
 
     <!-- Page specific CSS, JS, and other files in <head> -->
     <!-- CSS -->
@@ -56,7 +79,6 @@
 	top: 0%;
 	left: 0%;
 	width: 100%;
-	height: 120%;
 	background-color: black;
 	z-index:1001;
 	-moz-opacity: 0.8;
@@ -64,20 +86,21 @@
 	filter: alpha(opacity=80);
 }
 
-.white_content {
-	display: none;
-	border-radius: 25px;
-	position: absolute;
-	top: 25%;
-	left: 25%;
-	width: 50%;
-	height: 50%;
-	padding: 16px;
-	border: 16px solid gray;
-	background-color: white;
-	z-index:1002;
-	overflow: auto;
-}
+		.white_content {
+			display: none;
+			border-radius: 25px;
+			position: absolute;
+			padding: 16px;
+			border: 12px solid orange;
+			background-color: white;
+			z-index:1002;
+			overflow: auto;
+		}
+		
+		#reset_message {
+			left:40%;
+			top:25%;
+		}
     </style>
 
 </head>
@@ -205,7 +228,7 @@
 				</tr>
 				<tr></tr>
 				<tr>
-						<td>samo na svom vide<a href = "javascript:void(0)" onclick = "document.getElementById('reset_message').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-danger btn-xs">Reset password</a></td>
+						<td>samo na svom vide<a href = "javascript:void(0)" onclick = "showPopup('reset_message')" class="btn btn-danger btn-xs">Reset password</a></td>
 				</tr>
             </table>
 		</div>
@@ -299,10 +322,9 @@
 		<input type="password" id="old_password"  class="form-control"/><br>
 		<label for="new_password" class="control-label">New password:</label><br>
 		<input type="password" id="new_password" class="form-control" /><br>
-		<a href="#" class="btn btn-success">Confirm</a>
-		<a href = "javascript:void(0)" onclick = "document.getElementById('reset_message').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
+		<a href="#" class="btn btn-success btn-xs">Confirm</a>
+		<a href = "javascript:void(0)" onclick = "hidePopup('reset_message')" class="btn btn-danger btn-xs">Cancel</a>
 	</form>
- 
 </div>
  <div id="fade" class="black_overlay"></div>
 

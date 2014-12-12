@@ -4,12 +4,10 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <!-- CSS files -->
     <link rel="stylesheet" href="styles/bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
 
     <style>
-        /* Potrebno da menu ne bi zaklanjao sadrzaj jer je fixed-menu */
         body{
             padding-top: 70px;
         }
@@ -20,28 +18,18 @@
 			display: block;
 			overflow: hidden
 		}
-    </style>
-
-    <!-- JS files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-    <!-- Page specific CSS, JS, and other files in <head> -->
-    <!-- CSS -->
-    <style>
-         /* Zaglavlja iznad panela */
-         .header{
+		
+		.header{
             font-style: italic;
             font-weight: bold;
          }
-         /* Tabela sa podacima o takmicenjima */
-         .comp-info{
+         
+		 .comp-info{
             width:80%;
             font-weight: bold;
             font-size: 12pt;
          }
 
-         /* U span se nalaze konkretni podaci koji se vuku iz baze */
          .comp-info td span{
             font-weight: normal;
             font-style: italic;
@@ -51,7 +39,21 @@
 		 thead {
 			background-color: rgb(200, 200, 200);
 		 }
+		 
+		 .btn-group-wrap {
+			text-align: center;
+		}
+		
+		div.btn-group {
+			margin: 0 auto; 
+			text-align: center;
+			width: inherit;
+			display: inline-block;
+		}
     </style>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
   </head>
 
@@ -71,11 +73,10 @@
         			</div>
         			<div id="navbarCollapse" class="collapse navbar-collapse">
         				<ul class="nav navbar-nav">
-        					<li><a href="/">Home</a></li>
-							<li class="active"><a href="{{route('competitions.index')}}">Competitions</a></li>
+        					<li class="active"><a href="/">Home</a></li>
+							<li><a href="{{route('competitions.index')}}">Competitions</a></li>
 							<li><a href="{{route('concerts.index')}}">Concerts</a></li>
 							<li><a href="{{route('profile.index')}}">Profile</a></li>
-							<li><a href="{{route('profile.index')}}">Files</a></li>
         				</ul>
         				<ul class="nav navbar-nav navbar-right">
         					<li><a href="{{ route('logout') }}">Log out</a></li>
@@ -89,7 +90,7 @@
         <div class="col-sm-4">
             <div class="header"><h4>Select competition</h4></div>
             <div class="panel panel-success">
-                <div class="panel-heading">
+                <div class="panel-heading btn-group-wrap">
                     <div class="btn-group">
                         <a href="#" class="btn btn-success btn-lg" style="width:80%">Irish top 100</a>
                         <a href="#" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
@@ -175,35 +176,38 @@
                         <td>Open</td>
                         <td>3</td>
                         <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled=""><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                     <tr>
                         <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Michael Robinson</td>
                         <td><span class="label label-primary">Reel</span></td>
                         <td>Primary</td>
                         <td>2</td>
-                        <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+                       <td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled="" checked="true"><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                     <tr>
                         <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Alexander Robson</td>
                         <td><span class="label label-warning">2 Hand</span></td>
                         <td>Begginers</td>
                         <td>4</td>
-                        <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+                       <td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled=""><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                     <tr>
                         <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Jannifer Pinkser</td>
@@ -211,11 +215,12 @@
                         <td>Open</td>
                         <td>1</td>
                         <td>
-                            <span class="button-checkbox">
-                                <button type="button" class="btn" data-color="primary"><i></i></button>
-                                <input type="checkbox" class="hidden" checked />
-                            </span>
-                        </td>
+							 <div class="checkbox">
+								<label>
+									<input type="checkbox" disabled="" checked="true"><p></p>
+								</label>
+							</div>
+						</td>
                     </tr>
                 </tbody>
             </table>

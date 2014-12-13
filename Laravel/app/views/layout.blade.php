@@ -21,6 +21,13 @@
 
     <!-- Page specific CSS, JS, and other files in <head> -->
     @yield('head')
+	
+	<?php
+		//MenuModel::updateMenu(Route::currentRouteName(), Auth::user());
+								
+								
+	?>
+	
   </head>
   
   <body>
@@ -35,25 +42,26 @@
        						<span class="icon-bar"></span>
         					<span class="icon-bar"></span>
         				</button>
-        				<a href="/" class="navbar-brand">Dance</a>
+        				<a href="{{route('index')}}" class="navbar-brand">Dance</a>
         			</div>
         			<div id="navbarCollapse" class="collapse navbar-collapse">
         				<ul class="nav navbar-nav">
-        					<li class="active"><a href="/">Home</a></li>
+        					<!--<li class="active"><a href="{{route('index')}}">Home</a></li>
 							<li><a href="#">Practices</a></li>
+								
 							<li><a href="{{route('concerts.index')}}">Concerts</a></li>
 							<li><a href="{{route('users.index')}}">Users</a></li>
-							<li><a href="{{route('competitions.index')}}">Competitions</a></li>
+							<li><a href="{{route('competitions.index')}}">Competitions</a></li>-->
 							<?php
-								if(UserModel::find(Auth::user())->isAdmin() || UserModel::find(Auth::user())->isDesigner()){
+							MenuModel::updateMenu(Route::currentRouteName(), Auth::user());
+								/*if(Auth::user()->isAdmin() || Auth::user()->isDesigner()){
 									echo '<li><a href="#">Costumes</a></li>';
 								}
-								if(UserModel::find(Auth::user())->isAdmin() || UserModel::find(Auth::user())->isTrainer()){
+								if(Auth::user()->isAdmin() || Auth::user()->isTrainer()){
 									echo '<li><a href="#">Choreographies</a></li>';
-								}
-								
+								}*/
 							?>
-							<li><a href="#">Files</a></li>
+							<!--<li><a href="#">Files</a></li>-->
         				</ul>
         				<ul class="nav navbar-nav navbar-right">
         					<li><a href="{{ route('logout') }}">Log out</a></li>

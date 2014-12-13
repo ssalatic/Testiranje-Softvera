@@ -14,5 +14,11 @@ class BaseController extends Controller {
 			$this->layout = View::make($this->layout);
 		}
 	}
+	
+	public function isAdminRequest()
+	
+    {
+        return (Route::getCurrentRoute()->getPrefix() == 'admin');
+	}
 
 }

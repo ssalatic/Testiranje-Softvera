@@ -100,7 +100,7 @@ Route::group(array('before' => 'secure'), function()
 	
 	
 	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
-	
+	Route::get('gallery', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	
 	Route::post('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));

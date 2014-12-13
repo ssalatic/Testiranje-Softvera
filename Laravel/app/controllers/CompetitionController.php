@@ -75,7 +75,9 @@ class CompetitionController extends \BaseController {
 	public function index()
 	{
 		if (Auth::user()->isAdmin())
-			return Redirect::route('competitions.create');
+			//return Redirect::route('competitions.create');
+			
+			return View::make('pages.admin_competitions');
 		else
 			return View::make('pages.competitions');
 		

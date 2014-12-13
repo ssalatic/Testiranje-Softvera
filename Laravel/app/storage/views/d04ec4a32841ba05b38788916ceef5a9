@@ -20,7 +20,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
 
     <!-- Page specific CSS, JS, and other files in <head> -->
-    @yield('head')
+    <?php echo $__env->yieldContent('head'); ?>
 	
 	<?php
 		//MenuModel::updateMenu(Route::currentRouteName(), Auth::user());
@@ -42,16 +42,16 @@
        						<span class="icon-bar"></span>
         					<span class="icon-bar"></span>
         				</button>
-        				<a href="{{route('index')}}" class="navbar-brand">Dance</a>
+        				<a href="<?php echo route('index'); ?>" class="navbar-brand">Dance</a>
         			</div>
         			<div id="navbarCollapse" class="collapse navbar-collapse">
         				<ul class="nav navbar-nav">
-        					<!--<li class="active"><a href="{{route('index')}}">Home</a></li>
+        					<!--<li class="active"><a href="<?php echo route('index'); ?>">Home</a></li>
 							<li><a href="#">Practices</a></li>
 								
-							<li><a href="{{route('concerts.index')}}">Concerts</a></li>
-							<li><a href="{{route('users.index')}}">Users</a></li>
-							<li><a href="{{route('competitions.index')}}">Competitions</a></li>-->
+							<li><a href="<?php echo route('concerts.index'); ?>">Concerts</a></li>
+							<li><a href="<?php echo route('users.index'); ?>">Users</a></li>
+							<li><a href="<?php echo route('competitions.index'); ?>">Competitions</a></li>-->
 							<?php
 							MenuModel::updateMenu(Route::currentRouteName(), Auth::user());
 								/*if(Auth::user()->isAdmin() || Auth::user()->isDesigner()){
@@ -64,14 +64,14 @@
 							<!--<li><a href="#">Files</a></li>-->
         				</ul>
         				<ul class="nav navbar-nav navbar-right">
-        					<li><a href="{{ route('logout') }}">Log out</a></li>
+        					<li><a href="<?php echo route('logout'); ?>">Log out</a></li>
         				</ul>
         			</div>
         		</div>
         	</nav>
         </div>
 
-        @yield('content')
+        <?php echo $__env->yieldContent('content'); ?>
 
     </div>
   </body>

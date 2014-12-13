@@ -1,0 +1,8 @@
+To Do:
+		2. Detekcija tipa korisnika (obicni ili admin) i prikazivanje odredjene verzije stranice.
+			Na primer, ako se uloguje admin, concerts.html stranica treba naknadno da prikaze i dugme Add New za pozivanje popupova za unos koncerta.
+		3. Detekcija aktivne stranice u menu baru
+		4. Odraditi validacije(kad zavrsimo frontend i predjem i ja na testiranje)
+		6. Revizija koda. (Bice odradjeno kad se zavrsi frontend i ubaci sve u Laravel)
+		7. Promijeniti sve na srpski jezik (Bice odradjeno kad se bude radila revizija)
+		8. Zoom In i Zoom Out zajebu popupove :D

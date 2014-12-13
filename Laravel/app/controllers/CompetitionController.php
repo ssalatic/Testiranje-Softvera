@@ -74,7 +74,15 @@ class CompetitionController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.competitions');
+		//return View::make('pages.competitions');
+		
+		$view = ($this->isAdminRequest()) ? 'pages.admin_competitions' : 'pages.competitions';
+
+        return View::make($view, array(
+            'competitions' => CompetitionModel::paginate()
+        ));
+		
+		
 	}
 
 
@@ -108,7 +116,7 @@ class CompetitionController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		
 	}
 
 

@@ -10,7 +10,7 @@
 | and give it the Closure to execute when that URI is requested.
 |
 */
-
+//Route::model('competitions', 'CompetitionModel');
 Route::bind('users', function($id)
 {
 	return App\UserModel::whereId($id)-first();
@@ -31,7 +31,7 @@ Route::bind('coreographys', function($id)
 	return App\CoreographyModel::whereId($id)-first();
 });
 
-Route::bind('Costumes', function($id)
+Route::bind('costumes', function($id)
 {
 	return App\CostumeModel::whereId($id)-first();
 });
@@ -56,12 +56,31 @@ Route::bind('trainings', function($id)
 	return App\TrainingModel::whereId($id)-first();
 });
 
+/*Route::resource('competitions', 'CompetitionController', array('only' => array('index', 'show')));
+
+Route::group(array('prefix' => 'admin'), function()
+{
+		Route::resource('competitions', 'CompetitionController');
+});*/
+
 
 Route::group(array('before' => 'secure'), function()
 {
 	Route::get('/', array( 'before' => 'auth', 'as' => 'index', 'uses' => 'PagesController@index'));
-	
-	Route::resource('competitions', 'CompetitionController');
+	//Route::resource('competitions', 'CompetitionController');
+	/*Route::resource('competitions', array('before' => 'secure', 'https' => true, 'as' => 'competitions','uses' => 'CompetitionController@index', function()
+	{
+		//if(Auth::user()->isAdmin())
+			//	return Redirect::to('admin_competitions');
+			
+	}));*/
+	//Route::resource('competitions', 'CompetitionController');
+	//Route::resource('competitions', 'CompetitionController', array('only' => array('index', 'show')));
+
+	/*Route::group(array('prefix' => 'admin'), function()
+	{*/
+		Route::resource('competitions', 'CompetitionController');
+	//});
 	
 	Route::resource('concerts', 'ConcertController');
 	
@@ -98,6 +117,18 @@ Route::group(array('before' => 'secure'), function()
 		
 		return Redirect::to('login')->with('msg', 'Your account is now validated!');
 	}));
+	
+	
 
+// admin routes
+	
+	/*Route::get('admin/competitions', array('before' => 'admin', 'as' => 'admin-competitions', function()
+	{
+		return Redirect::to('admin_competitions');
+	}));*/
 });
+// route–model binding
+//Route::model('item', 'Item');
+
+// public routes
 

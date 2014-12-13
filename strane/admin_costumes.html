@@ -3,12 +3,10 @@
   <head>
     <meta charset="utf-8">
     
-    <!-- CSS files -->
     <link rel="stylesheet" href="styles/bootstrap.css" />
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
 
     <style>
-        /* Potrebno da menu ne bi zaklanjao sadrzaj jer je fixed-menu */
         body{
             padding-top: 70px;
         }
@@ -16,72 +14,17 @@
 		option{
 			height:40px;
 		}
-    </style>
-
-    <!-- JS files -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
-    <!-- Page specific CSS, JS, and other files in <head> -->
-    <!-- CSS -->
-    <style>
-	
-	/* Zaglavlja iznad panela */
-        .header{
-            font-style: italic;
-            font-weight: bold;
-        }
-        /* Tabela sa podacima o takmicenjima */
-        .comp-info{
-            width:80%;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-
-		.user-info{
-            width:80%;
-            font-weight: bold;
-            font-size: 12pt;
-        }
-		.user-info td{
-			height:40px;
-		}
 		
-		.user-info td span{
-            font-weight: normal;
+		.header{
             font-style: italic;
-            margin: 10px;
+            font-weight: bold;
         }
-		
-        /* U span se nalaze konkretni podaci koji se vuku iz baze */
-        .comp-info td span{
-            font-weight: normal;
-            font-style: italic;
-            margin: 10px;
-        }
-		option{
-			height:40px;
-		}
 		
 		thead {
 			background-color: rgb(200, 200, 200);
 		 }
-         /* Zaglavlja iznad panela */
-         .header{
-            font-style: italic;
-            font-weight: bold;
-         }
-		 
-		 .outer {
-				width:100%;
-				height:100%;
-				display:box;
-				box-orient:horizontal;
-				box-pack:center;
-				box-align:center;
-		 }
-		 
-		 .label{
+    	 
+		.label{
 			white-space: nowrap;
 			text-overflow: ellipsis;
 			display: block;
@@ -89,6 +32,9 @@
 		}
     </style>
 
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	
   </head>
 
   <body>

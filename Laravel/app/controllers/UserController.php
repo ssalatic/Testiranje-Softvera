@@ -43,7 +43,7 @@ class UserController extends \BaseController {
 				'username' => 'sometimes|required|alpha_num|between:6,45|unique:user,username',
 				'password' => 'sometimes|required|alpha_num|min:8',
 				'password_agn' => 'sometimes|required|min:8|alpha_num|same:password',
-				'user_type' => 'sometimes|digits_between:1,2|required',
+				'user_type' => 'sometimes|digits_between:0,3|required',
 				'first_name' => 'sometimes|alpha|max:45',
 				'last_name' => 'sometimes|alpha|max:45',
 				'birth_date' => 'sometimes|date',

@@ -23,6 +23,10 @@ Poslovni sistem za plesnu skolu, namenjen kao projekat iz Testiranja Softvera.
 * 2 - kostimograf
 * 3 - plesac
 
+##TO-DO:
+* app/config/app.php iskljuciti debug u finalnoj verziji
+*RADIIIIIIIIIIIi
+
 ##IZMENE: (za testere)
 * DIR app/contollers
 * DIR app/models

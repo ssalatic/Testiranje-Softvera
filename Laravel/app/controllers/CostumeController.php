@@ -65,7 +65,7 @@ class CostumeController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('pages.costumes');
 	}
 
 

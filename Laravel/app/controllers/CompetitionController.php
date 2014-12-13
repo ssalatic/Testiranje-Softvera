@@ -74,13 +74,16 @@ class CompetitionController extends \BaseController {
 	 */
 	public function index()
 	{
-		//return View::make('pages.competitions');
+		if (Auth::user()->isAdmin())
+			return Redirect::route('competitions.create');
+		else
+			return View::make('pages.competitions');
 		
-		$view = ($this->isAdminRequest()) ? 'pages.admin_competitions' : 'pages.competitions';
+// 		$view = ($this->isAdminRequest()) ? 'pages.admin_competitions' : 'pages.competitions';
 
-        return View::make($view, array(
-            'competitions' => CompetitionModel::paginate()
-        ));
+//         return View::make($view, array(
+//             'competitions' => CompetitionModel::paginate()
+//         ));
 		
 		
 	}

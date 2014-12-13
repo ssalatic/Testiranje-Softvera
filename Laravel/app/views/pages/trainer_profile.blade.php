@@ -1,5 +1,6 @@
-<?php $__env->startSection('head'); ?>
-	
+@extends('layout')
+
+@section('head')
 	<script>
 		function showPopup(id)
 		{
@@ -61,13 +62,13 @@
 	top: 0%;
 	left: 0%;
 	width: 100%;
+	height: 120%;
 	background-color: black;
 	z-index:1001;
 	-moz-opacity: 0.8;
 	opacity:.80;
 	filter: alpha(opacity=80);
 }
-
 		.white_content {
 			display: none;
 			border-radius: 25px;
@@ -83,10 +84,16 @@
 			left:40%;
 			top:25%;
 		}
+		
+		#about_message {
+			left:40%;
+			top: 25%;
+		}
     </style>
- <?php $__env->stopSection(); ?>
 
- <?php $__env->startSection('content'); ?>
+ @stop
+
+ @section('content')
 	
 	<div class="row">
 		<div id="notifications">
@@ -135,6 +142,36 @@
 				</div>
 			</div>	
 
+		<br/><br/> 
+		<div class="panel panel-success">
+				<div class="panel-heading">
+					<h3 class="panel-title">Efficiency</h3>
+				</div>
+				<div class="panel-body">
+					<table class="table table-striped table-hover ">
+					<thead>
+						<tr>
+							<th>Month</th><th>Trainings</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>December</td>
+						<td>10</td>      
+					</tr>
+					<tr>
+						<td>November</td>
+						<td>12</td>
+					</tr>
+					<tr>
+						<td>Oktober</td>
+						<td>14</td>
+					</tr>
+					</tbody>
+					</table>
+				</div>
+			</div>
+
 			
 		</div>	
 		<div class="col-sm-5">
@@ -179,11 +216,27 @@
 				<tr>
 					<td><span> Sneakers</span><td><span id="group">45.5</span></td>
 				</tr>
-				<tr></tr>
+				<tr>	</tr>
+				</table>
+				<table class="user-info hidden-xs">
+					<tr>
+	
+						<td><a href = "javascript:void(0)" onclick = "showPopup('reset_message')" class="btn btn-danger btn-xs">Reset password</a></td>
+					</tr>
+				
+					<tr>
+						<td>About:</td>
+					</tr>
+					<tr>
+						<td><span >Ku*** palac i mali kriminalac</span></td>
+					</tr>
 				<tr>
-						<td>samo na svom vide<a href = "javascript:void(0)" onclick = "showPopup('reset_message')" class="btn btn-danger btn-xs">Reset password</a></td>
+						<!--<td><textarea type="text" id="about" class="text-control"></textarea>About</td> -->
+						<td></td>
+						<td><a href = "javascript:void(0)" onclick = "showPopup('about_message')" class="btn btn-danger btn-xs">Edit</a></td>
 				</tr>
-            </table>
+				</table>
+            
 		</div>
         <div class="col-sm-3">
 			<div class="panel panel-success">
@@ -267,17 +320,27 @@
         </div>
     </div>
 	
-<?php $__env->stopSection(); ?>
+@stop
 <div id="reset_message" class="white_content">
 	<form>
 		<label for="old_password" class="control-label">Old password:</label><br>
 		<input type="password" id="old_password"  class="form-control"/><br>
 		<label for="new_password" class="control-label">New password:</label><br>
 		<input type="password" id="new_password" class="form-control" /><br>
-		<a href="#" class="btn btn-success btn-xs">Confirm</a>
+		<a href="#" class="btn btn-success btn-xs" >Confirm</a>
 		<a href = "javascript:void(0)" onclick = "hidePopup('reset_message')" class="btn btn-danger btn-xs">Cancel</a>
 	</form>
+ 
 </div>
- <div id="fade" class="black_overlay"></div>
 
-<?php echo $__env->make('layout', array_except(get_defined_vars(), array('__data', '__path')))->render(); ?>
+<div id="about_message" class="white_content">
+	<form>
+		<label for="old_password" class="control-label">About</label><br/>
+		<textarea rows="6" class="form-control" style="resize:none;"></textarea><br/>
+		<a href="#" class="btn btn-success btn-xs" >Confirm</a>
+		<a href = "javascript:void(0)" onclick = "hidePopup('about_message')" class="btn btn-danger btn-xs">Cancel</a>
+	</form>
+ 
+</div>
+
+ <div id="fade" class="black_overlay"></div>

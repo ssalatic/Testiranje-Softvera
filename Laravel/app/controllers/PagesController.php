@@ -28,7 +28,7 @@ class PagesController extends BaseController {
     
     public function gallery()
     {
-    	//return View::make('pages.gallery');
+    	return View::make('pages.gallery');
     }
 
     public function login()

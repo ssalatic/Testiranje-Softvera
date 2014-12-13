@@ -82,7 +82,13 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.profile');
+		if (Auth::user()->isAdmin())
+			//return View::make('pages.profile');
+			return View::make('pages.admin_profile');
+		else if(Auth::user()->isTrainer())
+			return View::make('pages.trainer_profile');
+		else 
+			return View::make('pages.profile');
 	}
 
 

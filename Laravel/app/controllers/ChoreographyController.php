@@ -69,7 +69,7 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return View::make('pages.coreographys');
 	}
 
 

@@ -26,9 +26,10 @@ Route::bind('concerts', function($id)
 	return App\ConcertModel::whereId($id)-first();
 });
 
-Route::bind('coreographys', function($id)
+
+Route::bind('choreographys', function($id)
 {
-	return App\CoreographyModel::whereId($id)-first();
+	return App\ChoreographyModel::whereId($id)-first();
 });
 
 Route::bind('costumes', function($id)
@@ -84,7 +85,7 @@ Route::group(array('before' => 'secure'), function()
 	
 	Route::resource('concerts', 'ConcertController');
 	
-	Route::resource('coreographys', 'CoreographyController');
+	Route::resource('choreographies', 'ChoreographyController');
 	
 	Route::resource('costumes', 'CostumeController');
 	
@@ -98,9 +99,10 @@ Route::group(array('before' => 'secure'), function()
 	
 	Route::resource('users', 'UserController');
 	
-	
 	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
-	Route::get('gallery', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));
+	Route::get('gallery', array('before' => 'secure|auth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));
+	
+	
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	
 	Route::post('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));

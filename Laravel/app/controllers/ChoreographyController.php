@@ -2,11 +2,11 @@
 
 class ChoreographyController extends \BaseController {
 	
-	private $coreography;
+	private $choreography;
 	
-	public function __construct(CoreographyModel $cor)
+	public function __construct(ChoreographyModel $cor)
 	{
-		$this->coreography= $cor;
+		$this->choreography= $cor;
 		
 		$this->beforeFilter('auth', [
 					
@@ -69,7 +69,12 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.coreographys');
+		if(Auth::user()->isAdmin() || Auth::user()->isTrainer()){
+			return View::make('pages.admin_choreography');
+		}
+		else{
+			return View::make('pages.choreographies');
+		}
 	}
 
 

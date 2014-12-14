@@ -40,6 +40,7 @@ class PagesController extends BaseController {
     {
     	Auth::logout();
     	
+		return Redirect::to('competitions');
     	return Redirect::to('login')->with('msg', 'Your are now logged out!');
     }
 

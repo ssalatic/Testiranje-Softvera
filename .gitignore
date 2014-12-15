@@ -1,2 +1,4 @@
 Laravel/app/storage/sessions/
 Laravel/app/storage/logs/
+Laravel/app/config/database.php
+

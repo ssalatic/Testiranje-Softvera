@@ -55,7 +55,7 @@
 @section('content')
         <div class="row">
 			<div class="hidden-xs col-sm-12" id="large-header" align="center">
-				<h2>Welcome back <?php echo Auth::user()->username; ?>, bussy week ahead of you, check out what's going on</h2>
+				<h2>Welcome back <?php echo Auth::user()->username; echo Auth::user()->first_name; ?>, bussy week ahead of you, check out what's going on</h2>
 			</div>
 		
 			<div class="visible-xs col-sm-12" id="small-header" align="center">

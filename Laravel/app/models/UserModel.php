@@ -87,7 +87,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getEmailAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setPasswordAttribute($value)
@@ -102,7 +105,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getFirstNameAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setLastNameAttribute($value)
@@ -112,7 +118,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getLastNameAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setSocialNumberAttribute($value)
@@ -122,7 +131,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getSocialNumberAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setPhoneNumberAttribute($value)
@@ -132,7 +144,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getPhoneNumberAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setAddressAttribute($value)
@@ -142,7 +157,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getAddressAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setHeightAttribute($value)
@@ -152,7 +170,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getHeightAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setBalletShoeSizeAttribute($value)
@@ -162,7 +183,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getBalletShoeSizeAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setSneakersSizeAttribute($value)
@@ -172,7 +196,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getSneakersSizeAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function setSexAttribute($value)
@@ -182,7 +209,10 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function getSexAttribute($value)
 	{
-		return Crypt::decrypt($value);
+		if (empty($value))
+			return null;
+		else
+			return Crypt::decrypt($value);
 	}
 	
 	public function getAuthIdentifier()
@@ -212,8 +242,6 @@ class UserModel extends \Eloquent implements UserInterface {
 		return 'remember_token';
 	}
 	
-	
-		
 	public function isAdmin(){
 		return $this->attributes['user_type'] == 0;
 	}

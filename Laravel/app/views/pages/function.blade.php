@@ -2,9 +2,11 @@
 @stop
 <?php	
 	$id = $_REQUEST["id"];
-	$is = UserModel::getUserWithId($id);
-	
-	echo $is;
+	$user = UserModel::getUserWithId($id);
+	$content = '<tr>
+					<td>First name:</td><td><span id="first_name">'.$user->first_name.'</span></td>
+                </tr>';
+	echo $content;
 
 ?>
 

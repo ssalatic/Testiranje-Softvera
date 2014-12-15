@@ -258,4 +258,32 @@ class UserModel extends \Eloquent implements UserInterface {
 	public function isDancer(){
 		return $this->attributes['user_type'] == 3;
 	}
+	
+	private $dancerArray = array("Aaa");
+	private $trainerArray = array();
+	
+	public function updateUsers(){
+		/*
+		$users = DB::table('user')->get();
+		
+		foreach ($users as $user)
+		{
+			//echo $user->;
+			//var_dump($user->name);
+		}*/
+		
+	}
+	
+	
+	public function getUsers($userType){
+		
+		$users = DB::table('user')->where('user_type', $userType)->get();
+		
+		
+		foreach($users as $user){
+			echo $user->username;
+		} 
+		
+		//echo $this->dancerArray[0];
+	}
 }

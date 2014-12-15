@@ -150,6 +150,13 @@
 		</div>	
 		<div class="col-sm-5">
 			<table class="user-info hidden-xs">
+				
+				<?php 
+					echo 'Hello';
+					$user = new UserModel();
+					$user->getUsers(3);
+				?>
+				
 				<tr>
 					<td>First name:</td><td><span id="first_name">Marko</span></td>
                 </tr>

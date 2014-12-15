@@ -25,6 +25,11 @@ class PagesController extends BaseController {
          ));
         
     }
+	
+	public function get_user_func()
+    {
+    	return View::make('pages.function');
+    }
     
     public function gallery()
     {

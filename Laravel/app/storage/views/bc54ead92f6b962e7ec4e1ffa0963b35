@@ -1,0 +1,8 @@
+<?php $__env->startSection('head'); ?>
+<?php $__env->stopSection(); ?>
+<?php	
+	$id = $_REQUEST["id"];
+	$is = UserModel::getUserWithId($id);
+	echo $is;
+
+?>

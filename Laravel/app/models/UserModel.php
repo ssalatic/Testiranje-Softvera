@@ -271,4 +271,9 @@ class UserModel extends \Eloquent implements UserInterface {
 		
 		echo '</select>';
 	}
+	
+	public static function getUserWithId($id){
+		$user = DB::table('user')->where('id', $id)->first();
+		return $user;
+	}
 }

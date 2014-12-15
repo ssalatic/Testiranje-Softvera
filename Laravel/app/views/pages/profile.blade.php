@@ -23,9 +23,26 @@
 			document.getElementById('fade').style.display='none';
 		}
 		
+		/*function showOptions(){
+			var e = document.getElementById("MySelectOption");
+			var strUser = e.options[e.selectedIndex].value;
+			alert(strUser);
+		}*/
 		function alertselected(selectobj){
 				var id = selectobj.options[selectobj.selectedIndex].id;
-				alert(id);
+				
+				
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							document.getElementById("txtHint").innerHTML = xmlhttp.responseText ;
+							
+						}
+					}
+					
+					
+					xmlhttp.open("GET", "{{route('function')}}?id="+id, true);
+					xmlhttp.send();
 		}
 		
 		
@@ -123,6 +140,12 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
+					<!--<select class="form-control" multiple="" onChange="alertselected(this)"> 
+						<option id="1" value="o1">Kvazimodo ooo</option>
+						<option id="2" value="o2">Kvazimodko KOnjo</option>
+					</select>-->
+					
+					
 					<?php
 						//print dancers
 						UserModel::getUsers(3);
@@ -147,8 +170,10 @@
 			
 		</div>	
 		<div class="col-sm-5">
-			<table class="user-info hidden-xs">
-				<tr>
+		<!--<p>Suggestions: <span id="txtHint"></span></p>-->
+			<table id = "tabela" class="user-info hidden-xs">
+				<span id="txtHint"></span>
+				<!--<tr>
 					<td>First name:</td><td><span id="first_name">Marko</span></td>
                 </tr>
 				<tr>
@@ -191,7 +216,7 @@
 				<tr></tr>
 				<tr>
 						<td>samo na svom vide<a href = "javascript:void(0)" onclick = "showPopup('reset_message')" class="btn btn-danger btn-xs">Reset password</a></td>
-				</tr>
+				</tr>-->
             </table>
 		</div>
         <div class="col-sm-3">
@@ -275,6 +300,7 @@
 			</div>
         </div>
     </div>
+	
 @stop
 <div id="reset_message" class="white_content">
 	<form>

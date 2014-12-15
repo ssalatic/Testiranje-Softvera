@@ -28,7 +28,19 @@
 		}*/
 		function alertselected(selectobj){
 				var id = selectobj.options[selectobj.selectedIndex].id;
-				alert(id);
+				
+				
+					var xmlhttp = new XMLHttpRequest();
+					xmlhttp.onreadystatechange = function() {
+						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+							document.getElementById("txtHint").innerHTML = xmlhttp.responseText ;
+							
+						}
+					}
+					
+					
+					xmlhttp.open("GET", "<?php echo route('function'); ?>?id="+id, true);
+					xmlhttp.send();
 		}
 		
 		
@@ -156,6 +168,7 @@
 			
 		</div>	
 		<div class="col-sm-5">
+		<p>Suggestions: <span id="txtHint"></span></p>
 			<table class="user-info hidden-xs">
 				<tr>
 					<td>First name:</td><td><span id="first_name">Marko</span></td>

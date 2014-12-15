@@ -126,10 +126,17 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select id="my_select" class="form-control" multiple="" onChange="alertselected(this)"> 
+					<!--<select class="form-control" multiple="" onChange="alertselected(this)"> 
 						<option id="1" value="o1">Kvazimodo ooo</option>
 						<option id="2" value="o2">Kvazimodko KOnjo</option>
-					</select>
+					</select>-->
+					
+					
+					<?php
+						//print dancers
+						UserModel::getUsers(3);
+					?>
+					
 				</div>
 				
 				
@@ -139,10 +146,10 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select class="form-control" multiple="">
-						<option>Trainer #1</option>
-						<option>Trainer #2</option>
-					</select>
+					<?php
+						//print trainers
+						UserModel::getUsers(1);
+					?>
 				</div>
 			</div>	
 
@@ -150,13 +157,6 @@
 		</div>	
 		<div class="col-sm-5">
 			<table class="user-info hidden-xs">
-				
-				<?php 
-					echo 'Hello';
-					$user = new UserModel();
-					$user->getUsers(3);
-				?>
-				
 				<tr>
 					<td>First name:</td><td><span id="first_name">Marko</span></td>
                 </tr>

@@ -23,11 +23,6 @@
 			document.getElementById('fade').style.display='none';
 		}
 		
-		/*function showOptions(){
-			var e = document.getElementById("MySelectOption");
-			var strUser = e.options[e.selectedIndex].value;
-			alert(strUser);
-		}*/
 		function alertselected(selectobj){
 				var id = selectobj.options[selectobj.selectedIndex].id;
 				alert(id);
@@ -128,10 +123,11 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select id="my_select" class="form-control" multiple="" onChange="alertselected(this)"> 
-						<option id="1" value="o1">Kvazimodo ooo</option>
-						<option id="2" value="o2">Kvazimodko KOnjo</option>
-					</select>
+					<?php
+						//print dancers
+						UserModel::getUsers(3);
+					?>
+					
 				</div>
 				
 				
@@ -141,10 +137,10 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select class="form-control" multiple="">
-						<option>Trainer #1</option>
-						<option>Trainer #2</option>
-					</select>
+					<?php
+						//print trainers
+						UserModel::getUsers(1);
+					?>
 				</div>
 			</div>	
 
@@ -279,7 +275,6 @@
 			</div>
         </div>
     </div>
-	
 @stop
 <div id="reset_message" class="white_content">
 	<form>

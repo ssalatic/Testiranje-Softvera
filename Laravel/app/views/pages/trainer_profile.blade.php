@@ -21,6 +21,12 @@
 			document.getElementById(id).style.display='none';
 			document.getElementById('fade').style.display='none';
 		}
+		
+		function alertselected(selectobj){
+			var id = selectobj.options[selectobj.selectedIndex].id;
+			alert(id);
+		}
+		
 	
 	</script>
 
@@ -122,10 +128,10 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select class="form-control" multiple="">
-						<option>Kvazimodo ooo</option>
-						<option>Kvazimodko oooo</option>
-					</select>
+					<?php
+						//print dancers
+						UserModel::getUsers(3);
+					?>
 				</div>
 				
 				
@@ -135,10 +141,10 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select class="form-control" multiple="">
-						<option>Trainer #1</option>
-						<option>Trainer #2</option>
-					</select>
+					<?php
+						//print trainers
+						UserModel::getUsers(1);
+					?>
 				</div>
 			</div>	
 

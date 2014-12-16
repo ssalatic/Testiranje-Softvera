@@ -5,12 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="styles/bootstrap.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
-
     <?php echo HTML::style('styles/bootstrap.css');; ?>
 
     <?php echo HTML::style('https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css');; ?>
+
 
     <style>
         /* Potrebno da menu ne bi zaklanjao sadrzaj jer je fixed-menu */

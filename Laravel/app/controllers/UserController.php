@@ -82,7 +82,7 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		//
+		return Redirect::route('users.show', Auth::user()->id);
 	}
 
 

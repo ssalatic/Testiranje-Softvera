@@ -34,7 +34,11 @@ class PagesController extends BaseController {
     
     public function gallery()
     {
-    	return View::make('pages.gallery');
+    	$files[] = DB::select(DB::raw('select file_name from choreography_file'));
+    	$files[] = DB::select(DB::raw('select file_name from competition_file'));
+    	$files[] = DB::select(DB::raw('select file_name from concert_file'));
+    	
+    	return View::make('pages.gallery', array( 'files' => $files));
     }
 
     public function login()

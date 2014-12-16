@@ -61,7 +61,7 @@
 									echo '<li><a href="#">Choreographies</a></li>';
 								}*/
 							?>
-							<!--<li><a href="#">Files</a></li>-->
+							<!--<li><a href="{{route('gallery')}}">Files</a></li>-->
         				</ul>
         				<ul class="nav navbar-nav navbar-right">
         					<li><a href="{{ route('logout') }}">Log out</a></li>

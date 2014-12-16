@@ -7,7 +7,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	protected $fillable = [
 			
-			'first_name', 'last_name', 'birth_date', 'phone_number',
+			'first_name', 'last_name', 'birth_date', 'phone_number','gender',
 			'adress', 'height', 'shoe_size', 'ballet_shoe_size',
 			'sneakers_size', 'changed_by'
 			
@@ -275,5 +275,11 @@ class UserModel extends \Eloquent implements UserInterface {
 	public static function getUserWithId($id){
 		$user = DB::table('user')->where('id', $id)->first();
 		return $user;
+	}
+	
+	public static function getGroups($id){
+		$groups = DB::table('user_group')->where('user_id',$id)->get();
+		
+		return $groups;
 	}
 }

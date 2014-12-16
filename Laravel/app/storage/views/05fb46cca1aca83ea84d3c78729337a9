@@ -152,7 +152,8 @@
 					
 					<?php
 						//print dancers
-						UserModel::getUsers(1);
+						UserModel::getUsers(3);
+						
 					?>
 					
 				</div>

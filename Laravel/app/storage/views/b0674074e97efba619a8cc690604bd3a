@@ -149,7 +149,7 @@
 		</div>
 		<div class="col-sm-4">
 		
-			<div class="header"><h4>Random name</h4></div>
+			<div class="header"><h4>Neko ime</h4></div>
 			
 			
 			

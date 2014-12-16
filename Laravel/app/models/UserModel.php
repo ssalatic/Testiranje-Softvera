@@ -261,7 +261,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public static function getUsers($userType){
 		
-		$users = DB::table('user')->where('user_type', $userType)->get();
+		$users = UserModel::where('user_type', '=', $userType)->get(); //DB::table('user')->where('user_type', $userType)->get();
 		
 		echo '<select class="form-control" multiple="" onChange="alertselected(this)">'; 
 					

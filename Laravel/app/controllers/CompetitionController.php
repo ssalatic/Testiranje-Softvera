@@ -74,7 +74,7 @@ class CompetitionController extends \BaseController {
 	 */
 	public function index()
 	{
-		//		
+		return Redirect::route('competitions.show', 1);
 	}
 
 

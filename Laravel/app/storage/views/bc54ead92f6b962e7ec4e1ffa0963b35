@@ -10,6 +10,7 @@
 			5. Dodati koreografije
 -->
 <?php	
+	
 	$id = $_REQUEST["id"];
 	$user = UserModel::getUserWithId($id);
 	
@@ -17,6 +18,8 @@
 	$fakeUserModel = new UserModel();
 	$fakeUserModel->id = $user->id;
 	$groups = $fakeUserModel->groups()->getResults();
+	
+	
 	
 	// pravljenje dela za grupe
 	$group_content = '<tr><td>Group(s):</td><td><span id="group">';
@@ -33,7 +36,7 @@
 	$group_content = $group_content.'</span></td></tr>';
 	
 	// content tabele za prikaz profila
-	$content = '<tr>
+	$information_content = '<tr>
 					<td>First name:</td><td><span id="first_name">'.$user->first_name.'</span></td>
                 </tr>
 				<tr>
@@ -74,9 +77,64 @@
 						<td>samo na svom vide<a href = "javascript:void(0)" onclick = "showPopup(\'reset_message\')" class="btn btn-danger btn-xs">Reset password</a></td>
 				</tr>';
 	
+	// deo za koreografije
 	
-	echo $content;
+	$choreographies = $fakeUserModel->choreographys()->getResults();
+	
+	$choreographies_content = '<thead><tr><th>Choreography</th></tr></thead><tbody>';
+	
+	foreach($choreographies as $choreography){
+		$choreographies_content = $choreographies_content.'<tr><td>'.$choreography->name.'</td></tr>';
+	}
+	$choreographies_content = $choreographies_content.'</tbody>';
+	
+	
+	// deo za kostime
+	$costumes = $fakeUserModel->ownsCostumes()->getResults();
+	
+	$costumes_content = '<thead><tr><th>Costume</th></tr></thead><tbody>';
+	foreach($costumes as $costume){
+		$costumes_content = $costumes_content.'<tr><td>'.$costume->identifier.'</td></tr>';
+	}
+	
+	echo $information_content.'<mm>'.$choreographies_content.'<mm>'.$costumes_content;
 ?>
+<!--
+					<thead>
+						<tr>
+							<th>Choreography</th>
+						</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>Chor #1</td>     
+					</tr>
+					<tr>
+						<td>Chor #2</td>
+					</tr>
+					<tr>
+						<td>Chor #3</td>
+					</tr> 
+					</tbody>
+-->
+<!--
+					<thead>
+						<tr>
+							<th>Costume</th>
+						</tr>
+					</thead>
+					<tbody>
+					
+					<tr>
+						<td>Blue small #1</td>     
+					</tr>
+					<tr>
+						<td>Blue small #2</td>
+					</tr>
+					<tr>
+						<td>Blue small #3</td>
+					</tr> 
+					</tbody>	 -->
 
 <!--<tr>
 					<td>First name:</td><td><span id="first_name">Marko</span></td>

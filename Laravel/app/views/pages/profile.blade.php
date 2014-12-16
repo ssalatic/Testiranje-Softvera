@@ -35,8 +35,10 @@
 					var xmlhttp = new XMLHttpRequest();
 					xmlhttp.onreadystatechange = function() {
 						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							document.getElementById("tabela").innerHTML = xmlhttp.responseText ;
-							
+							$responseArray = xmlhttp.responseText.split("<mm>");
+							document.getElementById("table").innerHTML = $responseArray[0];
+							document.getElementById("choreography").innerHTML = $responseArray[1];
+							document.getElementById("costume").innerHTML = $responseArray[2];
 						}
 					}
 					
@@ -171,8 +173,7 @@
 		</div>	
 		<div class="col-sm-5">
 		<!--<p>Suggestions: <span id="txtHint"></span></p>-->
-			<table id = "tabela" class="user-info hidden-xs">
-				<span id="txtHint"></span>
+			<table id = "table" class="user-info hidden-xs">
 				<!--<tr>
 					<td>First name:</td><td><span id="first_name">Marko</span></td>
                 </tr>
@@ -253,13 +254,15 @@
 					<h3 class="panel-title">Costumes</h3>
 				</div>
 				<div class="panel-body">
-					<table class="table table-striped table-hover ">
+					<table id="costume" class="table table-striped table-hover ">
+					<!--
 					<thead>
 						<tr>
 							<th>Costume</th>
 						</tr>
 					</thead>
 					<tbody>
+					
 					<tr>
 						<td>Blue small #1</td>     
 					</tr>
@@ -268,8 +271,8 @@
 					</tr>
 					<tr>
 						<td>Blue small #3</td>
-					</tr>
-					</tbody>
+					</tr> 
+					</tbody>	-->
 					</table>
 				</div>
 			</div>
@@ -278,10 +281,11 @@
 					<h3 class="panel-title">Coreographies</h3>
 				</div>
 				<div class="panel-body">
-					<table class="table table-striped table-hover ">
+					<table id ="choreography" class="table table-striped table-hover ">
+					<!--
 					<thead>
 						<tr>
-							<th>Coreography</th>
+							<th>Choreography</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -293,8 +297,8 @@
 					</tr>
 					<tr>
 						<td>Chor #3</td>
-					</tr>
-					</tbody>
+					</tr> 
+					</tbody> -->
 					</table>
 				</div>
 			</div>

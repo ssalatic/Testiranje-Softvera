@@ -2,6 +2,7 @@
 
 class ChoreographyModel extends \Eloquent {
 	
+
 	protected $fillable = [
 			'name', 'music', 'rhythm', 'tempo', 'duration', 'hard', 'soft'
 	];
@@ -10,7 +11,7 @@ class ChoreographyModel extends \Eloquent {
 			'id'
 	];
 	
-	protected $table = 'coreogrpahy';
+	protected $table = 'choreography';
 	
 	public $timestamps = false;
 	

@@ -11,7 +11,7 @@
 |
 */
 //Route::model('competitions', 'CompetitionModel');
-Route::bind('users', function($id)
+/* Route::bind('users', function($id)
 {
 	return App\UserModel::whereId($id)-first();
 });
@@ -56,7 +56,7 @@ Route::bind('trainings', function($id)
 {
 	return App\TrainingModel::whereId($id)-first();
 });
-
+ */
 /*Route::resource('competitions', 'CompetitionController', array('only' => array('index', 'show')));
 
 Route::group(array('prefix' => 'admin'), function()

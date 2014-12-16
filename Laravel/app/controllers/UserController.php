@@ -82,13 +82,7 @@ class UserController extends \BaseController {
 	 */
 	public function index()
 	{
-		if (Auth::user()->isAdmin())
-			//return View::make('pages.profile');
-			return View::make('pages.admin_profile');
-		else if(Auth::user()->isTrainer())
-			return View::make('pages.trainer_profile');
-		else 
-			return View::make('pages.profile');
+		//
 	}
 
 
@@ -150,7 +144,12 @@ class UserController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		if (Auth::user()->isAdmin())
+			return View::make('pages.admin_profile', array('$user' => $id));
+		else if(Auth::user()->isTrainer())
+			return View::make('pages.trainer_profile', array('$user' => $id));
+		else
+			return View::make('pages.profile', array('$user' => $id));
 	}
 
 

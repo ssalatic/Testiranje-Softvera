@@ -67,7 +67,7 @@ class ConcertController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.concerts');
+		//
 	}
 
 
@@ -101,7 +101,7 @@ class ConcertController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return View::make('pages.concerts', array('$concert' => $id));
 	}
 
 

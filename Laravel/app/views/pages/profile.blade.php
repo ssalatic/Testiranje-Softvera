@@ -1,54 +1,7 @@
 @extends('layout')
 
 @section('head')
-	
-	<script>
-		function showPopup(id)
-		{
-			document.getElementById(id).style.display='block';
-			document.getElementById('fade').style.display='block';
-			
-			var body = document.body,
-						html = document.documentElement;
 
-			var height = Math.max( body.scrollHeight, body.offsetHeight, 
-                       html.clientHeight, html.scrollHeight, html.offsetHeight );
-					   
-			document.getElementById('fade').style.height= height + 'px';
-		}
-		
-		function hidePopup(id)
-		{
-			document.getElementById(id).style.display='none';
-			document.getElementById('fade').style.display='none';
-		}
-		
-		/*function showOptions(){
-			var e = document.getElementById("MySelectOption");
-			var strUser = e.options[e.selectedIndex].value;
-			alert(strUser);
-		}*/
-		function alertselected(selectobj){
-				var id = selectobj.options[selectobj.selectedIndex].id;
-				
-				
-					var xmlhttp = new XMLHttpRequest();
-					xmlhttp.onreadystatechange = function() {
-						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
-							$responseArray = xmlhttp.responseText.split("<mm>");
-							document.getElementById("table").innerHTML = $responseArray[0];
-							document.getElementById("choreography").innerHTML = $responseArray[1];
-							document.getElementById("costume").innerHTML = $responseArray[2];
-						}
-					}
-					
-					
-					xmlhttp.open("GET", "{{route('function')}}?id="+id, true);
-					xmlhttp.send();
-		}
-		
-		
-	</script>
 
     <!-- Page specific CSS, JS, and other files in <head> -->
     <!-- CSS -->
@@ -111,6 +64,55 @@
 			top:25%;
 		}
     </style>
+
+    <script>
+    		function showPopup(id)
+    		{
+    			document.getElementById(id).style.display='block';
+    			document.getElementById('fade').style.display='block';
+
+    			var body = document.body,
+    						html = document.documentElement;
+
+    			var height = Math.max( body.scrollHeight, body.offsetHeight,
+                           html.clientHeight, html.scrollHeight, html.offsetHeight );
+
+    			document.getElementById('fade').style.height= height + 'px';
+    		}
+
+    		function hidePopup(id)
+    		{
+    			document.getElementById(id).style.display='none';
+    			document.getElementById('fade').style.display='none';
+    		}
+
+    		/*function showOptions(){
+    			var e = document.getElementById("MySelectOption");
+    			var strUser = e.options[e.selectedIndex].value;
+    			alert(strUser);
+    		}*/
+    		function alertselected(selectobj){
+    				var id = selectobj.options[selectobj.selectedIndex].id;
+
+
+    					var xmlhttp = new XMLHttpRequest();
+    					xmlhttp.onreadystatechange = function() {
+    						if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+    							$responseArray = xmlhttp.responseText.split("<mm>");
+    							document.getElementById("table").innerHTML = $responseArray[0];
+    							document.getElementById("choreography").innerHTML = $responseArray[1];
+    							document.getElementById("costume").innerHTML = $responseArray[2];
+    						}
+    					}
+
+
+    					xmlhttp.open("GET", "{{route('function')}}?id="+id, true);
+    					xmlhttp.send();
+    		}
+
+
+    	</script>
+
  @stop
 
  @section('content')
@@ -150,7 +152,7 @@
 					
 					<?php
 						//print dancers
-						UserModel::getUsers(3);
+						UserModel::getUsers(1);
 					?>
 					
 				</div>
@@ -305,7 +307,7 @@
         </div>
     </div>
 	
-@stop
+
 <div id="reset_message" class="white_content">
 	<form>
 		<label for="old_password" class="control-label">Old password:</label><br>
@@ -317,3 +319,4 @@
 	</form>
 </div>
  <div id="fade" class="black_overlay"></div>
+@stop

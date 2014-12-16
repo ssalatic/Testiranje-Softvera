@@ -16,8 +16,9 @@ class PagesController extends BaseController {
     	$comp = UserModel::find(Auth::user()->id)->competitions()->where('date', '>=', date("Y-m-d H:i:s"))->paginate(10);
 
     	Paginator::setPageName('page_c');
-    	$conc = UserModel::find(Auth::user()->id)->concertChoreographyUser()->paginate(10);
+    	$conc = DB::select(DB::raw('select distinct concert.id as id, name, start_time from concert_choreography_user join concert_choreography on concert_choreography_id = concert_choreography.id join concert on concert_id = concert.id where user_id = '.Auth::user()->id));
     	
+
         return View::make('index', array('practices' => $pract,
         								 'competitions' => $comp,
         								 'concerts' => $conc,

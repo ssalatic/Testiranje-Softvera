@@ -149,7 +149,7 @@
                     </form>
 					<?php
 						//print dancers
-						UserModel::getUsers(3);
+						UserModel::getUsers(1);
 					?>
 				</div>
 				
@@ -173,7 +173,7 @@
                     </form>
 					<?php
 						//print admins
-						UserModel::getUsers(0);
+						UserModel::getUsers(1);
 					?>
 				</div>
 			</div>	
@@ -320,7 +320,6 @@
     </div>
 	
  <div id="fade" class="black_overlay"></div>
-@stop
 
 <div id="new_user" class="white_content">
 	<div class="row">
@@ -394,3 +393,4 @@
 	</form>
  
 </div>
+@stop

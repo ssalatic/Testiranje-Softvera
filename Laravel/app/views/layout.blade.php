@@ -49,9 +49,9 @@
         					<!--<li class="active"><a href="{{route('index')}}">Home</a></li>
 							<li><a href="#">Practices</a></li>
 								
-							<li><a href="{{route('concerts.index')}}">Concerts</a></li>
-							<li><a href="{{route('users.index')}}">Users</a></li>
-							<li><a href="{{route('competitions.index')}}">Competitions</a></li>-->
+							<li><a href="{{route('concerts.show')}}">Concerts</a></li>
+							<li><a href="{{route('users.show')}}">Users</a></li>
+							<li><a href="{{route('competitions.show')}}">Competitions</a></li>-->
 							<?php
 							MenuModel::updateMenu(Route::currentRouteName(), Auth::user());
 								/*if(Auth::user()->isAdmin() || Auth::user()->isDesigner()){

@@ -50,23 +50,23 @@ Route::filter('auth', function()
 
 Route::filter('isAuth', function()
 {
-	if (!Auth::guest())
+	/*if (!Auth::guest())
 	{
 		return Redirect::secure('/');
-	}
+	}*/
 });
 
 Route::filter('secure', function()
 {
 	if(!Request::secure())
 	{
-		return Redirect::secure(Request::getRequestUri());
+		//return Redirect::secure(Request::getRequestUri());
 	}
 });
 
 Route::filter('auth.basic', function()
 {
-	return Auth::basic();
+	//return Auth::basic();
 });
 
 /*
@@ -82,12 +82,12 @@ Route::filter('auth.basic', function()
 
 Route::filter('guest', function()
 {
-	if (Auth::check()) return Redirect::to('/');
+	//if (Auth::check()) return Redirect::to('/');
 });
 
 
 Route::filter('admin', function(){
-	if (Auth::user()->isAdmin()) return Redirect::to('/');
+	//if (Auth::user()->isAdmin()) return Redirect::to('/');
 });
 
 /*
@@ -103,8 +103,8 @@ Route::filter('admin', function(){
 
 Route::filter('csrf', function()
 {
-	if (Session::token() != Input::get('_token'))
+	/*if (Session::token() != Input::get('_token'))
 	{
 		throw new Illuminate\Session\TokenMismatchException;
-	}
+	}*/
 });

@@ -12,7 +12,7 @@
 <?php	
 	
 	$id = $_REQUEST["id"];
-	$user = UserModel::getUserWithId($id);
+	$user = UserModel::find($id);
 	
 	// dobijanje svih grupa
 	$fakeUserModel = new UserModel();
@@ -58,7 +58,7 @@
                     <td>User type:</td><td><span id="user_type">'.$user->user_type.'</span></td>
                 </tr>
 				<tr>
-					<td>Gender:</td><td><span id="gender">'.$user->gender.'</span></td>
+					<td>Gender:</td><td><span id="gender">'.$user->sex.'</span></td>
                 </tr>' . $group_content.
 				'<tr>
 					<td>Size:</td>

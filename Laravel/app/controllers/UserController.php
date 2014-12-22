@@ -102,15 +102,15 @@ class UserController extends \BaseController {
 	 *
 	 * @return Response
 	 */
-	public function store()
+	/*public function store()
 	{
 
 		$validator = $this->validate(Input::except(['di']));
 		
 		if ($validator->passes()) 
 		{
-			$user = new UserModel;
-			
+			$user = new UserModel
+
 			$user->email = Input::get('email');
 			$user->sex = Input::get('gender');
 			$user->height = Input::get('height');
@@ -133,6 +133,49 @@ class UserController extends \BaseController {
 			return Redirect::route('users.create')->withErrors($validator)->withInput();	
 		}
 		
+	}*/
+	
+		public function store()
+	{
+
+		//$validator = $this->validate(Input::except(['di']));
+		
+		if (true) 
+		{
+			$user = new UserModel();
+			
+			$user->username = Input::get('username');
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->birth_date = Input::get('birth_date');
+			$user->social_number = Input::get('social_number');
+			$user->phone_number = Input::get('phone_number');
+			$user->email = Input::get('email');
+			$user->sex = Input::get('gender');
+			$user->user_type = Input::get('user_type');
+			$user->height = Input::get('height');
+			$user->password = Input::get('social_number');
+			$user->shoe_size = Input::get('shoe_size');
+			$user->sneakers_size = Input::get('sneakers_size');
+			$user->ballet_shoe_size = Input::get('ballet_shoe_size');
+			$user->validated = Session::token();
+			
+		    $user->save();
+		    
+		    Mail::queue('emails.welcome', array('token' => Session::token()), function($message)
+		    {
+		    	$message->to(Input::get('email'), Input::get('username'))->subject('Welcome!');
+		    });
+			return Redirect::route('users.update',$user->id)->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
+		    
+			//return Redirect::route('users.update',1)->with('msg', 'Radiiiii!');
+		     //return Redirect::route('practices.update')->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
+		} 
+		else 
+		{	
+			// return Redirect::route('users')->with('msg', 'Thanks for registering! But its not ok!');	
+		}
+		
 	}
 
 
@@ -145,11 +188,11 @@ class UserController extends \BaseController {
 	public function show($id)
 	{
 		if (Auth::user()->isAdmin())
-			return View::make('pages.admin_profile', array('$user' => $id));
+			return View::make('pages.admin_profile', array('user' => $id));
 		else if(Auth::user()->isTrainer())
-			return View::make('pages.trainer_profile', array('$user' => $id));
+			return View::make('pages.trainer_profile', array('user' => $id));
 		else
-			return View::make('pages.profile', array('$user' => $id));
+			return View::make('pages.profile', array('user' => $id));
 	}
 
 
@@ -173,7 +216,7 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		return Redirect::route('users.show', $id);
 	}
 
 

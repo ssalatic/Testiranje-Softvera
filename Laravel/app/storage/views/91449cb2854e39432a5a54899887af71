@@ -5,8 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- CSS files -->
-    <link rel="stylesheet" href="styles/bootstrap.css" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+    <?php echo HTML::style('styles/bootstrap.css');; ?>
+
+    <?php echo HTML::style('https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css');; ?>
+
 
     <style>
         /* Potrebno da menu ne bi zaklanjao sadrzaj jer je fixed-menu */
@@ -49,9 +51,9 @@
         					<!--<li class="active"><a href="<?php echo route('index'); ?>">Home</a></li>
 							<li><a href="#">Practices</a></li>
 								
-							<li><a href="<?php echo route('concerts.index'); ?>">Concerts</a></li>
-							<li><a href="<?php echo route('users.index'); ?>">Users</a></li>
-							<li><a href="<?php echo route('competitions.index'); ?>">Competitions</a></li>-->
+							<li><a href="<?php echo route('concerts.show'); ?>">Concerts</a></li>
+							<li><a href="<?php echo route('users.show'); ?>">Users</a></li>
+							<li><a href="<?php echo route('competitions.show'); ?>">Competitions</a></li>-->
 							<?php
 							MenuModel::updateMenu(Route::currentRouteName(), Auth::user());
 								/*if(Auth::user()->isAdmin() || Auth::user()->isDesigner()){
@@ -61,7 +63,7 @@
 									echo '<li><a href="#">Choreographies</a></li>';
 								}*/
 							?>
-							<!--<li><a href="#">Files</a></li>-->
+							<!--<li><a href="<?php echo route('gallery'); ?>">Files</a></li>-->
         				</ul>
         				<ul class="nav navbar-nav navbar-right">
         					<li><a href="<?php echo route('logout'); ?>">Log out</a></li>

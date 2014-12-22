@@ -177,50 +177,56 @@
 		<div class="col-sm-5">
 		<!--<p>Suggestions: <span id="txtHint"></span></p>-->
 			<table id = "table" class="user-info hidden-xs">
-				<!--<tr>
-					<td>First name:</td><td><span id="first_name">Marko</span></td>
+				<tr>
+					<td>First name:</td><td><span id="first_name"> <?php echo UserModel::find($user)->first_name; ?></span></td>
                 </tr>
 				<tr>
-					<td>Last name:</td><td><span id="last_name">Markovic</span></td>
+					<td>Last name:</td><td><span id="last_name"><?php echo UserModel::find($user)->last_name; ?></span></td>
                 </tr>
                 <tr>
-                    <td>Birth date:</td><td><span id="birth_date">1. 1. 1990.</span></td>
+                    <td>Birth date:</td><td><span id="birth_date"><?php echo UserModel::find($user)->birth_date; ?></span></td>
                 </tr>
 				<tr>
-					<td>Social number:</td><td><span id="social_number">12345674890</span></td>
+					<td>Social number:</td><td><span id="social_number"><?php echo UserModel::find($user)->social_number; ?></span></td>
                 </tr>
 				<tr>
-					<td>Phone number:</td><td><span id="phone_number">12345674890</span></td>
+					<td>Phone number:</td><td><span id="phone_number"><?php echo UserModel::find($user)->phone_number; ?></span></td>
                 </tr>
 				<tr>
-					<td>Email:</td><td><span id="email">marko@markovic.com</span></td>
+					<td>Email:</td><td><span id="email"><?php echo UserModel::find($user)->email; ?></span></td>
                 </tr>
 				<tr>
-                    <td>User type:</td><td><span id="user_type">Dancer</span></td>
+                    <td>User type:</td><td><span id="user_type"><?php echo UserModel::find($user)->user_type; ?></span></td>
                 </tr>
 				<tr>
-					<td>Gender:</td><td><span id="gener">Male</span></td>
+					<td>Gender:</td><td><span id="gener"><?php echo UserModel::find($user)->sex; ?></span></td>
                 </tr>
 				
 				<tr>
-					<td>Group:</td><td><span id="group">101</span></td>
-                </tr>
+					<td>Group(s):</td>
+				</tr>
+					<?php $groups = UserModel::find($user)->groups;
+						foreach($groups as $group){
+							echo '<tr><td></td><td><span id="group">'.$group->name.'</span></td></tr>';
+						}
+						 ?>
+                
 				<tr>
 					<td>Size:</td>
 				</tr>
 				<tr>
-					<td><span>Shoe</span></td><td><span id="group">45.5</span></td>
+					<td><span>Shoe</span></td><td><span id="group"><?php echo UserModel::find($user)->shoe_size; ?></span></td>
 				</tr>
 				<tr>
-					<td><span>Ballet</span></td><td><span id="group">45.5</span></td>
+					<td><span>Ballet</span></td><td><span id="group"><?php echo UserModel::find($user)->ballet_shoe_size; ?></span></td>
 				</tr>
 				<tr>
-					<td><span> Sneakers</span><td><span id="group">45.5</span></td>
+					<td><span> Sneakers</span><td><span id="group"><?php echo UserModel::find($user)->sneakers_size; ?></span></td>
 				</tr>
 				<tr></tr>
 				<tr>
 						<td>samo na svom vide<a href = "javascript:void(0)" onclick = "showPopup('reset_message')" class="btn btn-danger btn-xs">Reset password</a></td>
-				</tr>-->
+				</tr>
             </table>
 		</div>
         <div class="col-sm-3">

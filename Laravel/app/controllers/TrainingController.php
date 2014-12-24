@@ -63,7 +63,11 @@ class TrainingController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.trainings');
+		$id = TrainingModel::getVisibleTrainings()[0]->id;
+		return Redirect::route('trainings.show', $id);
+		//$training = TrainingModel::find(1);
+		//$training = TrainingModel::where('id', '=', $id)->get();
+		//return View::make('pages.users.index', array('training' => $training));
 	}
 
 
@@ -96,8 +100,12 @@ class TrainingController extends \BaseController {
 	 * @return Response
 	 */
 	public function show($id)
-	{
-		//
+	{	
+		//$id = TrainingModel::where('id', '=', $id)->first();
+		//$training = TrainingModel::find($id);
+		$tr = TrainingModel::find($id);
+		
+		return View::make('pages.trainings', array('tr' => $tr));
 	}
 
 
@@ -121,7 +129,7 @@ class TrainingController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		return Redirect::route('pages.show', $id);
 	}
 
 

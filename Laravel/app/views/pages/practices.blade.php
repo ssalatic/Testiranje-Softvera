@@ -1,9 +1,13 @@
 @extends('layout')
 
 @section('head')
-<!-- Page specific CSS, JS, and other files in <head> -->
-    <!-- CSS -->
-        <style>
+<meta charset="utf-8">
+
+    <!-- CSS files -->
+    <link rel="stylesheet" href="styles/bootstrap.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/fontawesome/4.1.0/css/font-awesome.min.css" />
+
+    <style>
         body{
             padding-top: 70px;
         }
@@ -77,9 +81,9 @@
 		}
     </style>
 
-	 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
-
+	
 	<script>
 		function showPopup(id)
 		{
@@ -119,12 +123,41 @@
 		}
 	
 	</script>
+
 	
 @stop
 
 
 @section('content')
-		<div class="row">
+    <div class="row">
+        <nav role="navigation" class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" data-target="#navbarCollapse" data-toggle="collapse" class="navbar-toggle">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    <a href="#" class="navbar-brand">Dance</a>
+                </div>
+                <div id="navbarCollapse" class="collapse navbar-collapse">
+                    <ul class="nav navbar-nav">
+                        <li><a href="/">Home</a></li>
+                        <li><a href="{{route('competitions.index')}}">Competitions</a></li>
+						<li><a href="{{route('concerts.index')}}">Concerts</a></li>
+						<li class="active"><a href="{{route('profile.index')}}">Profile</a></li>
+						<li><a href="{{route('profile.index')}}">Files</a></li>
+                    </ul>
+                    <ul class="nav navbar-nav navbar-right">
+                        <li><a href="{{ route('logout') }}">Log out</a></li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </div>
+
+	<div class="row">
 		<div class="col-lg-6">
 			<a href = "javascript:void(0)" onclick = "showPopup('new_practice')" class="btn btn-success btn-xs">Add New</a>
 			<a href = "javascript:void(0)" onclick ="showPopup('new_practice')" class="btn btn-success btn-xs">Edit</a>
@@ -251,5 +284,4 @@
 	<a href="#" class="btn btn-success btn-xs" onclick = "hidePopup('new_practice')">Ok</a>
 				<a href = "javascript:void(0)" onclick = "hidePopup('new_practice')" class="btn btn-danger btn-xs">Cancel</a>
 		
-</div>
 @stop

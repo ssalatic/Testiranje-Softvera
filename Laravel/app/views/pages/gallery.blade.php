@@ -80,7 +80,7 @@
 					<tbody>
 					 <?php
 
-                                        $alloewd_values_pic = array("jpg", "jpeg");
+                                        $alloewd_values_pic = array("jpg", "jpeg", "gif", "png", "bmp");
                                         foreach($files as $file){
                                             foreach($file as $f){
                                             if( in_array( get_file_extension($f->file_name), $alloewd_values_pic) ){

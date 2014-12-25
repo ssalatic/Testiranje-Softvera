@@ -63,7 +63,9 @@ class TrainingController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.practices');
+		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;
+		
+		return Redirect::route('trainings.show', $training);
 	}
 
 
@@ -97,7 +99,29 @@ class TrainingController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		return View::make('pages.practices', array('$training' => $id));
+		if (Auth::user()->isAdmin())
+		{
+			$training = TrainingModel::first();
+			$trainings = TrainingModel::all();
+			$users = $training->users;
+		}	
+		else if(Auth::user()->isTrainer())
+		{
+			$training = TrainingModel::find($id);
+			$trainings = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->get();
+			$users = $training->users;
+		}	
+		else
+		{
+			$training = TrainingModel::find($id);
+			$trainings = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->get();
+			$users = $training->users;
+		}
+		
+		return View::make('pages.practices', array('training' => $training,
+												   'trainings' => $trainings,
+												   'users' => $users
+		));
 	}
 
 
@@ -133,7 +157,11 @@ class TrainingController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		TrainingModel::find($id)->delete();
+		
+		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;
+		
+		return Redirect::route('trainings.show', $training);
 	}
 
 

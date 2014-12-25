@@ -47,7 +47,7 @@
         			<div id="navbarCollapse" class="collapse navbar-collapse">
         				<ul class="nav navbar-nav">
         					<!--<li class="active"><a href="{{route('index')}}">Home</a></li>
-							<li><a href="#">Practices</a></li>
+							<li><a href="{{route('trainings.show')}}">Practices</a></li>
 								
 							<li><a href="{{route('concerts.show')}}">Concerts</a></li>
 							<li><a href="{{route('users.show')}}">Users</a></li>

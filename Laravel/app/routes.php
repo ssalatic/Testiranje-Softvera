@@ -102,7 +102,10 @@ Route::group(array('before' => 'secure'), function()
 	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 	Route::get('gallery', array('before' => 'secure|auth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));
 	Route::get('function', array('before' => 'secure|auth', 'https' => true , 'as' => 'function', 'uses' => 'PagesController@get_user_func'));
-	
+	Route::get('download/{path}', array('before' => 'secure|auth', 'https' => true , 'as' => 'download', function($path)
+	{
+		return Response::download(public_path().'/files/'.$path);
+	}));
 	
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	

@@ -63,7 +63,7 @@ class TrainingController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.trainings');
+		return View::make('pages.practices');
 	}
 
 
@@ -97,7 +97,7 @@ class TrainingController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		return View::make('pages.practices', array('$training' => $id));
 	}
 
 

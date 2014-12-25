@@ -99,16 +99,23 @@
 					<table class="table table-striped table-hover ">
 					<tbody>
 			    <?php
-
+                    $alloewd_values = array("avi", "NT", "Irix", "Linux");
                     foreach($files as $file){
 
-                        echo '
-                            <tr>
-                                <td><a href="files/'.$file[0]->file_name.'">'.$file[0]->file_name.'</a></td>
-                            </tr>
-                        ';
+                        if( in_array($file[0]->file_name, $alloewd_values) ){
+
+
+                            echo '
+                                <tr>
+                                    <td><a href="files/'.$file[0]->file_name.'">'.$file[0]->file_name.'</a></td>
+                                </tr>
+                            ';
+                        }
                     }
 
+                    function get_file_extension($file_name) {
+                    	return substr(strrchr($file_name,'.'),1);
+                    }
                 ?>
 
 					</tbody>

@@ -28,17 +28,15 @@ class TrainingController extends \BaseController {
 	}
 	
 	
-	public function validate()
+	public function validate($data)
 	{
 
 		$rules = array(
 				
-				'id' =>'sometimes|required|integer|unique:training,id',
-				'date' => 'sometimes|date',
-				'trainer_id' => 'sometimes|integer|exists:user,id',
-				'finished' => 'sometimes|boolean',
-				'changed_by' => 'sometimes|integer|required|exists:user,id',
-				'group_id' => 'sometimes|integer|required|exists:group,id'
+				'practice_date' => 'required|date',
+				'time' => 'required',
+				'teacher' => 'required|integer|exists:user,id',
+				'group' => 'integer|required|exists:group,id'
 				
 		);
 		
@@ -87,7 +85,29 @@ class TrainingController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		
+		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;
+		
+		$validator = $this->validate(Input::all());
+		
+		if ($validator->passes()) 
+		{
+			$trn = new TrainingModel();
+			
+			$trn->date = Input::get('practice_date').' '.Input::get('time');
+			$trn->trainer_id = Input::get('teacher');
+			$trn->group_id = Input::get('group');
+			$trn->changed_by = Auth::user()->id;
+			$trn->save();
+			
+			$trn->users()->sync(Input::get('users'));
+		    
+		    return Redirect::route('trainings.show', $training);
+		} 
+		else 
+		{	
+			return Redirect::route('trainings.show', $training)->withErrors($validator);	
+		}
 	}
 
 
@@ -101,7 +121,7 @@ class TrainingController extends \BaseController {
 	{
 		if (Auth::user()->isAdmin())
 		{
-			$training = TrainingModel::first();
+			$training = TrainingModel::find($id);
 			$trainings = TrainingModel::all();
 			$users = $training->users;
 		}	
@@ -145,7 +165,28 @@ class TrainingController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		
+		$trn = TrainingModel::find($id);
+		
+		$validator = $this->validate(Input::all());
+		
+		if ($validator->passes())
+		{
+				
+			$trn->date = Input::get('practice_date').' '.Input::get('time');
+			$trn->trainer_id = Input::get('teacher');
+			$trn->group_id = Input::get('group');
+			$trn->changed_by = Auth::user()->id;
+			$trn->save();
+				
+			$trn->users()->sync(Input::get('users'));
+		
+			return Redirect::route('trainings.show', $trn->id);
+		}
+		else
+		{
+			return Redirect::route('trainings.show', $trn->id)->withErrors($validator);
+		}
 	}
 
 
@@ -156,7 +197,7 @@ class TrainingController extends \BaseController {
 	 * @return Response
 	 */
 	public function destroy($id)
-	{
+	{	
 		TrainingModel::find($id)->delete();
 		
 		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;

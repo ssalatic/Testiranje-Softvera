@@ -133,8 +133,5 @@ Route::group(array('before' => 'secure'), function()
 		return Redirect::to('admin_competitions');
 	}));*/
 });
-// route–model binding
-//Route::model('item', 'Item');
 
-// public routes
 

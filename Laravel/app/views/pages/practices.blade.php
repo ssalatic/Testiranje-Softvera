@@ -163,9 +163,16 @@
 		<div class="col-sm-3">
 			<div class="header"><h4>Upcoming Practices</h4></div>
 			<ul class="nav nav-tabs">
+                <li class="active"><a href="#regular" data-toggle="tab" aria-expanded="true">Regular</a></li>
+            </ul>
+			<?php
+			// OVDE TREBA DA SE SREDI PERSONAL (NEMA U BAZI NISTA ZA TO)
+			/*<ul class="nav nav-tabs">
 				<li class="active"><a href="#regular" data-toggle="tab" aria-expanded="true">Regular</a></li>
 				<li class=""><a href="#personal" data-toggle="tab" aria-expanded="true">Personal</a></li>
 			</ul>
+			*/
+			?>
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="regular">
 
@@ -331,7 +338,7 @@
 	    <div class="col-sm-12">
 
             {{ Form::open(['method' => 'PUT', 'style' => "margin: 15px;", 'class'=>"row", 'route' => ['trainings.update', $training->id]]) }}
-            
+
                         <table>
 
                         <tr>

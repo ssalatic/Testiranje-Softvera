@@ -34,3 +34,6 @@ Poslovni sistem za plesnu skolu, namenjen kao projekat iz Testiranja Softvera.
 * app/routes.php
 * app/fiters.php
 * app/start/global.php <- Ovde stoje error handleri za 404 i sl. Zakomentarisite za testiranje.
+
+
+U USERU TREBA DA SE OPRAVE ONE STAVKE SA STRANE DA SE POVEZU, DODAVANJE GRUPA I DODAVANJE SLIKE

@@ -210,6 +210,7 @@ class UserController extends \BaseController {
 			$usr->ballet_shoe_size = Input::get('ballet_shoe_size');
 			
 		    $usr->save();
+			//$usr->groups()->sync(Input::get('groups'));
 			return Redirect::route('users.show', $usr->id)->withErrors("Updated");
 		}
 		else

@@ -357,7 +357,22 @@
 						</tr>
 					</thead>
 					<tbody>
-					<tr>
+					
+					<?php
+					
+					/*OVO NECE DA RADI!*/
+						/*$costumes = $user->hasCostumes();
+						foreach($costumes as $costume){
+						
+							echo '<tr>
+								<td>'.$costume->id.'</td>     
+								</tr>';
+						
+						}*/
+						
+						
+					?>
+					<!--<tr>
 						<td>Blue small #1</td>     
 					</tr>
 					<tr>
@@ -365,7 +380,7 @@
 					</tr>
 					<tr>
 						<td>Blue small #3</td>
-					</tr>
+					</tr>-->
 					</tbody>
 					</table>
 				</div>
@@ -382,7 +397,20 @@
 						</tr>
 					</thead>
 					<tbody>
-					<tr>
+					
+					<?php
+						$coreographies = $user->choreographys();
+						foreach($coreographies as $coreography){
+						
+							echo '<tr>
+								<td>'.$coreography->name.'</td>     
+								</tr>';
+						
+						}
+						
+						
+					?>
+					<!--<tr>
 						<td>Chor #1</td>     
 					</tr>
 					<tr>
@@ -390,7 +418,7 @@
 					</tr>
 					<tr>
 						<td>Chor #3</td>
-					</tr>
+					</tr>-->
 					</tbody>
 					</table>
 				</div>

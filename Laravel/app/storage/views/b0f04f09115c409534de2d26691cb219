@@ -104,7 +104,7 @@
 		}
 		
 		
-		function doSomething(id, usern, name, lname, bdate, snumber, pnumber, eemail,esssize,ebssize,essize,eheight)
+		function doSomething(id, usern, name, lname, bdate, snumber, pnumber, eemail,esssize,ebssize,essize,eheight, eutype, egender)
 		{
 			/* ovo radi treba fizicki radnik da popuni */
 			var username = document.getElementById("edit_username");
@@ -130,6 +130,14 @@
 			sneakers_size.value = essize;
 			var edit_height = document.getElementById("edit_height");
 			edit_height.value = eheight;
+			
+			if(egender == 'male') document.getElementById('edit_male').checked = true;
+			else document.getElementById('edit_female').checked = true;
+			
+			if(eutype == 0) document.getElementById('edit_admin').checked = true;
+			if(eutype == 1) document.getElementById('edit_trainer').checked = true;
+			if(eutype == 2) document.getElementById('edit_designer').checked = true;
+			if(eutype == 3) document.getElementById('edit_dancer').checked = true;
 			
 			
 			showPopup(id);
@@ -173,10 +181,22 @@
 			<?php	echo '<a href = "javascript:void(0)" onclick ="doSomething(\'edit_user\',\''.$user->username.'\'
 					,\''.$user->first_name.'\',\''.$user->last_name.'\',\''.$user->birth_date.'\'
 					,\''.$user->social_number.'\',\''.$user->phone_number.'\',\''.$user->email.'\'
-					,\''.$user->shoe_size.'\',\''.$user->ballet_shoe_size.'\',\''.$user->sneakers_size.'\',\''.$user->height.'\'	
+					,\''.$user->shoe_size.'\',\''.$user->ballet_shoe_size.'\',\''.$user->sneakers_size.'\',\''.$user->height.'\'
+					,\''.$user->user_type.'\',\''.$user->sex.'\'
 					)" class="btn btn-success btn-xs">Edit user</a>'; 
+					
+					//echo '<a href = "javascript:void(0)" onclick = "deleteThisUser(\''.$user->id.'\')" class="btn btn-danger btn-xs">Delete</a>';
 			?>
-			<a href="#" class="btn btn-danger btn-xs">Delete User</a>
+			
+			<?php echo Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("You sure??");', 'route' => ['users.destroy', $user->id]]); ?>
+
+
+			<?php echo Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']); ?>
+
+
+			<?php echo Form::close(); ?>
+
+			
 		</div>
 	</div>
     <div class="row">
@@ -384,7 +404,11 @@
  
 <!-------------------------------------------------------------------------->
  <div id="edit_user" class="white_content">
-<form id="registrationForm" method="POST" class="form-horizontal" action="<?php echo URL::route('users.store'); ?>">
+ 
+ 
+ <?php echo Form::open(['method' => 'PUT', 'class'=>"form-horizontal", 'route' => ['users.update', $user->id]]); ?>
+
+<!--<form id="registrationForm" method="POST" class="form-horizontal" action="<?php echo URL::route('users.store'); ?>">-->
 	<div class="row">
 	<div class="col-sm-6">
 			<!--<div class="header"><h4 id="name">Enter information</h4></div>-->
@@ -401,22 +425,22 @@
 					<div class="col-sm-5">
 					<div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="3" /> Dancer
+                                    <input id = "edit_dancer" type="radio" name="user_type" value="3" /> Dancer
                                 </label>
                             </div>
 							<div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="2" /> Designer
+                                    <input id = "edit_designer" type="radio" name="user_type" value="2" /> Designer
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="1" /> Trainer
+                                    <input  id = "edit_trainer" type="radio" name="user_type" value="1" /> Trainer
                                 </label>
                             </div>
 							 <div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="0" /> Admin
+                                    <input id = "edit_admin" type="radio" name="user_type" value="0" /> Admin
                                 </label>
                             </div>
 					</div>
@@ -428,14 +452,14 @@
 			<label for="gender">Gender:</label>
 			<div class="btn-toolbar">
 				<div class="btn-group">
-				<div class="radio">
+				<div class="radio" id="gender">
                                 <label>
-                                    <input type="radio" name="gender" value="male" /> Male
+                                    <input type="radio" name="gender" id="edit_male" value="male" /> Male
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="gender" value="female" /> Female
+                                    <input type="radio" name="gender" id="edit_female" value="female" /> Female
                                 </label>
                             </div>
 				<!--
@@ -474,9 +498,12 @@
 			<div class="form-group">
                  <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
                  <button type="submit" class="btn btn-success btn-xs">Sign up</button>
+				 <a href = "javascript:void(0)" onclick = "hidePopup('edit_user')" class="btn btn-danger btn-xs">Cancel</a>
             </div>
-			</form>
-			<a href = "javascript:void(0)" onclick = "hidePopup('edit_user')" class="btn btn-danger btn-xs">Cancel</a>
+			<!--</form>--><?php echo Form::close(); ?>
+
+
+			
 		</div>
 </div></div>
  
@@ -573,9 +600,10 @@
 			<div class="form-group">
                  <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
                  <button type="submit" class="btn btn-success btn-xs">Sign up</button>
+				 <a href = "javascript:void(0)" onclick = "hidePopup('new_user')" class="btn btn-danger btn-xs">Cancel</a>
             </div>
 			</form>
-			<a href = "javascript:void(0)" onclick = "hidePopup('new_user')" class="btn btn-danger btn-xs">Cancel</a>
+			
 		</div>
 </div></div>
 <!----------------------------------------------------------------------------------------------------------------------------->

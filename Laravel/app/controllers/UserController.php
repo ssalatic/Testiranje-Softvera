@@ -187,7 +187,35 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$usr = UserModel::find($id);
+		
+		$validator = $this->validate(Input::except(['id']));
+		
+		if ($validator->passes()) 
+		{
+			
+			//$usr->username = Input::get('username');
+			$usr->first_name = Input::get('first_name');
+			$usr->last_name = Input::get('last_name');
+			$usr->birth_date = Input::get('birth_date');
+			$usr->social_number = Input::get('social_number');
+			$usr->phone_number = Input::get('phone_number');
+			$usr->email = Input::get('email');
+			$usr->sex = Input::get('gender');
+			$usr->user_type = Input::get('user_type');
+			$usr->height = Input::get('height');
+			$usr->password = Input::get('social_number');
+			$usr->shoe_size = Input::get('shoe_size');
+			$usr->sneakers_size = Input::get('sneakers_size');
+			$usr->ballet_shoe_size = Input::get('ballet_shoe_size');
+			
+		    $usr->save();
+			return Redirect::route('users.show', $usr->id)->withErrors("Updated");
+		}
+		else
+		{
+			return Redirect::route('users.show', $usr->id)->withErrors($validator);
+		}
 	}
 
 
@@ -199,7 +227,9 @@ class UserController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		UserModel::find($id)->delete();
+		
+		return Redirect::route('users.show', Auth::user()->id);
 	}
 
 

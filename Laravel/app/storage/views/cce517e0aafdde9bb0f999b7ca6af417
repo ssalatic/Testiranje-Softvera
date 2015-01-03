@@ -53,7 +53,7 @@
 <?php $__env->startSection('content'); ?>
         <div class="row">
 			<div class="hidden-xs col-sm-12" id="large-header" align="center">
-				<h2>Welcome back <?php echo Auth::user()->username; echo Auth::user()->first_name; ?>, bussy week ahead of you, check out what's going on</h2>
+				<h2>Welcome back <?php echo Auth::user()->first_name; ?>, bussy week ahead of you, check out what's going on</h2>
 			</div>
 		
 			<div class="visible-xs col-sm-12" id="small-header" align="center">
@@ -61,19 +61,24 @@
 			</div>
 			
 		</div>
-		<div class="row">
-			<div class="col-sm-4 col-sm-offset-4 updates">
-				<p>Ovo se Ä�ita iz bekenda. Probajte da horizontalno popunjavate sa table</p>
-				<div class="alert alert-dismissable alert-danger">
-					<button type="button" class="close" data-dismiss="alert">Ã—</button>
-					<strong>Petar Petrovic</strong>, has moved Training 101 to 15. Sep 2014.
-				</div>
-				<div class="alert alert-dismissable alert-warning">
-					<button type="button" class="close" data-dismiss="alert">Ã—</button>
-					<strong>Marko Markovic</strong>, hasn't played for 5 practices.
-				</div>
-			</div>
-		</div>
+
+		<?php
+		    /*
+		      <div class="row">
+              			<div class="col-sm-4 col-sm-offset-4 updates">
+              				<p>Ovo se Ä�ita iz bekenda. Probajte da horizontalno popunjavate sa table</p>
+              				<div class="alert alert-dismissable alert-danger">
+              					<button type="button" class="close" data-dismiss="alert">Ã—</button>
+              					<strong>Petar Petrovic</strong>, has moved Training 101 to 15. Sep 2014.
+              				</div>
+              				<div class="alert alert-dismissable alert-warning">
+              					<button type="button" class="close" data-dismiss="alert">Ã—</button>
+              					<strong>Marko Markovic</strong>, hasn't played for 5 practices.
+              				</div>
+              			</div>
+              		</div>
+		     * */
+		?>
     <div class="row">
         <div class="col-sm-7">
             <div class="hidden-xs"><h2 align="center" style="font-weight: bold;">Agenda</h2></div>
@@ -87,17 +92,16 @@
                             <?php
 							// Ovo nemamo:  '. $practice->trainer->firstName .' '.$practice->trainer->lastName .' OVO LEVO MORA SREDIMO (PROBLEMI SA ENKRIPCIJOM)
 							//<td class="hidden-xs panel-content-desc">Introduction to Irish step dancing</td>
-                            // <td>'. UserModel::find($practice->trainer_id)->first_name .'</td> PROBLEM SA ENKRIPCIJOM
-                            
+
 							foreach($practices as $practice){
                                         echo '
                                             <tr>
                                                 <td>'. $practice->group->name .'</td>
                                                 <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>  </td>
+                                                <td><a href="'.route('users.show', $practice->trainer_id).'">'. UserModel::find($practice->trainer_id)->first_name .' '.UserModel::find($practice->trainer_id)->last_name .'</a></td>
                                                 <td>'.  TrainingModel::find($practice->id)->date .'</td>
                                             </tr>
                                         ';
-
                             }
 							?>
 
@@ -124,7 +128,7 @@
 
                             echo '
                                     <tr>
-                                        <td>'.$comp->competition->name.'</td>
+                                        <td><a href="'.route('competitions.show', $comp->id).'">'.$comp->competition->name.'</a></td>
                                         <td class="hidden-xs panel-content-desc">Your competitiona type is '.$comp->competitionType->name.'</td>
                                         <td class="hidden-xs panel-content-desc">Your category is '.$comp->competitionLevel->name.'</td>
                                         <td>'.$comp->competition->date_start.'</td>
@@ -152,13 +156,12 @@
                     <?php
                         //<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Main Dancer</td>
                         foreach($concerts as $conc){
-
+                            $concID = DB::select(DB::raw('select count(choreography_id) as broj from concert_choreography_user join concert_choreography on concert_choreography_id = concert_choreography.id where user_id = '.Auth::user()->id.' and concert_id = '. $conc->id))[0]->broj;
                             if(ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->start_time >= date("Y-m-d H:i:s")){
                                 echo '
                                     <tr>
-                                        <td>'. ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->name .'</td>
-
-                                        <td class="hidden-xs panel-content-desc">You will be performing in 3 coreographies</td>
+                                        <td><a href="'.route('concerts.show', $conc->id).'">'. ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->name .'</a></td>
+                                        <td class="hidden-xs panel-content-desc">You will be performing in '. $concID .' coreographies</td>
                                         <td>'. ConcertModel::find(ConcertChoreographyUserModel::find($conc->id)->concertChoreography->concert_id)->start_time .'</td>
                                     </tr>
                                 ';

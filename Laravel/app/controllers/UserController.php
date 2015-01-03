@@ -41,23 +41,23 @@ class UserController extends \BaseController {
 				
 				'id' =>'sometimes|required|integer|unique:user,id',
 				'username' => 'sometimes|required|alpha_num|between:6,45|unique:user,username',
-				'password' => 'sometimes|required|alpha_num|min:8',
-				'password_agn' => 'sometimes|required|min:8|alpha_num|same:password',
+				//'password' => 'sometimes|required|alpha_num|min:8',
+				//'password_agn' => 'sometimes|required|min:8|alpha_num|same:password',
 				'user_type' => 'sometimes|digits_between:0,3|required',
 				'first_name' => 'sometimes|alpha|max:45',
 				'last_name' => 'sometimes|alpha|max:45',
 				'birth_date' => 'sometimes|date',
 				'social_number' => 'sometimes|digits:13|unique:user,social_number',
-				'phone_number' => 'sometimes|numeric|max:45',
-				'address' => 'sometimes|alpha_num|max:200',
+				'phone_number' => 'sometimes|alpha|max:45',
+				//'address' => 'sometimes|alpha_num|max:200',
 				'height' => 'sometimes|digits:3',
 				'shoe_size' => 'sometimes|digits:2',
 				'ballet_shoe_size' => 'sometimes|digits:2',
 				'sneakers_size' => 'sometimes|digits:2',
-				'changed_by' => 'sometimes|integer|exists:user,id',
+				//'changed_by' => 'sometimes|integer|exists:user,id',
 				'email' => 'sometimes|email|unique:user,email|required',
 				'sex' => 'sometimes|in:male,female',
-				'competition_user.result' => 'sometimes|alpha_num|max:45'
+				//'competition_user.result' => 'sometimes|alpha_num|max:45'
 				
 		);
 		
@@ -103,20 +103,28 @@ class UserController extends \BaseController {
 	 * @return Response
 	 */
 	public function store()
-	{
+		{
 
-		$validator = $this->validate(Input::except(['di']));
+		$validator = $this->validate(Input::except(['id']));
 		
 		if ($validator->passes()) 
 		{
-			$user = new UserModel;
+			$user = new UserModel();
 			
+			$user->username = Input::get('username');
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->birth_date = Input::get('birth_date');
+			$user->social_number = Input::get('social_number');
+			$user->phone_number = Input::get('phone_number');
 			$user->email = Input::get('email');
 			$user->sex = Input::get('gender');
+			$user->user_type = Input::get('user_type');
 			$user->height = Input::get('height');
-			$user->birth_date = Input::get('birthday');
-			$user->password = Input::get('password');
-			$user->username = Input::get('username');
+			$user->password = Input::get('social_number');
+			$user->shoe_size = Input::get('shoe_size');
+			$user->sneakers_size = Input::get('sneakers_size');
+			$user->ballet_shoe_size = Input::get('ballet_shoe_size');
 			$user->validated = Session::token();
 			
 		    $user->save();
@@ -124,17 +132,22 @@ class UserController extends \BaseController {
 		    Mail::queue('emails.welcome', array('token' => Session::token()), function($message)
 		    {
 		    	$message->to(Input::get('email'), Input::get('username'))->subject('Welcome!');
-		    });
-		    
-		    return Redirect::route('login')->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
+		    });/*
+			return Redirect::route('users.update',$user->id)->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
+		    */
+			
+			//return Redirect::back()->with('msg', 'Radiiiii!');
+			return Redirect::route('users.show',Auth::user()->id)->withErrors($validator)->withInput();
+		     //return Redirect::back()->withErrors(['Thanks for registering! Validation e-mail was sent to provided address!']);
+			 //return Redirect::route('practices.update')->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
 		} 
 		else 
 		{	
-			return Redirect::route('users.create')->withErrors($validator)->withInput();	
+			//return Redirect::route('users.show',Auth::user()->id)->withErrors(['Ne valja']);
+			return Redirect::route('users.show',Auth::user()->id)->withErrors($validator)->withInput();
 		}
 		
 	}
-
 
 	/**
 	 * Display the specified resource.
@@ -144,12 +157,13 @@ class UserController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		$user = UserModel::find($id);
 		if (Auth::user()->isAdmin())
-			return View::make('pages.admin_profile', array('$user' => $id));
+			return View::make('pages.admin_profile', array('user' => $user));
 		else if(Auth::user()->isTrainer())
-			return View::make('pages.trainer_profile', array('$user' => $id));
+			return View::make('pages.trainer_profile', array('user' => $user));
 		else
-			return View::make('pages.profile', array('$user' => $id));
+			return View::make('pages.profile', array('user' => $user));
 	}
 
 

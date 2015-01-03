@@ -27,6 +27,19 @@ class GroupModel extends \Eloquent {
 	public function trainings()
 	{
 		return $this->hasMany('TrainingModel', 'group_id');
-	} 
+	}
+
+	public static function getGroups(){
+	
+		$groups = GroupModel::all(); //DB::table('user')->where('user_type', $userType)->get();
+		
+		echo '<select class="form-control" id="group" multiple size = "3">';		
+
+		foreach($groups as $group){
+			echo '<option value="'.$group->id.'">'.$group->name.'</option>';
+		} 
+		
+		echo '</select>';
+	}
 	
 }

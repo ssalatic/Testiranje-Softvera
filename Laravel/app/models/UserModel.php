@@ -165,7 +165,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	
 	public function setHeightAttribute($value)
 	{
-		$this->attributes['height'] = Crypt::encrypt($value);
+		$this->attributes['height'] = $value;//Crypt::encrypt($value);
 	}
 	
 	public function getHeightAttribute($value)
@@ -173,12 +173,12 @@ class UserModel extends \Eloquent implements UserInterface {
 		if (empty($value))
 			return null;
 		else
-			return Crypt::decrypt($value);
+			return $value;//Crypt::decrypt($value);
 	}
 	
 	public function setBalletShoeSizeAttribute($value)
 	{
-		$this->attributes['ballet_shoe_size'] = Crypt::encrypt($value);
+		$this->attributes['ballet_shoe_size'] = $value;//Crypt::encrypt($value);
 	}
 	
 	public function getBalletShoeSizeAttribute($value)
@@ -186,12 +186,12 @@ class UserModel extends \Eloquent implements UserInterface {
 		if (empty($value))
 			return null;
 		else
-			return Crypt::decrypt($value);
+		return $value;//Crypt::decrypt($value);
 	}
 	
 	public function setSneakersSizeAttribute($value)
 	{
-		$this->attributes['sneakers_size'] = Crypt::encrypt($value);
+		$this->attributes['sneakers_size'] = $value; //Crypt::encrypt($value);
 	}
 	
 	public function getSneakersSizeAttribute($value)
@@ -199,7 +199,7 @@ class UserModel extends \Eloquent implements UserInterface {
 		if (empty($value))
 			return null;
 		else
-			return Crypt::decrypt($value);
+			return $value;//Crypt::decrypt($value);
 	}
 	
 	public function setSexAttribute($value)
@@ -263,16 +263,23 @@ class UserModel extends \Eloquent implements UserInterface {
 		
 		$users = UserModel::where('user_type', '=', $userType)->get(); //DB::table('user')->where('user_type', $userType)->get();
 		
-		echo '<select class="form-control" multiple="" onChange="alertselected(this)">'; 
-					
+		echo '<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value" size = "3" >'; 
+				
 		foreach($users as $user){
-			echo '<option id="'.$user->id.'">'.$user->username.'</option>';
+			echo '<option value ="'.route('users.update',$user->id).'">'.$user->username.'</option>';
 		} 
 		
 		echo '</select>';
 	}
 	
-	public static function getUserWithId($id){
+	public static function printUserType($id){
+		if($id == 0) echo "Admin";
+		if($id == 1) echo "Trainer";
+		if($id == 2) echo "Designer";
+		if($id == 3) echo "Dancer";
+	}
+	
+	/*public static function getUserWithId($id){
 		$user = DB::table('user')->where('id', $id)->first();
 		return $user;
 	}
@@ -281,5 +288,5 @@ class UserModel extends \Eloquent implements UserInterface {
 		$groups = DB::table('user_group')->where('user_id',$id)->get();
 		
 		return $groups;
-	}
+	}*/
 }

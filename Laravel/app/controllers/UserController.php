@@ -189,12 +189,12 @@ class UserController extends \BaseController {
 	{
 		$usr = UserModel::find($id);
 		
-		$validator = $this->validate(Input::except(['id']));
+		$validator = $this->validate(Input::except(['id','username']));
 		
 		if ($validator->passes()) 
 		{
 			
-			//$usr->username = Input::get('username');
+			$usr->username = Input::get('username');
 			$usr->first_name = Input::get('first_name');
 			$usr->last_name = Input::get('last_name');
 			$usr->birth_date = Input::get('birth_date');

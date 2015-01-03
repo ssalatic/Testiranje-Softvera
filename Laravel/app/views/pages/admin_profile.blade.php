@@ -412,7 +412,7 @@
 			<!--<div class="header"><h4 id="name">Enter information</h4></div>-->
 			
 			<label for="usernam">Username:</label><br>
-			<input type="text" id="edit_username" name="username" class="form-control"/><br>
+			<input type="text" id="edit_username" name="username" class="form-control" readonly/><br>
 		
 			<div id="pic">
 				<img src="img/user.jpg" width="200" height="200"/>

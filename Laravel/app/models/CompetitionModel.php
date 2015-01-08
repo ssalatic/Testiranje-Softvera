@@ -21,7 +21,7 @@ class CompetitionModel extends \Eloquent {
 	
 	public function files()
 	{
-		return $this->hasMany('Competition_file', 'competitioin_id');
+		return $this->hasMany('CompetitionFileModel', 'competition_id');
 	}
 	
 }

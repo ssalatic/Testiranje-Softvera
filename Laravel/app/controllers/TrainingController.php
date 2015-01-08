@@ -179,7 +179,7 @@ class TrainingController extends \BaseController {
 			$trn->changed_by = Auth::user()->id;
 			$trn->save();
 				
-			$trn->users()->sync(Input::get('users'));
+			$trn->users()->sync(Input::get('users'), false);
 		
 			return Redirect::route('trainings.show', $trn->id);
 		}

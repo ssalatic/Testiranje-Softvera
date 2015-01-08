@@ -68,8 +68,41 @@
 		left: 32%;
 		top: 15%;
 	}
+
+	.btn-file {
+        position: relative;
+        overflow: hidden;
+    }
+    .btn-file input[type=file] {
+        position: absolute;
+        top: 0;
+        right: 0;
+        min-width: 100%;
+        min-height: 100%;
+        font-size: 100px;
+        text-align: right;
+        filter: alpha(opacity=0);
+        opacity: 0;
+        outline: none;
+        background: white;
+        cursor: inherit;
+        display: block;
+    }
+
     </style>
 
+    <script>
+
+        $(document).ready(function() {
+            $('select[name=type2]').change(function(event) {
+
+                window.open($('select[name=type2] option:selected').val(),"_self")
+
+            });
+        });
+
+
+    </script>
 @stop
 
 @section('content')
@@ -77,63 +110,104 @@
 			<div class="col-lg-6">
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Add New</a>
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
-				<a href="#" class="btn btn-danger btn-xs">Delete</a>
+
+				{{ Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("You sure??");', 'route' => ['competitions.destroy', $comp->id]]) }}
+
+                {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) }}
+
+                {{ Form::close() }}
 			</div>
 		</div>
 		<div class="row">
 		<div class="col-sm-3">
 			<div class="header"><h4>Select competition</h4></div>
 				<form role="search">
+				    <ul class="errors">
+
+                        @foreach($errors->all() as $message)
+                            <li>{{ $message }}</li>
+                        @endforeach
+                    </ul>
 					<div class="form-group">
-                         <input type="text" placeholder="Search" class="form-control">
+                         <input name="search" type="text" placeholder="Search" class="form-control" onsubmit="<?php route("competitions.show", 0); ?>">
                     </div>
                 </form>
-				<select class="form-control" multiple="">
-					<option>Grand Masters</option>
-					<option>Random name</option>
+				<select name="type2" class="form-control" multiple>
+
+                <?php
+                    foreach($comps as $cmps){
+
+                        if ($cmps->id == $comp->id)
+                            echo'<option selected value = "'.route('competitions.show', $cmps->id) .'">'. $cmps->name.'</option>';
+                        else
+                            echo'<option value = "'.route('competitions.show', $cmps->id) .'"> '.$cmps->name.' </option>';
+                    }
+                ?>
+
 				</select>
 		</div>
         <div class="col-sm-3">
-            	<div class="header" align="center"><h4>[Competition name goes here]</h4></div>
+            	<div class="header" align="center"><h4><?php echo $comp->name; ?></h4></div>
                 <div align="center">
 					 <table class="table table-striped table-hover ">
 						<tbody>
-							<tr>
-								<td>Date:</td>
-								<td>25.06.1993</td>
-							</tr>
-								<td>Location:</td>
-								<td>Beograd</td>
-							<tr>
-								<td>Judges:</td>
-								<td>
-									<ul>
-										<li>Sudac 1</li>
-										<li>Sudac 2</li>
-									</ul>
-								</td>
-							</tr>
-							<tr>
-								<td>Musicians:</td>
-								<td>
-									<ul>
-										<li>Muzicar 1</li>
-										<li>Muzicar 2</li>
-									</ul>
-								</td>
-							</tr>
-							<tr>
-								<td>Organizer:</td>
-								<td>Random lik</td>
-							</tr>
+						<?php
+						    echo '
+                                <tr>
+                                    <td>Start date:</td>
+                                    <td>' .$comp->date_start. '</td>
+                                </tr>
+							';
+							echo '
+                                <tr>
+                                    <td>End date:</td>
+                                    <td>' .$comp->date_end. '</td>
+                                </tr>
+                            ';
+							echo '
+                                <td>Location:</td>
+                                    <td>' .$comp->location. '</td>
+                                <tr>
+							';
+							echo '
+                                <td>Judges:</td>
+                                    <td>
+                                        <ul>';
+                                        $judges = explode( ';', $comp->judges);
+                                        foreach($judges as $judge){
+                                            echo '<li>'. $judge .'</li>';
+                                        }
+                                echo'
+                                </ul>
+                                    </td>
+                                </tr>
+							';
+                        echo '
+                            <td>Musicians:</td>
+                                <td>
+                                    <ul>';
+                                    $musicians = explode( ';', $comp->musician);
+                                    foreach($musicians as $musician){
+                                        echo '<li>'. $musician .'</li>';
+                                    }
+                            echo'
+                            </ul>
+                                </td>
+                            </tr>
+                        ';
+							//<td>Organizer:</td>
+							//	<td>Random lik</td>
+							//</tr>
+							?>
 						</tbody>
 					</table>
-                    <p>Ovdje idu godine(starosne dobi) </p>
+
                 </div>
             <div class="header">
 				<div class="col-sm-6"><h4>Files</h4></div>
+
 				<div class="col-sm-2 col-sm-offset-1"><a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-info btn-xs">Add new file</a></div>
-			</div>
+			-</div>
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
@@ -143,12 +217,33 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="#">Opening ceremony</a></td>
-                        <td><span class="label label-success">Video</span></td>
-                    </tr>
-                    <tr>
+                <?php
+                    foreach($files as $file){
+
+                            echo '
+                                <tr>
+                                    <td>1</td>
+                                    <td><a href='. route('download', $file->file_name ) .'>'.$file->file_name.'</a></td>
+                                    <td><span class="label label-success">'.$file->file_type.'</span></td>
+                                    <td>';
+                                    echo"
+                                         ".Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("You sure??");', 'route' => ['competitions.destroyFile', $file->id]])."
+
+                                         ".Form::submit('Delete', ['class' => 'btn btn-danger btn-xs'])."
+
+                                         ".Form::close()." ";
+                                         echo'
+                                    </td>
+
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                </tr>
+                            ';
+
+                    }
+
+                   /* <tr>
                         <td>2</td>
                         <td><a href="#">Photos</a></td>
                         <td><span class="label label-danger">Photo</span></td>
@@ -157,15 +252,17 @@
                         <td>1</td>
                         <td><a href="#">Coreography</a></td>
                         <td><span class="label label-info">PDF</span></td>
-                    </tr>
+                    </tr>*/
+                    ?>
                 </tbody>
             </table>
         </div>
         <div class="col-sm-6">
             <div class="header">
 				<div class="col-sm-6"><h4>Competitors</h4></div>
-				<div class="col-sm-3 col-sm-offset-3"><a href = "javascript:void(0)" onclick = "document.getElementById('new_competitor').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-info btn-xs">Add new competitor</a></div>
+    			<div class="col-sm-3 col-sm-offset-3"><a href = "javascript:void(0)" onclick = "document.getElementById('new_competitor').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-info btn-xs">Add new competitor</a></div>
 			</div>
+
             <table class="table table-striped table-hover ">
                 <thead>
                     <tr>
@@ -177,58 +274,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>John Boo</td>
-                        <td><span class="label label-primary">Reel</span></td>
-                        <td>Open</td>
-                        <td>3</td>
-                       <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled=""><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Michael Robinson</td>
-                        <td><span class="label label-primary">Reel</span></td>
-                        <td>Primary</td>
-                        <td>2</td>
-                        <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled="" checked="true"><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Alexander Robson</td>
-                        <td><span class="label label-warning">2 Hand</span></td>
-                        <td>Begginers</td>
-                        <td>4</td>
-                        <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled=""><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Jannifer Pinkser</td>
-                        <td><span class="label label-primary">Single jig</span></td>
-                        <td>Open</td>
-                        <td>1</td>
-                        <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled="" checked="true"><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
+                    <?php
+                        foreach($parts as $participation)
+                            foreach($participation->users as $user){
+                                echo '
+                                    <tr>
+                                        <td><a href="'.route('users.show', $user->id).'">'. $user->first_name .' '.$user->last_name .'</a> </td>
+                                        <td><span class="label label-primary"> '. $participation->competitionType['name'].' </span></td>
+                                        <td>'.$participation->competitionLevel['name'].'</td>
+                                        <td>'.$user->pivot->result.'</td>
+                                       <td>
+                                             <div class="checkbox">
+                                                <label>';
+                                                    if($participation->star){
+                                                        echo '<input  type="checkbox" disabled="" checked><p></p>';
+                                                    }
+                                                    else{
+                                                        echo '<input type="checkbox" disabled=""><p></p>';
+                                                    }
+                                echo '
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ';
+                            }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -288,37 +359,37 @@
 		</div>
 
     </div>
+
+        <!-- Add new files -->
 		<div id="new_file" class="white_content">
+
 			<table class="table table-striped table-hover" style="width:100%;">
-				<tr>
-					<td>
-						<span class="label label-info">Change file</span>
-					</td>
-					<td>
-						<p>/User/Desktop/Competition/video.mpg</p>
-					</td>
-					</td>
-					<td><span class="label label-success">Video</span></td>
-				</tr>
-				<tr>
-						<td>
-							<span class="label label-info">Change file</span>
-						</td>
-						<td>
-							<p>/User/Desktop/Competition/coreographies.mpg</p>
-						</td>
-						</td>
-						<td><span class="label label-info">PDF</span></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn btn-info btn-xs">Select file</a></td>
-						<td></td>
-						<td></td>
-					</tr>
+                <tr>
+                    <td>
+                        {{ Form::open(['route' => ['competitions.upload', $comp->id], 'files' => true]) }}
+
+                        {{ Form::label('file','File') }}
+
+                        {{ Form::file('file') }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        {{ Form::submit('Save',['class'=>'btn btn-success btn-xs']) }}
+
+                        {{ Form::close() }}
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
+                    </td>
+                </tr>
 				</table>
-				<a href="#" class="btn btn-success btn-xs">Add File</a>
-				<a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
-		</div>
+
+	    </div>
+
+
 		<div id="new_competition" class="white_content">
 			
                 <div class="panel-body" align="center">

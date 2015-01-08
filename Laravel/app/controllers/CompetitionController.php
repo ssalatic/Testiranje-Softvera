@@ -96,7 +96,28 @@ class CompetitionController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$comp = Auth::user()->competitions()->first()->id;
+		
+		$validator = $this->validate(Input::all());
+		
+		if ($validator->passes())
+		{
+			$cmp = new CompetitionModel();
+				
+// 			$trn->date = Input::get('practice_date').' '.Input::get('time');
+// 			$trn->trainer_id = Input::get('teacher');
+// 			$trn->group_id = Input::get('group');
+// 			$trn->changed_by = Auth::user()->id;
+// 			$trn->save();
+				
+// 			$trn->users()->sync(Input::get('users'));
+		
+			return Redirect::route('competitions.show', $comp);
+		}
+		else
+		{
+			return Redirect::route('competitions.show', $comp)->withErrors($validator);
+		}
 	}
 
 
@@ -108,10 +129,31 @@ class CompetitionController extends \BaseController {
 	 */
 	public function show($id)
 	{
+		$src = Input::get('search');
+		if (isset($src)) {
+			$mdl = CompetitionModel::where('name', '=', $src)->first();
+			if (isset($mdl))
+				return Redirect::route('competitions.show', $mdl->id);
+			else
+				return Redirect::route('competitions.show', $id)->withErrors("Not found!");
+		}
+		
+		$cm = CompetitionModel::find($id);
+		$cms = CompetitionModel::all();
+		$files = $cm->files;
+		
 		if (Auth::user()->isAdmin())
-			return View::make('pages.admin_competitions', array('$competition' => $id));
+			return View::make('pages.admin_competitions', array('comp' => $cm,
+																'comps' => $cms,
+																'parts' => $cm->participations,
+																'files' => $files
+																));
 		else
-			return View::make('pages.competitions', array('$competition' => $id));
+			return View::make('pages.competitions', array('comp' => $cm,
+														  'comps' => $cms,
+														  'parts' => $cm->participations,
+														  'files' => $files
+														));
 	}
 
 
@@ -135,7 +177,47 @@ class CompetitionController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$cmp = CompetitionModel::find($id);
+		
+		$validator = $this->validate(Input::all());
+		
+		if ($validator->passes())
+		{
+		
+// 			$trn->date = Input::get('practice_date').' '.Input::get('time');
+// 			$trn->trainer_id = Input::get('teacher');
+// 			$trn->group_id = Input::get('group');
+// 			$trn->changed_by = Auth::user()->id;
+// 			$trn->save();
+		
+// 			$trn->users()->sync(Input::get('users'), false);
+		
+			return Redirect::route('competitions.show', $cmp->id);
+		}
+		else
+		{
+			return Redirect::route('competitions.show', $cmp->id)->withErrors($validator);
+		}
+	}
+	
+	public function upload($id)
+	{
+		$file = $_FILES['file'];
+		
+		if ($file['name'] != '') {
+			move_uploaded_file($file["tmp_name"], public_path().'/files/'.$file['name']);
+				
+			$cfm = new CompetitionFileModel();
+				
+			$cfm->file_name = $file['name'];
+			$cfm->competition_id = $id;
+			$cfm->file_type = $file['type'];
+			$cfm->save();
+				
+			return Redirect::route('competitions.show', $id);
+		} else {
+			return Redirect::route('competitions.show', $id)->withErrors('Error uploading file!');
+		}
 	}
 
 
@@ -147,8 +229,36 @@ class CompetitionController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$cm = CompetitionModel::find($id);
+		
+		foreach($cm->files as $file) {
+			unlink(public_path().'/files/'.$file->file_name);
+			$file->delete();
+		}
+		
+		foreach($cm->participations as $part) {
+			$part->users()->sync([], true);
+			
+			$part->delete();
+		}
+		
+		$cm->delete();
+		
+		$cmp = Auth::user()->competitions()->first()->id;
+		
+		return Redirect::route('competitions.show', $cmp);	
 	}
 
+	public function destroyFile($id)
+	{
+		$cfm = CompetitionFileModel::find($id);
+		
+		unlink(public_path().'/files/'.$cfm->file_name);
+		$cfm->delete();
+		
+		$cmp = Auth::user()->competitions()->first()->id;
+		
+		return Redirect::route('competitions.show', $cmp);
+	}
 
 }

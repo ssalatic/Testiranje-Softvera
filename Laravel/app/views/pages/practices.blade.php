@@ -254,7 +254,7 @@
 	<div class="col-sm-12">
 
 
-            <form id="Form_Edit" method="POST" class="row" action="{{ URL::route('trainings.update', $training->id) }}" style="margin: 15px;">
+            <form id="Form_Edit" method="POST" class="row" action="{{ URL::route('trainings.store') }}" style="margin: 15px;">
             <table>
 
 

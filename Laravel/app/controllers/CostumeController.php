@@ -65,7 +65,12 @@ class CostumeController extends \BaseController {
 	 */
 	public function index()
 	{
-		return View::make('pages.costumes');
+		//return View::make('pages.costumes');
+		$costume = CostumeModel::first();
+		if(count($costume) != 0)
+			return Redirect::route('costumes.show', $costume->id);
+		else
+			return Redirect::route('emptyPage', 0);
 	}
 
 
@@ -99,7 +104,16 @@ class CostumeController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		$costume = CostumeModel::find($id);
+		//echo $costume->identifier;
+		$costumeType = $costume->type()->getResults();
+		//echo $costumeType->name;
+		$costumes = $costumeType->costumes()->getResults();
+		return View::make('pages.costumes', array(	'costume' => $costume,
+													'costumes' => $costumes,
+													'costumeType' => $costumeType			
+												));
+
 	}
 
 
@@ -123,7 +137,39 @@ class CostumeController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+	echo "kurac";/*
+		$costumeType = CostumeTypeModel::find($id);
+		$costume = [];
+		$costumes = [];
+		return View::make('pages.costumes', array(	'costume' => $costume,
+													'costumes' => $costumes,
+													'costumeType' => $costumeType			
+												)); */
+	}
+	
+	
+	
+	/**
+	 * God the specified resource from storage.
+	 *
+	 * @param  int  $id
+	 * @return Response
+	 */
+	public function emptyPage($id){
+	
+		if($id != 0)
+			$costumeType = CostumeTypeModel::find($id);
+		else 
+			$costumeType = [];
+		$costume = [];
+		$costumes = [];
+		return View::make('pages.costumes', array(	'costume' => $costume,
+													'costumes' => $costumes,
+													'costumeType' => $costumeType			
+												));
+	
+	
+	
 	}
 
 

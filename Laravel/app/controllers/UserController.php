@@ -204,7 +204,6 @@ class UserController extends \BaseController {
 			$usr->sex = Input::get('gender');
 			$usr->user_type = Input::get('user_type');
 			$usr->height = Input::get('height');
-			$usr->password = Input::get('social_number');
 			$usr->shoe_size = Input::get('shoe_size');
 			$usr->sneakers_size = Input::get('sneakers_size');
 			$usr->ballet_shoe_size = Input::get('ballet_shoe_size');

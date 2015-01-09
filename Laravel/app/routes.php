@@ -99,6 +99,15 @@ Route::group(array('before' => 'secure'), function()
 	
 	Route::resource('users', 'UserController');
 	
+	Route::get('emptyPage/{id}', array('before' => 'secure|auth', 'https' => true , 'as' => 'emptyPage', 'uses' => 'CostumeController@emptyPage'), function($id){
+		return $id;
+	}	
+	);
+	
+	Route::post('addToKnows', array('before' => 'secure|auth', 'https' => true , 'as' => 'addToKnows', 'uses' => 'ChoreographyController@addToKnows'));
+	Route::post('removeFromKnows', array('before' => 'secure|auth', 'https' => true , 'as' => 'removeFromKnows', 'uses' => 'ChoreographyController@removeFromKnows'));
+	
+	
 	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 	Route::get('gallery', array('before' => 'secure|auth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));
 	Route::get('function', array('before' => 'secure|auth', 'https' => true , 'as' => 'function', 'uses' => 'PagesController@get_user_func'));

@@ -30,4 +30,9 @@ class ChoreographyModel extends \Eloquent {
 		return $this->hasMany('ConcertChoreographyModel', 'choreography_id');
 	}
 	
+	public static function getAll(){
+		$choreographies = ChoreographyModel::all();
+		return $choreographies;
+	}
+	
 }

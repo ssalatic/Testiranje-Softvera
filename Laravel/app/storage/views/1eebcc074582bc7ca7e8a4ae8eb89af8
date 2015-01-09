@@ -36,9 +36,29 @@
                          <input type="text" placeholder="Search" class="form-control">
                     </div>
                 </form>
-				<select class="form-control" multiple="">
-					<option>Grand Masters</option>
-					<option>Random name</option>
+				<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value">
+					<?php
+						$series = CostumeTypeModel::all();
+						//echo $costumeType;
+						if(count($series) != 0)
+						foreach($series as $cT){
+							$igumani = $cT->costumes()->getResults();
+							if(count($igumani) == 0){
+									if($cT == $costumeType)
+										echo '<option value ="'.route('emptyPage',$cT->id).'" selected>'.$cT->name.'</option>';
+									else
+								//echo '<option>'.$cT->name.'</option>';
+										echo '<option value ="'.route('emptyPage',$cT->id).' ">'.$cT->name.'</option>';
+									continue;
+							}
+							$i = $igumani[0];
+							if($cT == $costumeType)
+								echo '<option value ="'.route('costumes.show',$i->id).'" selected>'.$cT->name.'</option>';
+							else
+								//echo '<option>'.$cT->name.'</option>';
+								echo '<option value ="'.route('costumes.show',$i->id).' ">'.$cT->name.'</option>';
+						}
+					?>
 				</select>
 				<br/>
 				<div class="input-group">
@@ -55,9 +75,18 @@
                          <input type="text" placeholder="Search" class="form-control">
                     </div>
                 </form>
-				<select class="form-control" multiple="">
-					<option>Grand Masters</option>
-					<option>Random name</option>
+				<select class="form-control" multiple="" size = "4">
+					<?php
+						//echo $costumeType;
+						if(count ($costumes) != 0){
+						foreach($costumes as $c)
+							if($c == $costume)
+								echo '<option selected>'.$c->identifier.'</option>';
+							else
+								echo '<option>'.$c->identifier.'</option>';
+						}
+					
+					?>
 				</select>
 				<br/>
 				<div class="input-group">
@@ -69,11 +98,30 @@
 		</div>
 		<div class="col-sm-2 form-group" style="margin-top: 3%;">
 			<label for="name">Name</label><br/>
-			<input type="text" id="name" class="form-control input-sm" />
+			<?php 
+				if( count($costume) != 0 ) 
+					echo '<input type="text" id="name" value ="'.$costume->identifier.'" class="form-control input-sm />"';  
+				else 	
+					echo '<input type="text" id="name" class="form-control input-sm />"'; 
+			?>
 			<label for="size">Size</label><br/>
-			<input type="text" id="size" class="form-control input-sm" />
+			<?php 
+				if( count($costume) != 0 ) 
+					echo '<input type="text" id="size" value ="'.$costume->size.'" class="form-control input-sm />"';  
+				else 	
+					echo '<input type="text" id="size" class="form-control input-sm />"'; 
+			?>
 			<label for="possesion">Possesion</label><br/>
-			<input type="text" id="possesion"  class="form-control input-sm"/>
+			<?php 
+			if( count($costume) != 0 ) {
+				$user_in_posesion = $costume->userInPossesion()->getResults();
+				echo '<input type="text" id="possesion" value ="'.$costume->identifier.'" class="form-control input-sm />"';  
+			}
+			else 
+				echo '<input type="text" id="possesion" class="form-control input-sm />"';
+			?>
+			
+			</div>
 		</div>
         <div class="col-sm-4">
 			<div class="header"><h4>Select Users</h4></div>

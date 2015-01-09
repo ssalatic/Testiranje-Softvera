@@ -69,11 +69,12 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function index()
 	{
+		$choreography = ChoreographyModel::first();
 		if(Auth::user()->isAdmin() || Auth::user()->isTrainer()){
-			return View::make('pages.admin_choreography');
+			return Redirect::route('choreographies.show', $choreography->id);
 		}
 		else{
-			return View::make('pages.choreographies');
+			return Redirect::route('pages.index');
 		}
 	}
 
@@ -96,7 +97,21 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+		$validator = $this->validate(Input::except(['id']));
+		if ($validator->passes()){
+		/*
+			$choreography = new ChoreographyModel();
+			$choreography.name = Input::get('');
+			$choreography.music = Input::get('');
+			$choreography.rhythm = Input::get('');
+			$choreography.tempo = Input::get('');
+			$choreography.duration = Input::get('');
+			$choreography.hard = Input::get('');
+			$choreography.soft = Input::get('');
+			*/
+		}else{
+		}
+	
 	}
 
 
@@ -108,7 +123,22 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		//
+		if (Auth::user()->isAdmin() || Auth::user()->isTrainer())
+		{
+			$choreography = ChoreographyModel::find($id);
+			$choreographies = ChoreographyModel::all();
+			$users = $choreography->users;
+			$files = $choreography->files;
+		
+			$otherUsers = ChoreographyController::getOtherUsers($users);
+		}
+		
+		return View::make('pages.admin_choreography', array('choreography' => $choreography,
+												   'choreographies' => $choreographies,
+												   'users' => $users,
+												   'files' => $files,
+												   'otherUsers' => $otherUsers
+		));
 	}
 
 
@@ -145,6 +175,57 @@ class ChoreographyController extends \BaseController {
 	public function destroy($id)
 	{
 		//
+	}
+	
+	
+	// remove from other to knows
+	public function addToKnows(){
+		$choreography_id = Input::get('id');
+		
+		$choreography = ChoreographyModel::find($choreography_id);
+		$choreography->users()->attach(Input::get('other'));
+		
+		return Redirect::route('choreographies.show', $choreography_id);
+	}
+	
+	public function removeFromKnows(){
+		$choreography_id = Input::get('id');
+		
+		$choreography = ChoreographyModel::find($choreography_id);
+		$choreography->users()->detach(Input::get('know'));
+		
+		return Redirect::route('choreographies.show', $choreography_id);
+	}
+	
+
+	public static function getOtherUsers($kUsers){
+		$allUsers = UserModel::all();
+		
+		$otherUsers = array();
+		
+		foreach($allUsers as $user){
+			if($user->isAdmin()){
+				continue;
+			}		
+			
+			$found = false;
+			
+			foreach($kUsers as $targetUser){
+				
+				//echo $targetUser->username . '</br>';
+			
+				if($user->id == $targetUser->id){
+					$found = true;
+					break;
+				}
+			}
+			if(!$found){
+				//echo $user->username . '</br>';
+				array_push($otherUsers, $user);
+			}
+		}
+		
+		return $otherUsers;
 	}
 
 

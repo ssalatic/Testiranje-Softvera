@@ -95,7 +95,7 @@
 	overflow: auto;
 	}
 	
-	#new_competition {
+	#new_choreography, #edit_choreography {
 		left: 35%;
 		top: 15%;
 	}
@@ -116,8 +116,8 @@
 @section('content')
 		<div class="row">
 			<div class="col-lg-6">
-				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Add New</a>
-				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
+				<a href = "javascript:void(0)" onclick = "document.getElementById('new_choreography').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Add New</a>
+				<a href = "javascript:void(0)" onclick = "document.getElementById('edit_choreography').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
 				<a href="#" class="btn btn-danger btn-xs">Delete</a>
 			</div>
 		</div>
@@ -129,28 +129,41 @@
                          <input type="text" placeholder="Search" class="form-control">
                     </div>
                 </form>
-				<select class="form-control" multiple="">
+				<select class="form-control" size="3" multiple="" onchange="location=this.options[this.selectedIndex].value">
+					
+					<?php
+						//$choreographies = ChoreographyModel::getAll();
+						foreach($choreographies as $chor){
+							//choreographies.show
+							echo '<option value = "'.route('choreographies.show', $chor->id).'"> '.$chor->name.' </option>';
+						}
+					?>
+					<!--
 					<option>Grand Masters</option>
 					<option>Random name</option>
+					-->
 				</select>
 		</div>
         <div class="col-sm-4">
-				<div class="header"><h4>English</h4></div>
+				<div class="header"><h4><?php echo $choreography->name; ?></h4></div>
             	<table class="user-info hidden-xs">
 				<tr>
-					<td>Music:</td><td><span id="first_name">Dzenan</span></td>
+					<td>Music:</td><td><span id="music"><?php echo $choreography->music; ?></span></td>
                 </tr>
 				<tr>
-					<td>Rhytm:</td><td><span id="last_name">sta ja znam</span></td>
+					<td>Rhytm:</td><td><span id="rhythm"><?php echo $choreography->rhythm; ?></span></td>
                 </tr>
                 <tr>
-                    <td>Tempo:</td><td><span id="birth_date">1. 1. 1990.</span></td>
+                    <td>Tempo:</td><td><span id="tempo"><?php echo $choreography->tempo; ?></span></td>
                 </tr>
 				<tr>
-					<td>Duraction:</td><td><span id="social_number">12345674890</span></td>
+					<td>Duration:</td><td><span id="duration"><?php echo $choreography->duration; ?></span></td>
                 </tr>
 				<tr>
-					<td>Soft or Hard:</td><td><span id="email">Hard</span></td>
+					<td>Soft:</td><td><span id="soft"><?php echo ($choreography->soft ? 'Yes' : 'No'); ?></span></td>
+                </tr>
+				<tr>
+					<td>Hard:</td><td><span id="hard"><?php echo ($choreography->hard ? 'Yes' : 'No'); ?></span></td>
                 </tr>
 				
             </table>
@@ -168,6 +181,19 @@
                 </tr>
                 </thead>
                 <tbody>
+				
+				<?php 
+					foreach($files as $file){
+					 echo'<tr>';
+					 echo'<td>'.$file->id.'</td>';
+					 echo'<td>'.$file->file_name.'</td>';
+					 echo'<td><span class="label label-success">'.$file->file_type.'</span></td>';
+                    //<td><a href="#">Opening ceremony</a></td>
+                    //<td><span class="label label-success">Video</span></td>
+					 echo'</tr>';
+					}
+				?>
+				<!--
                 <tr>
                     <td>1</td>
                     <td><a href="#">Opening ceremony</a></td>
@@ -183,20 +209,80 @@
                     <td><a href="#">Coreography</a></td>
                     <td><span class="label label-info">PDF</span></td>
                 </tr>
+				-->
                 </tbody>
             </table>
         </div>
         <div class="col-sm-4">
-			<div class="header"><h4>Users who know</h4></div>
-				<form role="search">
-					<div class="form-group">
-                         <input type="text" placeholder="Search" class="form-control">
-                    </div>
-                </form>
-				<select class="form-control" multiple="">
-					<option>Grand Masters</option>
-					<option>Random name</option>
-				</select>
+		
+			<div class="header"><h4>Users</h4></div>
+			<ul class="nav nav-tabs">
+				<li class="active"><a href="#know" data-toggle="tab" aria-expanded="true">Know</a></li>
+				<li class=""><a href="#other" data-toggle="tab" aria-expanded="true">Other</a></li>
+			</ul>
+			<div id="myTabContent" class="tab-content">
+				<div class="tab-pane fade active in" id="know">
+					<form role="search">
+						<div class="form-group">
+                            <input type="text" placeholder="Search" class="form-control">
+                        </div>
+                    </form>
+					
+					<form id="registrationForm" method="POST" class="form-horizontal" action="{{ URL::route('removeFromKnows') }}">
+					
+						<input type="hidden" name="id" value="<?php echo $choreography->id;?>" />
+						
+						<select name="know[]" class="form-control" multiple="" onChange="alertselected(this)"> 
+							<?php 
+								foreach($users as $user){
+									echo '<option id="1" value="'.$user->id.'">'.$user->username.'</option>';
+								}
+							?>
+							
+						</select>
+						
+						<div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+                            <button type="submit" class="btn btn-default">Remove</button>
+                        </div>
+						</div>
+				</form>
+					
+					
+				</div>
+				
+				
+				<div class="tab-pane fade" id="other">
+					<form role="search">
+						<div class="form-group">
+                            <input type="text" placeholder="Search" class="form-control">
+                        </div>
+                    </form>
+					
+					 <form id="registrationForm" method="POST" class="form-horizontal" action="{{ URL::route('addToKnows') }}"> 
+						
+						<input type="hidden" name="id" value="<?php echo $choreography->id;?>" />
+						
+						<select name="other[]" class="form-control" multiple="" onChange="alertselected(this)"> 
+							<?php 
+								foreach($otherUsers as $user){
+									echo '<option value="'.$user->id.'">'.$user->username.'</option>';
+								}
+							?>
+						
+						</select>
+						
+						<div class="form-group">
+                        <div class="col-sm-9 col-sm-offset-3">
+                            <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+                            <button type="submit" class="btn btn-default">Add</button>
+                        </div>
+						</div>
+					</form>
+				</div>
+
+		</div>	
 		</div>
 
     </div>
@@ -233,23 +319,66 @@
 				<a href="#" class="btn btn-success btn-xs">Add File</a>
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
 		</div>
-		<div id="new_competition" class="white_content">
+		<div id="new_choreography" class="white_content">
                 <div class="panel-body" align="center">
-					<form>
-					<label for="location" class="control-label">Name:</label><br>
-					<input type="text" id="location" class="form-control" /><br>
-					<label for="judges" class="control-label">Music:</label><br>
+					<form  id="registrationForm" method="POST" class="form-horizontal" action="{{ URL::route('choreographies.store') }}>
+					<label for="_name" class="control-label">Name:</label><br>
+					<input type="text" name="name" id="name" class="form-control" /><br>
+					<label for="music" class="control-label">Music:</label><br>
 					<input type="text" id="judges" class="form-control" /><br>
-					<label for="musisician" class="control-label">Tempo:</label><br>
+					<label for="tempo" class="control-label">Tempo:</label><br>
 					<input type="text" id="musician" class="form-control" /><br>
-					<label for="organizer" class="control-label">Duraction:</label><br>
+					<label for="duration" class="control-label">Duration:</label><br>
 					<input type="text" id="ogranizer" class="form-control" /><br>
-					<label for="organizer" class="control-label">Soft or Hard:</label><br>
-					<input type="text" id="ogranizer" class="form-control" /><br>
+					<div class="checkbox">
+						<label>
+							<input  type="checkbox" />Hard
+						</label>
+					</div>
+					<br>
+					<div class="checkbox">
+						<label>
+							<input  type="checkbox" />Soft
+						</label>
+					</div>
+					<br>
+					<button type="submit" class="btn btn-success btn-xs">Save Competition</button>
+					<a href = "javascript:void(0)" onclick = "document.getElementById('new_choreography').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
 					</form>
                 </div>
-			<a href="#" class="btn btn-success btn-xs">Save Competition</a>
-			<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
-</div>
+			
+			
+		</div>
+		
+		<div id="edit_choreography" class="white_content">
+                <div class="panel-body" align="center">
+					<form  id="registrationForm" method="POST" class="form-horizontal" action="{{ URL::route('choreographies.store') }}>
+					<label for="_name" class="control-label">Name:</label><br>
+					<input type="text" name="name" id="name" class="form-control" /><br>
+					<label for="music" class="control-label">Music:</label><br>
+					<input type="text" id="judges" class="form-control" /><br>
+					<label for="tempo" class="control-label">Tempo:</label><br>
+					<input type="text" id="musician" class="form-control" /><br>
+					<label for="duration" class="control-label">Duration:</label><br>
+					<input type="text" id="ogranizer" class="form-control" /><br>
+					<div class="checkbox">
+						<label>
+							<input  type="checkbox" />Hard
+						</label>
+					</div>
+					<br>
+					<div class="checkbox">
+						<label>
+							<input  type="checkbox" />Soft
+						</label>
+					</div>
+					<br>
+					<button type="submit" class="btn btn-success btn-xs">Update Competition</button>
+					<a href = "javascript:void(0)" onclick = "document.getElementById('edit_choreography').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
+					</form>
+                </div>
+			
+			
+		</div>
 	<div id="fade" class="black_overlay"></div>
 @stop

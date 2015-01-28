@@ -141,31 +141,40 @@
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select class="form-control" multiple="">
-						<option>Grand Masters</option>
-						<option>Random name</option>
+					<select class="form-control" multiple=""  onchange="location=this.options[this.selectedIndex].value">
+						<?php
+							$concerts = ConcertModel::all();
+							foreach($concerts as $c){
+								echo '<option value ="'.route('concerts.show',$c->id).' ">'.$c->name.'</option>';
+							}
+
+							?>
 					</select>
 			
 		</div>
 		<div class="col-sm-4">
 		
-			<div class="header"><h4>Neko ime</h4></div>
+			<div class="header"><h4><?php if(count($concert) != 0) echo $concert->name ?></h4></div>
 			
 			
 			
 			<table class="user-info hidden-xs">
 				<tr>
-					<td>Date:</td><td><span id="first_name">15.10.2014.</span></td>
+					<td>Date starts:</td><td><span id="first_name"><?php if(count($concert) != 0) echo $concert->start_time; ?></span></td>
                 </tr>
 				<tr>
-					<td>Location:</td><td><span id="last_name">Belgrade</span></td>
-                </tr>
-                <tr>
-                    <td>Judges:</td><td><span id="birth_date">Will Smith</span></td>
+					<td>Date ends:</td><td><span id="first_name"><?php if(count($concert) != 0) echo $concert->end_time; ?></span></td>
+				</tr>
+				<tr>
+					<td>Location:</td><td><span id="last_name"><?php if(count($concert) != 0) echo $concert->location; ?></span></td>
                 </tr>
 				<tr>
-					<td>Musician:</td><td><span id="social_number">Madonna</span></td>
-                </tr>
+					<td>Judges:</td><td><span id="last_name"><?php if(count($concert) != 0) echo $concert->judges; ?></span></td>
+				</tr>
+				<tr>
+					<td>Musicians:</td><td><span id="last_name"><?php if(count($concert) != 0) echo $concert->musicians; ?></span></td>
+				</tr>
+
             </table>
 			
 			
@@ -198,53 +207,55 @@
             </table>
         </div>
         <div class="col-sm-4">
-            <div class="header"><h4>Participants</h4></div>
 			<div class="panel panel-success">
 				<div class="panel-heading">
-					<h3 class="panel-title">Opening Act</h3>
+					<h3 class="panel-title">Participants</h3>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-hover ">
 					<thead>
 						<tr>
-							<th>Name</th><th>Costume</th>
+							<th>Name</th><th>Choreography</th>
 						</tr>
 					</thead>
 					<tbody>
-					<tr>
-						<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>John Boo</td>
-						<td>Black dress #1</td>      
-					</tr>
-					<tr>
-						<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Michael Robinson</td>
-						<td>Black dress #1</td>
-					</tr>
-					<tr>
-						<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Alexander Robson</td>
-						<td>Red dress #1</td>
-					</tr>
-					<tr>
-						<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Jannifer Pinkser</td>
-						<td>Red dress #2</td>
-					</tr>
+					<?php
+						if(count($concert)!=0){
+							$chore = $concert->concertChoreography()->getResults();
+							foreach($chore as $ch){
+								$users = $ch->concertChoreographyUser()->getResults();
+								foreach($users as $user){
+									echo '<tr>
+										<td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/> '.UserModel::find($user->user_id)->username.'</td>
+										<td> '.ChoreographyModel::find($ch->choreography_id)->name.'</td>
+										</tr>';
+								}
+							}
+
+						}
+					?>
 					</tbody>
-					</table>
 				</div>
-			</div>
-            
-        </div>
-    </div>
+        	</div>
+    	</div>
 @stop
 <div id="new_concert_1" class="white_content container">
 	<div class="row">
 	<div class="col-sm-4">
 		<label for="name">Name</label><br/>
 		<input id="name" type="text" class="form-control input-sm" />
-		<label for="date">Date</label><br/>
-		<input id="date" type="date" class="form-control input-sm" />
+		<label for="date_start">Starts at:</label><br/>
+		<input id="date_start" type="date" class="form-control input-sm" />
+		<label for="date_end">Ends at:</label><br/>
+		<input id="date_end" type="date" class="form-control input-sm" />
+		<label for="date_end">Musician:</label><br/>
+		<input id="Musician" type="text" class="form-control input-sm" />
+		<label for="date_end">Judges:</label><br/>
+		<input id="Judges" type="text" class="form-control input-sm" />
+
 		<label for="location">Location</label><br/>
 		<input id="location" type="text" class="form-control input-sm" /><br/>
-		<div class="header">
+		<!--<div class="header">
 				<div class="col-sm-12 col-sm-offset-9"><a href = "javascript:void(0)" onclick = "hidePopup('new_concert_1');showPopup('new_ticket')" class="btn btn-info btn-xs">Add Ticket</a></div>
 		</div>
             <table class="table table-striped table-hover ">
@@ -272,7 +283,7 @@
                         <td>800.0</td>
                     </tr>
                 </tbody>
-            </table>
+            </table>-->
 	</div>
 	<div class="col-sm-4">
 		<div class="header"><h4>Coreographies</h4></div>

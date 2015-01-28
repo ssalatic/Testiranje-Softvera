@@ -67,7 +67,7 @@ class ConcertController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Redirect::route('concerts.show', 1);
+		return Redirect::route('concerts.show', 0);
 	}
 
 
@@ -101,7 +101,8 @@ class ConcertController extends \BaseController {
 	 */
 	public function show($id)
 	{
-		return View::make('pages.concerts', array('$concert' => $id));
+		$concert = ConcertModel::find($id);
+		return View::make('pages.concerts', array('concert' => $concert));
 	}
 
 

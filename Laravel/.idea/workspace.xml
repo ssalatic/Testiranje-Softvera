@@ -28,7 +28,7 @@
       <file leaf-file-name="costumes.blade.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/views/pages/costumes.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-5.3461537" vertical-offset="643" max-vertical-offset="4284">
+            <state vertical-scroll-proportion="-3.3846154" vertical-offset="694" max-vertical-offset="4284">
               <caret line="46" column="114" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="114" />
               <folding />
             </state>
@@ -38,8 +38,18 @@
       <file leaf-file-name="ConcertModel.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/models/ConcertModel.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="595">
-              <caret line="5" column="43" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="43" />
+            <state vertical-scroll-proportion="-15.692307" vertical-offset="0" max-vertical-offset="595">
+              <caret line="24" column="39" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="39" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ConcertChoreographyModel.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/ConcertChoreographyModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="629">
+              <caret line="26" column="43" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="43" />
               <folding />
             </state>
           </provider>
@@ -58,12 +68,25 @@
       <file leaf-file-name="concerts.blade.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/views/pages/concerts.blade.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.74823946" vertical-offset="2448" max-vertical-offset="6307">
-              <caret line="169" column="21" selection-start-line="169" selection-start-column="21" selection-end-line="169" selection-end-column="21" />
+            <state vertical-scroll-proportion="0.27458256" vertical-offset="3388" max-vertical-offset="6460">
+              <caret line="208" column="30" selection-start-line="208" selection-start-column="30" selection-end-line="208" selection-end-column="30" />
               <folding>
-                <marker date="1422471494718" expanded="true" signature="2410:2573" placeholder="..." />
-                <marker date="1422471494718" expanded="true" signature="2436:2565" placeholder="..." />
+                <marker date="1422473715125" expanded="true" signature="2410:2573" placeholder="..." />
+                <marker date="1422473715125" expanded="true" signature="2436:2565" placeholder="..." />
+                <marker date="1422473715125" expanded="true" signature="5740:5821" placeholder="..." />
+                <marker date="1422473715125" expanded="true" signature="5740:5822" placeholder="..." />
+                <marker date="1422473715125" expanded="true" signature="5740:5964" placeholder="..." />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="ChoreographyModel.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/app/models/ChoreographyModel.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="731">
+              <caret line="6" column="17" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="17" />
+              <folding />
             </state>
           </provider>
         </entry>
@@ -82,6 +105,7 @@
         <option value="$PROJECT_DIR$/app/controllers/TrainingController.php" />
         <option value="$PROJECT_DIR$/app/routes.php" />
         <option value="$PROJECT_DIR$/app/controllers/ConcertController.php" />
+        <option value="$PROJECT_DIR$/app/models/ConcertModel.php" />
         <option value="$PROJECT_DIR$/app/views/pages/concerts.blade.php" />
       </list>
     </option>
@@ -581,29 +605,48 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/models/ConcertModel.php">
+    <entry file="file://$PROJECT_DIR$/app/models/ConcertChoreographyModel.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-3.2692308" vertical-offset="0" max-vertical-offset="595">
-          <caret line="5" column="43" selection-start-line="5" selection-start-column="35" selection-end-line="5" selection-end-column="43" />
+        <state vertical-scroll-proportion="-17.0" vertical-offset="0" max-vertical-offset="629">
+          <caret line="26" column="43" selection-start-line="26" selection-start-column="20" selection-end-line="26" selection-end-column="43" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/ChoreographyModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="731">
+          <caret line="6" column="17" selection-start-line="6" selection-start-column="13" selection-end-line="6" selection-end-column="17" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/costumes.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-5.3461537" vertical-offset="643" max-vertical-offset="4284">
+        <state vertical-scroll-proportion="-3.3846154" vertical-offset="694" max-vertical-offset="4284">
           <caret line="46" column="114" selection-start-line="46" selection-start-column="56" selection-end-line="46" selection-end-column="114" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/models/ConcertModel.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-15.692307" vertical-offset="0" max-vertical-offset="595">
+          <caret line="24" column="39" selection-start-line="24" selection-start-column="20" selection-end-line="24" selection-end-column="39" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/views/pages/concerts.blade.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.74823946" vertical-offset="2448" max-vertical-offset="6307">
-          <caret line="169" column="21" selection-start-line="169" selection-start-column="21" selection-end-line="169" selection-end-column="21" />
+        <state vertical-scroll-proportion="0.27458256" vertical-offset="3388" max-vertical-offset="6460">
+          <caret line="208" column="30" selection-start-line="208" selection-start-column="30" selection-end-line="208" selection-end-column="30" />
           <folding>
-            <marker date="1422471494718" expanded="true" signature="2410:2573" placeholder="..." />
-            <marker date="1422471494718" expanded="true" signature="2436:2565" placeholder="..." />
+            <marker date="1422473715125" expanded="true" signature="2410:2573" placeholder="..." />
+            <marker date="1422473715125" expanded="true" signature="2436:2565" placeholder="..." />
+            <marker date="1422473715125" expanded="true" signature="5740:5821" placeholder="..." />
+            <marker date="1422473715125" expanded="true" signature="5740:5822" placeholder="..." />
+            <marker date="1422473715125" expanded="true" signature="5740:5964" placeholder="..." />
           </folding>
         </state>
       </provider>

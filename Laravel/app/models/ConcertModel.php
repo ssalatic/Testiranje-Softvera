@@ -3,7 +3,7 @@
 class ConcertModel extends \Eloquent {
 	
 	protected $fillable = [
-			'session_id', 'name', 'location', 'start_time', 'end_time'
+			'session_id', 'name', 'location', 'start_time', 'end_time', 'judges', 'musicians'
 	];
 	
 	protected $guarded = [

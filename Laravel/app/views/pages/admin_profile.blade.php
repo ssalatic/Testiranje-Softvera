@@ -514,7 +514,7 @@
                     </div>
 			<div class="form-group">
                  <!-- Do NOT use name="submit" or id="submit" for the Submit button -->
-                 <button type="submit" class="btn btn-success btn-xs">Sign up</button>
+                 <button type="submit" class="btn btn-success btn-xs">Update</button>
 				 <a href = "javascript:void(0)" onclick = "hidePopup('edit_user')" class="btn btn-danger btn-xs">Cancel</a>
             </div>
 			<!--</form>-->{{ Form::close() }}
@@ -593,6 +593,8 @@
 		</div>
 			
 		<div class="col-sm-6">
+			<label for="first_name">Password:</label><br>
+			<input type="text" id="password" name="password" class="form-control"/><br>
 			<label for="first_name">First name:</label><br>
 			<input type="text" id="first_name" name="first_name" class="form-control"/><br>
 			<label for="last_name">Last name:</label><br>

@@ -48,7 +48,7 @@ class UserController extends \BaseController {
 				'last_name' => 'sometimes|alpha|max:45',
 				'birth_date' => 'sometimes|date',
 				'social_number' => 'sometimes|digits:13|unique:user,social_number',
-				'phone_number' => 'sometimes|alpha|max:45',
+				'phone_number' => 'sometimes|max:45',
 				//'address' => 'sometimes|alpha_num|max:200',
 				'height' => 'sometimes|digits:3',
 				'shoe_size' => 'sometimes|digits:2',
@@ -112,14 +112,15 @@ class UserController extends \BaseController {
 			$user = new UserModel();
 
 			$user->username = Input::get('username');
+			$user->password = Input::get('password');	
 			$user->first_name = Input::get('first_name');
 			$user->last_name = Input::get('last_name');
 			$user->birth_date = Input::get('birth_date');
 			$user->phone_number = Input::get('phone_number');
 			$user->email = Input::get('email');
 			$user->sex = Input::get('gender');
-
-
+			
+			
 			$dencer = Input::get('dancer');
 			$designer = Input::get('designer');
 			$trainer = Input::get('trainer');
@@ -148,14 +149,15 @@ class UserController extends \BaseController {
 
 
 			$user->height = Input::get('height');
-			$user->password = Input::get('social_number');
 			$user->shoe_size = Input::get('shoe_size');
 			$user->sneakers_size = Input::get('sneakers_size');
 			$user->ballet_shoe_size = Input::get('ballet_shoe_size');
 			$user->validated = Session::token();
 
 		    $user->save();
+			$user->groups()->attach(Input::get('groups'));
 
+			
 		    Mail::queue('emails.welcome', array('token' => Session::token()), function($message)
 		    {
 		    	$message->to(Input::get('email'), Input::get('username'))->subject('Welcome!');
@@ -233,6 +235,8 @@ class UserController extends \BaseController {
 			$usr->shoe_size = Input::get('shoe_size');
 			$usr->sneakers_size = Input::get('sneakers_size');
 			$usr->ballet_shoe_size = Input::get('ballet_shoe_size');
+			
+			$usr->groups()->attach(Input::get('groups'));
 			
 		    $usr->save();
 			//$usr->groups()->sync(Input::get('groups'));

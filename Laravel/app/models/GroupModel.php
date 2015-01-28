@@ -33,7 +33,7 @@ class GroupModel extends \Eloquent {
 	
 		$groups = GroupModel::all(); //DB::table('user')->where('user_type', $userType)->get();
 		
-		echo '<select class="form-control" id="group" multiple size = "3">';		
+		echo '<select name="groups[]" class="form-control" id="group" multiple size = "3">';		
 
 		foreach($groups as $group){
 			echo '<option value="'.$group->id.'">'.$group->name.'</option>';

@@ -145,7 +145,10 @@
 						<?php
 							$concerts = ConcertModel::all();
 							foreach($concerts as $c){
-								echo '<option value ="'.route('concerts.show',$c->id).' ">'.$c->name.'</option>';
+								if($c->id == $concert->id)
+									echo '<option selected value ="'.route('concerts.show',$c->id).' ">'.$c->name.'</option>';
+								else
+									echo '<option value ="'.route('concerts.show',$c->id).' ">'.$c->name.'</option>';
 							}
 
 							?>

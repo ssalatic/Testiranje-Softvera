@@ -67,7 +67,11 @@ class ConcertController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Redirect::route('concerts.show', 0);
+		$concert = ConcertModel::first();
+		if(count($concert) == 0)
+			return Redirect::route('concerts.show', 0);
+		else
+			return Redirect::route('concerts.show', $concert->id);
 	}
 
 

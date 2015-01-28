@@ -145,7 +145,11 @@ class CostumeController extends \BaseController {
 		$costume->size = Input::get('size');
 
 		$costume->save();
+
 		//echo Input::get('possesion');
+
+
+
 		return Redirect::route('costumes.show', $costume->id);
 	}
 

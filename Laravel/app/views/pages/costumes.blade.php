@@ -26,6 +26,13 @@
 			overflow: hidden
 		}
     </style>
+	<script>
+		function setPossesion(id)
+		{
+			document.getElementById('possesion').value = id;
+		}
+	</script>
+
  @stop
 
  @section('content')
@@ -123,14 +130,35 @@
 					echo '<input type="text" id="size" name="size" class="form-control input-sm />"';
 			?>
 			<label for="possesion">Possesion</label><br/>
-			<?php 
-			if( count($costume) != 0 ) {
+			<?php
+
+			$users = UserModel::all();
+			echo '<div align="center">
+				<select name="users" class="form-control input-sm" onchange="setPossesion(this.options[this.selectedIndex].value)">';
+					foreach($users as $usr)
+						if(count($costume) != 0){
+							if($costume->owner == $usr->id )
+								echo '<option selected value="'.$usr->id.'">'.$usr->first_name.' '.$usr->last_name.'</option>';
+							else
+								echo '<option value="'.$usr->id.'">'.$usr->first_name.' '.$usr->last_name.'</option>';
+						}
+						else echo '<option value="'.$usr->id.'">'.$usr->first_name.' '.$usr->last_name.'</option>';
+				echo '</select>';
+
+			echo '<input type="hidden" id="possesion" name="possesion" value="';
+			if(count($costume) != 0)
+				echo $costume->owner;
+
+			echo '"/>';
+
+
+			/*if( count($costume) != 0 ) {
 				$user_in_posesion = $costume->userInPossesion()->getResults();
 				echo '<input type="text" id="possesion" name="possesion" value ="'.$costume->owner.'" class="form-control input-sm />"';
 			}
 			else 
 				echo '<input type="text" id="possesion" name="possesion" class="form-control input-sm />"';
-			?>
+			*/?>
 			
 			</div>
 

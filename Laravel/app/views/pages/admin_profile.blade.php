@@ -106,7 +106,7 @@
 		}
 		
 		
-		function doSomething(id, usern, name, lname, bdate, snumber, pnumber, eemail,esssize,ebssize,essize,eheight, eutype, egender)
+		function doSomething(id, usern, name, lname, bdate, pnumber, eemail,esssize,ebssize,essize,eheight, eutype, egender)
 		{
 			/* ovo radi treba fizicki radnik da popuni */
 			var username = document.getElementById("edit_username");
@@ -117,8 +117,6 @@
 			last_name.value = lname;
 			var birth_date = document.getElementById("edit_birth_date");
 			birth_date.value = bdate;
-			var social_number = document.getElementById("edit_social_number");
-			social_number.value = snumber;
 			var phone_number = document.getElementById("edit_phone_number");
 			phone_number.value = pnumber;
 			var email = document.getElementById("edit_email");
@@ -173,7 +171,6 @@
 					<strong>Alert</strong>'."   ".$errors->first().'</div>
 					</div>
 					</div>';
-						//@endif
     ?>
 	
 	
@@ -182,7 +179,7 @@
 			<a href = "javascript:void(0)" onclick = "showPopup('new_user')" class="btn btn-success btn-xs">Add New</a>
 			<?php	echo '<a href = "javascript:void(0)" onclick ="doSomething(\'edit_user\',\''.$user->username.'\'
 					,\''.$user->first_name.'\',\''.$user->last_name.'\',\''.$user->birth_date.'\'
-					,\''.$user->social_number.'\',\''.$user->phone_number.'\',\''.$user->email.'\'
+					,\''.$user->phone_number.'\',\''.$user->email.'\'
 					,\''.$user->shoe_size.'\',\''.$user->ballet_shoe_size.'\',\''.$user->sneakers_size.'\',\''.$user->height.'\'
 					,\''.$user->user_type.'\',\''.$user->sex.'\'
 					)" class="btn btn-success btn-xs">Edit user</a>'; 
@@ -259,9 +256,6 @@
                 </tr>
                 <tr>
                     <td>Birth date:</td><td><span id="birth_date"><?php echo $user->birth_date; ?></span></td>
-                </tr>
-				<tr>
-					<td>Social number:</td><td><span id="social_number"><?php echo $user->social_number; ?></span></td>
                 </tr>
 				<tr>
 					<td>Phone number:</td><td><span id="phone_number"><?php echo $user->phone_number; ?></span></td>
@@ -451,22 +445,22 @@
 					<div class="col-sm-5">
 					<div class="radio">
                                 <label>
-                                    <input id = "edit_dancer" type="radio" name="user_type" value="3" /> Dancer
+                                    <input id = "edit_dancer" type="checkbox" name="user_type" value="3" /> Dancer
                                 </label>
                             </div>
 							<div class="radio">
                                 <label>
-                                    <input id = "edit_designer" type="radio" name="user_type" value="2" /> Designer
+                                    <input id = "edit_designer" type="checkbox" name="user_type" value="2" /> Designer
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input  id = "edit_trainer" type="radio" name="user_type" value="1" /> Trainer
+                                    <input  id = "edit_trainer" type="checkbox" name="user_type" value="1" /> Trainer
                                 </label>
                             </div>
 							 <div class="radio">
                                 <label>
-                                    <input id = "edit_admin" type="radio" name="user_type" value="0" /> Admin
+                                    <input id = "edit_admin" type="checkbox" name="user_type" value="0" /> Admin
                                 </label>
                             </div>
 					</div>
@@ -506,8 +500,6 @@
 			<input type="text" id="edit_last_name" name="last_name" class="form-control"/><br>
 			<label for="birth_date">Date of birth:</label><br>
 			<input type="date" id="edit_birth_date" name="birth_date" class="form-control"/><br>
-			<label for="social_number">Social number:</label><br>
-			<input type="text" id="edit_social_number" name="social_number" class="form-control"/><br>		
 			<label for="social_number">Phone number:</label><br>
 			<input type="text" id="edit_phone_number" name="phone_number" class="form-control"/><br>
 			<label for="email">Email:</label><br>
@@ -551,22 +543,22 @@
 					<div class="col-sm-5">
 					<div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="3" /> Dancer
+                                    <input type="checkbox" name="user_type" value="3" /> Dancer
                                 </label>
                             </div>
 							<div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="2" /> Designer
+                                    <input type="checkbox" name="user_type" value="2" /> Designer
                                 </label>
                             </div>
                             <div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="1" /> Trainer
+                                    <input type="checkbox" name="user_type" value="1" /> Trainer
                                 </label>
                             </div>
 							 <div class="radio">
                                 <label>
-                                    <input type="radio" name="user_type" value="0" /> Admin
+                                    <input type="checkbox" name="user_type" value="0" /> Admin
                                 </label>
                             </div>
 					</div>
@@ -606,8 +598,6 @@
 			<input type="text" id="last_name" name="last_name" class="form-control"/><br>
 			<label for="birth_date">Date of birth:</label><br>
 			<input type="date" id="birth_date" name="birth_date" class="form-control"/><br>
-			<label for="social_number">Social number:</label><br>
-			<input type="text" id="social_number" name="social_number" class="form-control"/><br>		
 			<label for="social_number">Phone number:</label><br>
 			<input type="text" id="phone_number" name="phone_number" class="form-control"/><br>
 			<label for="email">Email:</label><br>
@@ -647,14 +637,17 @@
 </div>
 
 <div id="dues" class="white_content">
-	<form>
+	{{ Form::open(['method' => 'PUT', 'route' => ['update.dues', $user->id]]) }}
 		<label for="old_password" class="control-label">Date:</label><br>
-		<input type="date" id="date"  class="form-control"/><br>
+		<input type="date" id="date" name = "date"  class="form-control"/><br>
 		<label for="new_password" class="control-label">Amount:</label><br>
-		<input type="password" id="new_password" class="form-control" /><br>
-		<a href="#" class="btn btn-success btn-xs">Confirm</a>
-		<a href = "javascript:void(0)" onclick = "hidePopup('dues')" class="btn btn-danger btn-xs">Cancel</a>
-	</form>
+		<input type="text" id="new_password" name = "amount" class="form-control" /><br>
+		<div class="form-group">
+			<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+			<button type="submit" class="btn btn-success btn-xs">Confirm</button>
+			<a href = "javascript:void(0)" onclick = "hidePopup('dues')" class="btn btn-danger btn-xs">Cancel</a>
+		</div>
+	{{ Form::close() }}
  
 </div>
 @stop

@@ -240,10 +240,6 @@ class UserController extends \BaseController {
 		);
 
 		$validator = Validator::make(Input::all(['new_password']), $rules);
-		//$validator = $this->validate(Input::only(['new_password']));
-		//echo $usr->password;
-		//echo Input::get('np');
-		//echo Hash::make(Input::get('new_password')).'   -   '.Hash::make(Input::get('old_password')).'  -  '.$usr->password;
 
 		if ($validator->passes()) {
 			if (Hash::check(Input::get('old_password'), $usr->password)) {
@@ -255,15 +251,17 @@ class UserController extends \BaseController {
 		}else{
 			return Redirect::route('users.show', $usr->id)->withErrors($validator)->withInput();
 		}
+	}
 
-		/*if($usr->password === Input::get('old_password')) {
-			$usr->password = Input::get('new_password');
-			$usr->save();
 
-			return Redirect::route('users.show', $usr->id)->withErrors(['Changed']);
-		}
-		else return Redirect::route('users.show',$usr->id)->withErrors(['Does not match']);
-	*/
+	public function update_dues($id){
+		$dues = PaymentModel::firstOrCreate(array('user_id' => $id));
+		$dues->user_id = $id;
+		$dues->date_payed = Input::get('date');
+		$dues->amount = Input::get('amount');
+
+		$dues->save();
+		return Redirect::route('users.show', $id)->withErrors(['Changed']);
 	}
 
 

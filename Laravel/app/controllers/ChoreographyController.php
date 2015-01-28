@@ -63,6 +63,11 @@ class ChoreographyController extends \BaseController {
 	public function index()
 	{
 		$choreography = ChoreographyModel::first();
+		
+		if($choreography == null){
+			$choreography = $this->getEmptyObject();
+		}
+		
 		if(Auth::user()->isAdmin() || Auth::user()->isTrainer()){
 			return Redirect::route('choreographies.show', $choreography->id);
 		}
@@ -135,6 +140,9 @@ class ChoreographyController extends \BaseController {
 			$choreography = ChoreographyModel::find($id);			
 			
 			if($choreography == null){
+				
+				$choreography = $this->getEmptyObject();
+				/*
 				$choreography = new ChoreographyModel();
 				$choreography->name = '';
 				$choreography->music = '';
@@ -145,7 +153,7 @@ class ChoreographyController extends \BaseController {
 				$choreography->soft = '';
 				
 				$choreography->id = $id;
-				
+				*/
 				$users = [];
 				$files = [];
 				$otherUsers = [];
@@ -284,5 +292,17 @@ class ChoreographyController extends \BaseController {
 		return $otherUsers;
 	}
 
-
+	private function getEmptyObject(){
+		$choreography = new ChoreographyModel();
+		$choreography->name = '';
+		$choreography->music = '';
+		$choreography->rhythm = '';
+		$choreography->tempo = '';
+		$choreography->duration = 0;
+		$choreography->hard = '';
+		$choreography->soft = '';
+		
+		$choreography->id = 0;
+		return $choreography;
+	}
 }

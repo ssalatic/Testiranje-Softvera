@@ -197,6 +197,7 @@
 			
 			<div class="header">
 				<div class="col-sm-4"><h4>Files</h4></div>
+
 				<div class="col-sm-2 col-sm-offset-1"><a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-info btn-xs">Add new file</a></div>
 			</div>
 			<table class="table table-striped table-hover ">

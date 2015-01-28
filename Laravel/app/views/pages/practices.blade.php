@@ -142,7 +142,7 @@
             <li>{{ $message }}</li>
         @endforeach
 
-        @if(Auth::user()->isAdmin() || Auth::user()->isTrainer())
+        @if((Auth::user()->isAdmin() || Auth::user()->isTrainer() ) && $training != null)
 
             <div class="col-lg-6">
                             <a href = "javascript:void(0)" onclick = "showPopup('new_practice')" class="btn btn-success btn-xs">Add New</a>
@@ -154,7 +154,10 @@
 			{{ Form::close() }}
 
             </div>
-
+        @else
+             <div class="col-lg-6">
+                 <a href = "javascript:void(0)" onclick = "showPopup('new_practice')" class="btn btn-success btn-xs">Add New</a>
+            </div>
         @endif
 
 
@@ -178,12 +181,17 @@
 
 					<select name="type1" class="form-control" multiple>
 						<?php
-						foreach($trainings as $trn){
+						if($trainings != null){
+                            foreach($trainings as $trn){
+                                if($training != null)
+                                if ($trn->id == $training->id)
+                                    echo'<option selected value = "'.route('trainings.show', $trn->id) .'">'. $trn->date.'</option>';
+                                else
+                                    echo'<option value = "'.route('trainings.show', $trn->id) .'"> '.$trn->date.' </option>';
+                            }
+						}else{
+						        echo'<option value = "">  </option>';
 
-							if ($trn->id == $training->id)
-						    	echo'<option selected value = "'.route('trainings.show', $trn->id) .'">'. $trn->date.'</option>';
-							else
-								echo'<option value = "'.route('trainings.show', $trn->id) .'"> '.$trn->date.' </option>';
 						}
 						?>
 					</select>
@@ -207,13 +215,13 @@
 		<div class="col-sm-5">
 			<table class="user-info hidden-xs">
 				<tr>
-					<td>Date:</td><td><span id="p_date"><?php echo $training->date; ?></span></td>
+					<td>Date:</td><td><span id="p_date"><?php if($training != null) echo $training->date; ?></span></td>
                 </tr>
 				<tr>
-					<td>Teacher:</td><td><a href="{{route('users.show', $training->trainer_id)}}"><span id="teacher"><?php echo UserModel::find($training->trainer_id)->first_name .' '. UserModel::find($training->trainer_id)->last_name;  ?></span></a></td>
+					<td>Teacher:</td><td><a href="@if($training != null)){{route('users.show', $training->trainer_id)}} @endif"><span id="teacher"><?php if($training != null && UserModel::find($training->trainer_id) != null) echo UserModel::find($training->trainer_id)->first_name .' '. UserModel::find($training->trainer_id)->last_name;  ?></span></a></td>
                 </tr>
                 <tr>
-                    <td>Group:</td><td><span id="group"><?php echo GroupModel::find($training->group_id)->name;  ?></span></td>
+                    <td>Group:</td><td><span id="group"><?php if($training != null && GroupModel::find($training->group_id) != null){ echo GroupModel::find($training->group_id)->name;} ?></span></td>
                 </tr>
 			</table>
 			<div class="header"><h4>Dancers</h4></div>
@@ -222,7 +230,7 @@
 					<td> First Name </td><td>Last Name</td><td></td>
 				</thead>
 			<?php
-
+            if($users != null)
 			foreach($users as $user){
                 echo'
                     <tr>
@@ -269,7 +277,7 @@
                                             <?php
 
                                                 foreach(UserModel::where('user_type', '=', 1)->get() as $trainer){
-
+                                                   if($trainer != null)
                                                    echo '
                                                       <option value = "'.$trainer->id.'">'.$trainer->first_name.' '.$trainer->last_name.'</option>
 
@@ -287,7 +295,7 @@
                                     <?php
 
                                         foreach(GroupModel::all() as $group){
-
+                                           if($group != null)
                                            echo '
                                               <option value = "'.$group->id.'">'.$group->name.'</option>
 
@@ -303,7 +311,7 @@
                         <select name="users[]" class="form-control" style="margin-left: 10px;" multiple>
                            <?php
                            foreach(UserModel::all() as $usr){
-
+                                if($usr != null)
                                 echo '<option value = "'.$usr->id.'"> '.$usr->first_name.'  '.$usr->last_name.' </option>';
                            }
                            ?>
@@ -336,35 +344,36 @@
 
 	<div class="row">
 	    <div class="col-sm-12">
-
+            @if($training != null)
             {{ Form::open(['method' => 'PUT', 'style' => "margin: 15px;", 'class'=>"row", 'route' => ['trainings.update', $training->id]]) }}
 
                         <table>
 
                         <tr>
-                        <td><label for="practice_date">Date:</label><br><input type="date" name="practice_date" value="<?php echo explode(" ", $training->date)[0];?>"><br/>
+                        <td><label for="practice_date">Date:</label><br><input type="date" name="practice_date" value="<?php if($training != null) echo explode(" ", $training->date)[0];?>"><br/>
 
-                        <label for="time">Time:</label><br><input type="time" name="time" value="<?php echo explode(" ", $training->date)[1];?>"><br/>
+                        <label for="time">Time:</label><br><input type="time" name="time" value="<?php if($training != null) echo explode(" ", $training->date)[1];?>"><br/>
                         <div class="row"></div>
             			<label >Teacher:</label></br>
                                 <div class="btn-group" style="margin-bottom: 20px; clear: both;">
                                             <select name="teacher" >
                                                         <?php
-
+                                                            if(UserModel::where('user_type', '=', 1)->get() != null)
                                                             foreach(UserModel::where('user_type', '=', 1)->get() as $trainer){
+                                                               if($trainer != null && $training != null){
+                                                                   if($training->trainer_id == $trainer->id){
 
-                                                               if($training->trainer_id == $trainer->id){
-
-                                                                    echo '
-                                                                        <option value = "'.$trainer->id.'" selected>'.$trainer->first_name.' '.$trainer->last_name.'</option>
-                                                                    ';
-
-                                                               }else{
                                                                         echo '
-                                                                            <option value = "'.$trainer->id.'">'.$trainer->first_name.' '.$trainer->last_name.'</option>
-
+                                                                            <option value = "'.$trainer->id.'" selected>'.$trainer->first_name.' '.$trainer->last_name.'</option>
                                                                         ';
-                                                                    }
+
+                                                                   }else{
+                                                                            echo '
+                                                                                <option value = "'.$trainer->id.'">'.$trainer->first_name.' '.$trainer->last_name.'</option>
+
+                                                                            ';
+                                                                        }
+                                                               }
                                                             }
                                                         ?>
 
@@ -378,7 +387,7 @@
                                                 <?php
 
                                                     foreach(GroupModel::all() as $group){
-
+                                                        if($group != null && $training != null)
                                                        if($training->group_id == $group->id){
 
                                                             echo '
@@ -402,18 +411,21 @@
                                     <select name="users[]" class="form-control" multiple="" style="margin-left: 10px;">
                                        <?php
                                        $usrs = array();
-
+                                       if($training != null)
                                        foreach($training->users as $usr2)
                                             $usrs[] = $usr2->id;
 
                                        foreach(UserModel::all() as $usr){
-
+                                            if($usr != null){
                                             if(in_array( $usr->id, $usrs)){
                                                 echo'<option value = "'.$usr->id.'" selected> '.$usr->first_name.'  '.$usr->last_name.' </option>';
                                             }else{
 
                                                 echo'<option value = "'.$usr->id.'"> '.$usr->first_name.'  '.$usr->last_name.' </option>';
 
+                                            }
+                                            }else{
+                                                echo'<option value = ""></option>';
                                             }
 
                                        }
@@ -432,6 +444,7 @@
                                 </div>
 
                                 {{ Form::close() }}
+                                @endif
 
 	    </div>
 

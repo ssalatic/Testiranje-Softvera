@@ -140,18 +140,27 @@ class CompetitionController extends \BaseController {
 		
 		$cm = CompetitionModel::find($id);
 		$cms = CompetitionModel::all();
-		$files = $cm->files;
+		
+		if ($cm != null)
+			$files = $cm->files;
+		else
+			$files = null;
+		
+		if ($cm != null)
+			$part = $cm->participations;
+		else 
+			$part = null;
 		
 		if (Auth::user()->isAdmin())
 			return View::make('pages.admin_competitions', array('comp' => $cm,
 																'comps' => $cms,
-																'parts' => $cm->participations,
+																'parts' => $part,
 																'files' => $files
 																));
 		else
 			return View::make('pages.competitions', array('comp' => $cm,
 														  'comps' => $cms,
-														  'parts' => $cm->participations,
+														  'parts' => $part,
 														  'files' => $files
 														));
 	}

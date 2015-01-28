@@ -61,9 +61,12 @@ class TrainingController extends \BaseController {
 	 */
 	public function index()
 	{
-		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;
-		
-		return Redirect::route('trainings.show', $training);
+		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first();
+		if ($training != null) {
+			$training = $training->id;
+			return Redirect::route('trainings.show', $training);			
+		} else  
+			return Redirect::route('trainings.show', 1);
 	}
 
 
@@ -86,21 +89,30 @@ class TrainingController extends \BaseController {
 	public function store()
 	{
 		
-		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;
+		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first();
+		if ($training != null)
+			$training = $training->id;
+		else 
+			$training = 1;
 		
 		$validator = $this->validate(Input::all());
 		
 		if ($validator->passes()) 
 		{
-			$trn = new TrainingModel();
-			
-			$trn->date = Input::get('practice_date').' '.Input::get('time');
-			$trn->trainer_id = Input::get('teacher');
-			$trn->group_id = Input::get('group');
-			$trn->changed_by = Auth::user()->id;
-			$trn->save();
-			
-			$trn->users()->sync(Input::get('users'));
+			for ($i = 0; $i < 52; $i++) {
+				$trn = new TrainingModel();
+				
+				$trn->date = Input::get('practice_date').' '.Input::get('time');
+				$date = new DateTime($trn->date);
+				$date->modify('+'.$i.' weeks');
+				date_add($date, date_interval_create_from_date_string($i.' weeks'));
+				$trn->trainer_id = Input::get('teacher');
+				$trn->group_id = Input::get('group');
+				$trn->changed_by = Auth::user()->id;
+				$trn->save();
+				
+				$trn->users()->sync(Input::get('users'));
+			}
 		    
 		    return Redirect::route('trainings.show', $training);
 		} 
@@ -123,19 +135,28 @@ class TrainingController extends \BaseController {
 		{
 			$training = TrainingModel::find($id);
 			$trainings = TrainingModel::all();
-			$users = $training->users;
+			if ($training != null)
+				$users = $training->users;
+			else 
+				$users = null;
 		}	
 		else if(Auth::user()->isTrainer())
 		{
 			$training = TrainingModel::find($id);
 			$trainings = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->get();
-			$users = $training->users;
+			if ($training != null)
+				$users = $training->users;
+			else 
+				$users = null;
 		}	
 		else
 		{
 			$training = TrainingModel::find($id);
 			$trainings = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->get();
-			$users = $training->users;
+			if ($training != null)
+				$users = $training->users;
+			else 
+				$users = null;
 		}
 		
 		return View::make('pages.practices', array('training' => $training,

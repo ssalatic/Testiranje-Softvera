@@ -110,12 +110,13 @@
 			<div class="col-lg-6">
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Add New</a>
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
-
+                @if($comp != null)
 				{{ Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("You sure??");', 'route' => ['competitions.destroy', $comp->id]]) }}
 
                 {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) }}
 
                 {{ Form::close() }}
+                @endif
 			</div>
 		</div>
 		<div class="row">
@@ -135,66 +136,118 @@
 				<select name="type2" class="form-control" multiple>
 
                 <?php
-                    foreach($comps as $cmps){
+                    if ($comps != null){
+                        foreach($comps as $cmps){
 
-                        if ($cmps->id == $comp->id)
-                            echo'<option selected value = "'.route('competitions.show', $cmps->id) .'">'. $cmps->name.'</option>';
-                        else
-                            echo'<option value = "'.route('competitions.show', $cmps->id) .'"> '.$cmps->name.' </option>';
+                            if ($cmps->id == $comp->id)
+                                echo'<option selected value = "'.route('competitions.show', $cmps->id) .'">'. $cmps->name.'</option>';
+                            else
+                                echo'<option value = "'.route('competitions.show', $cmps->id) .'"> '.$cmps->name.' </option>';
+                        }
+                    }else{
+
+                         echo'<option value = ""> </option>';
+
                     }
                 ?>
 
 				</select>
 		</div>
         <div class="col-sm-3">
-            	<div class="header" align="center"><h4><?php echo $comp->name; ?></h4></div>
+            	<div class="header" align="center"><h4><?php if($comp != null)  echo $comp->name; ?></h4></div>
                 <div align="center">
 					 <table class="table table-striped table-hover ">
 						<tbody>
 						<?php
-						    echo '
-                                <tr>
-                                    <td>Start date:</td>
-                                    <td>' .$comp->date_start. '</td>
-                                </tr>
-							';
-							echo '
-                                <tr>
-                                    <td>End date:</td>
-                                    <td>' .$comp->date_end. '</td>
-                                </tr>
-                            ';
-							echo '
-                                <td>Location:</td>
-                                    <td>' .$comp->location. '</td>
-                                <tr>
-							';
-							echo '
-                                <td>Judges:</td>
+						    if($comp != null){
+                                echo '
+                                    <tr>
+                                        <td>Start date:</td>
+                                        <td>' .$comp->date_start. '</td>
+                                    </tr>
+                                ';
+                                echo '
+                                    <tr>
+                                        <td>End date:</td>
+                                        <td>' .$comp->date_end. '</td>
+                                    </tr>
+                                ';
+                                echo '
+                                    <td>Location:</td>
+                                        <td>' .$comp->location. '</td>
+                                    <tr>
+                                ';
+                                echo '
+                                    <td>Judges:</td>
+                                        <td>
+                                            <ul>';
+                                            $judges = explode( ';', $comp->judges);
+                                            foreach($judges as $judge){
+                                                echo '<li>'. $judge .'</li>';
+                                            }
+                                    echo'
+                                    </ul>
+                                        </td>
+                                    </tr>
+                                ';
+                            echo '
+                                <td>Musicians:</td>
                                     <td>
                                         <ul>';
-                                        $judges = explode( ';', $comp->judges);
-                                        foreach($judges as $judge){
-                                            echo '<li>'. $judge .'</li>';
+                                        $musicians = explode( ';', $comp->musician);
+                                        foreach($musicians as $musician){
+                                            echo '<li>'. $musician .'</li>';
                                         }
                                 echo'
                                 </ul>
                                     </td>
                                 </tr>
-							';
-                        echo '
-                            <td>Musicians:</td>
-                                <td>
-                                    <ul>';
-                                    $musicians = explode( ';', $comp->musician);
-                                    foreach($musicians as $musician){
-                                        echo '<li>'. $musician .'</li>';
-                                    }
-                            echo'
-                            </ul>
-                                </td>
-                            </tr>
-                        ';
+                            ';
+                        }else{
+
+                                echo '
+                                    <tr>
+                                        <td>Start date:</td>
+                                        <td></td>
+                                    </tr>
+                                ';
+                                echo '
+                                    <tr>
+                                        <td>End date:</td>
+                                        <td></td>
+                                    </tr>
+                                ';
+                                echo '
+                                    <td>Location:</td>
+                                        <td></td>
+                                    <tr>
+                                ';
+                                echo '
+                                    <td>Judges:</td>
+                                        <td>
+                                            <ul>';
+
+                                                echo '<li></li>';
+
+                                    echo'
+                                    </ul>
+                                        </td>
+                                    </tr>
+                                ';
+                            echo '
+                                <td>Musicians:</td>
+                                    <td>
+                                        <ul>';
+
+                                            echo '<li>  </li>';
+
+                                echo'
+                                </ul>
+                                    </td>
+                                </tr>
+                            ';
+
+                        }
 							//<td>Organizer:</td>
 							//	<td>Random lik</td>
 							//</tr>
@@ -218,6 +271,7 @@
                 </thead>
                 <tbody>
                 <?php
+                if($files != null){
                     foreach($files as $file){
 
                             echo '
@@ -242,17 +296,8 @@
                             ';
 
                     }
+                }
 
-                   /* <tr>
-                        <td>2</td>
-                        <td><a href="#">Photos</a></td>
-                        <td><span class="label label-danger">Photo</span></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="#">Coreography</a></td>
-                        <td><span class="label label-info">PDF</span></td>
-                    </tr>*/
                     ?>
                 </tbody>
             </table>
@@ -275,6 +320,7 @@
                 </thead>
                 <tbody>
                     <?php
+                    if($parts != null){
                         foreach($parts as $participation)
                             foreach($participation->users as $user){
                                 echo '
@@ -299,6 +345,7 @@
                                     </tr>
                                 ';
                             }
+                    }
                     ?>
                 </tbody>
             </table>
@@ -366,18 +413,24 @@
 			<table class="table table-striped table-hover" style="width:100%;">
                 <tr>
                     <td>
+
+                        @if($comp != null)
                         {{ Form::open(['route' => ['competitions.upload', $comp->id], 'files' => true]) }}
 
                         {{ Form::label('file','File') }}
 
                         {{ Form::file('file') }}
+                        @endif
                     </td>
                 </tr>
                 <tr>
                     <td>
-                        {{ Form::submit('Save',['class'=>'btn btn-success btn-xs']) }}
 
-                        {{ Form::close() }}
+                            @if($comp != null)
+                                {{ Form::submit('Save',['class'=>'btn btn-success btn-xs']) }}
+
+                                {{ Form::close() }}
+                            @endif
                     </td>
                 </tr>
                 <tr>
@@ -414,3 +467,4 @@
 </div>
 	<div id="fade" class="black_overlay"></div>
 @stop
+

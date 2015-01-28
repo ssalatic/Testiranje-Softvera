@@ -97,7 +97,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	{
 		$this->attributes['password'] = Hash::make($value);
 	}
-	
+
 	public function setFirstNameAttribute($value)
 	{
 		$this->attributes['first_name'] = Crypt::encrypt($value);

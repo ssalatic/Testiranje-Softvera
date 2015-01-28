@@ -636,14 +636,21 @@
 </div></div>
 <!----------------------------------------------------------------------------------------------------------------------------->
 <div id="reset_message" class="white_content">
-	<form>
+	<?php echo Form::open(['method' => 'PUT', 'route' => ['password.new', $user->id]]); ?>
+
 		<label for="old_password" class="control-label">Old password:</label><br>
-		<input type="password" id="old_password"  class="form-control"/><br>
+		<input type="password" id="old_password" name="old_password"  class="form-control"/><br>
 		<label for="new_password" class="control-label">New password:</label><br>
-		<input type="password" id="new_password" class="form-control" /><br>
-		<a href="#" class="btn btn-success btn-xs">Confirm</a>
-		<a href = "javascript:void(0)" onclick = "hidePopup('reset_message')" class="btn btn-danger btn-xs">Cancel</a>
-	</form>
+		<input type="password" id="new_password" name="new_password" class="form-control" /><br>
+	<?php echo Form::token(); ?>
+
+		<div class="form-group">
+			<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+			<button type="submit" class="btn btn-success btn-xs">Confirm</button>
+			<a href = "javascript:void(0)" onclick = "hidePopup('reset_message')" class="btn btn-danger btn-xs">Cancel</a>
+		</div>
+	<?php echo Form::close(); ?>
+
  
 </div>
 

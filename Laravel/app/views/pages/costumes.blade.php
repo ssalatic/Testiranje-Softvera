@@ -96,7 +96,7 @@
 				<br/>
 			<form id="add_costume" method="POST" class="form-horizontal" action="{{ URL::route('add.costume') }}">
 				<div class="input-group">
-					<input type="hidden" name="id" value="<?php echo $costumeType->id;?>" />
+					<input type="hidden" name="id" value="<?php echo count($costumeType) == 0 ? 0 : $costumeType->id;?>" />
 					<input type="text" id="costume_name" name="costume_name" class="form-control" placeholder="Costume name...">
 					<span class="input-group-btn">
 						<button  type="submit" class="btn btn-default" type="button">Add</button>

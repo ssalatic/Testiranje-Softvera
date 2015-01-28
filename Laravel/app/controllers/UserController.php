@@ -115,7 +115,6 @@ class UserController extends \BaseController {
 			$user->first_name = Input::get('first_name');
 			$user->last_name = Input::get('last_name');
 			$user->birth_date = Input::get('birth_date');
-			$user->social_number = Input::get('social_number');
 			$user->phone_number = Input::get('phone_number');
 			$user->email = Input::get('email');
 			$user->sex = Input::get('gender');
@@ -198,7 +197,6 @@ class UserController extends \BaseController {
 			$usr->first_name = Input::get('first_name');
 			$usr->last_name = Input::get('last_name');
 			$usr->birth_date = Input::get('birth_date');
-			$usr->social_number = Input::get('social_number');
 			$usr->phone_number = Input::get('phone_number');
 			$usr->email = Input::get('email');
 			$usr->sex = Input::get('gender');
@@ -230,6 +228,42 @@ class UserController extends \BaseController {
 		UserModel::find($id)->delete();
 		
 		return Redirect::route('users.show', Auth::user()->id);
+	}
+
+
+
+	public function new_password($id){
+		$usr = UserModel::find($id);
+
+		$rules = array(
+			'new_password' => 'required|alpha_num|min:8',
+		);
+
+		$validator = Validator::make(Input::all(['new_password']), $rules);
+		//$validator = $this->validate(Input::only(['new_password']));
+		//echo $usr->password;
+		//echo Input::get('np');
+		//echo Hash::make(Input::get('new_password')).'   -   '.Hash::make(Input::get('old_password')).'  -  '.$usr->password;
+
+		if ($validator->passes()) {
+			if (Hash::check(Input::get('old_password'), $usr->password)) {
+				$usr->password = Input::get('new_password');
+				$usr->save();
+				return Redirect::route('users.show', $usr->id)->withErrors(['Changed']);
+			} else
+				return Redirect::route('users.show', $usr->id)->withErrors(['Does not match']);
+		}else{
+			return Redirect::route('users.show', $usr->id)->withErrors($validator)->withInput();
+		}
+
+		/*if($usr->password === Input::get('old_password')) {
+			$usr->password = Input::get('new_password');
+			$usr->save();
+
+			return Redirect::route('users.show', $usr->id)->withErrors(['Changed']);
+		}
+		else return Redirect::route('users.show',$usr->id)->withErrors(['Does not match']);
+	*/
 	}
 
 

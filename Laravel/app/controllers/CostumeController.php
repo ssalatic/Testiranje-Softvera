@@ -70,7 +70,7 @@ class CostumeController extends \BaseController {
 		if(count($costume) != 0)
 			return Redirect::route('costumes.show', $costume->id);
 		else
-			return Redirect::route('emptyPage', 0);
+				return Redirect::route('emptyPage', 0);
 	}
 
 

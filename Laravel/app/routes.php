@@ -117,6 +117,8 @@ Route::group(array('before' => 'secure'), function()
 	{
 		return Response::download(public_path().'/files/'.$path);
 	}));
+
+	Route::put('password.new/{id}', array('https' => true , 'as' => 'password.new', 'uses' => 'UserController@new_password'));
 	
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	

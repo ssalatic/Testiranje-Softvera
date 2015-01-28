@@ -81,7 +81,9 @@ class CostumeController extends \BaseController {
 	 */
 	public function create()
 	{
-		//
+		//$costume = new CostumeModel();
+		//echo Input::get('costume_type')." ".Input::get('id');
+		//$costume->identifier = Input::get('costume_type');
 	}
 
 
@@ -92,7 +94,7 @@ class CostumeController extends \BaseController {
 	 */
 	public function store()
 	{
-		//
+
 	}
 
 
@@ -137,14 +139,38 @@ class CostumeController extends \BaseController {
 	 */
 	public function update($id)
 	{
-	echo "kurac";/*
-		$costumeType = CostumeTypeModel::find($id);
-		$costume = [];
-		$costumes = [];
-		return View::make('pages.costumes', array(	'costume' => $costume,
-													'costumes' => $costumes,
-													'costumeType' => $costumeType			
-												)); */
+		$costume = CostumeModel::find($id);
+		$costume->identifier = Input::get('name');
+		$costume->owner = Input::get('possesion');
+		$costume->size = Input::get('size');
+
+		$costume->save();
+		//echo Input::get('possesion');
+		return Redirect::route('costumes.show', $costume->id);
+	}
+
+
+	public function add_costume_type(){
+		$costume_type = new CostumeTypeModel();
+		$costume_type->name = Input::get('costume_type');
+		$costume_type->save();
+
+		return Redirect::route('emptyPage', 0);
+
+
+	}
+
+	public function add_costume(){
+		$costume = new CostumeModel();
+		$costume->identifier = Input::get('costume_name');
+		$costume->costume_type_id = Input::get('id');
+		$costume->owner = '2';
+		$costume->size = 'XL';
+		$costume->save();
+
+		return Redirect::route('costumes.show', $costume->id);
+
+
 	}
 	
 	

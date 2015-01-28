@@ -121,7 +121,11 @@ Route::group(array('before' => 'secure'), function()
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	
 	Route::post('handleLogin', array('before' => 'csrf', 'https' => true , 'as' => 'handle.login', 'uses' => 'PagesController@handleLogin'));
-	
+
+	Route::post('costumetype_add', array('https' => true , 'as' => 'add.costumetype', 'uses' => 'CostumeController@add_costume_type'));
+
+	Route::post('costume_add', array('https' => true , 'as' => 'add.costume', 'uses' => 'CostumeController@add_costume'));
+
 	Route::get('validate', array('as' => 'validate', function()
 	{
 		$token = Input::get('token');

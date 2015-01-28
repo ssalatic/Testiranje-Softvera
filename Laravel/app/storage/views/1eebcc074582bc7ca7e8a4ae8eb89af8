@@ -61,12 +61,15 @@
 					?>
 				</select>
 				<br/>
+
+			<form id="add_costumeType" method="POST" class="form-horizontal" action="<?php echo URL::route('add.costumetype'); ?>">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Costume type...">
+					<input type="text" id="costume_type" name="costume_type" class="form-control" placeholder="Costume type...">
 					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">Add</button>
+						<button type="submit" class="btn btn-default" type="button">Add</button>
 					</span>
 				</div>
+			</form>
 		</div>
         <div class="col-sm-3">
 			<div class="header"><h4>Red Costumes</h4></div>
@@ -75,53 +78,73 @@
                          <input type="text" placeholder="Search" class="form-control">
                     </div>
                 </form>
-				<select class="form-control" multiple="" size = "4">
+				<select class="form-control" multiple="" size = "4" onchange="location=this.options[this.selectedIndex].value">
 					<?php
 						//echo $costumeType;
 						if(count ($costumes) != 0){
 						foreach($costumes as $c)
 							if($c == $costume)
-								echo '<option selected>'.$c->identifier.'</option>';
+								echo '<option value ="'.route('costumes.show',$c->id).' " selected >'.$c->identifier.'</option>';
 							else
-								echo '<option>'.$c->identifier.'</option>';
+								echo '<option value ="'.route('costumes.show',$c->id).' ">'.$c->identifier.'</option>';
 						}
 					
 					?>
 				</select>
 				<br/>
+			<form id="add_costume" method="POST" class="form-horizontal" action="<?php echo URL::route('add.costume'); ?>">
 				<div class="input-group">
-					<input type="text" class="form-control" placeholder="Costume name...">
+					<input type="hidden" name="id" value="<?php echo $costumeType->id;?>" />
+					<input type="text" id="costume_name" name="costume_name" class="form-control" placeholder="Costume name...">
 					<span class="input-group-btn">
-						<button class="btn btn-default" type="button">Add</button>
+						<button  type="submit" class="btn btn-default" type="button">Add</button>
 					</span>
 				</div>
+			</form>
 		</div>
+
+	<?php echo Form::open(['method' => 'PUT', 'class'=>"form-horizontal", 'route' => ['costumes.update', count($costume) == 0 ? 1 : $costume->id]]); ?>
+
+
 		<div class="col-sm-2 form-group" style="margin-top: 3%;">
 			<label for="name">Name</label><br/>
 			<?php 
 				if( count($costume) != 0 ) 
-					echo '<input type="text" id="name" value ="'.$costume->identifier.'" class="form-control input-sm />"';  
+					echo '<input type="text" id="name" name="name" value ="'.$costume->identifier.'" class="form-control input-sm />"';
 				else 	
-					echo '<input type="text" id="name" class="form-control input-sm />"'; 
+					echo '<input type="text" id="name" name="name" class="form-control input-sm />"';
 			?>
 			<label for="size">Size</label><br/>
 			<?php 
 				if( count($costume) != 0 ) 
-					echo '<input type="text" id="size" value ="'.$costume->size.'" class="form-control input-sm />"';  
+					echo '<input type="text" id="size" name="size" value ="'.$costume->size.'" class="form-control input-sm />"';
 				else 	
-					echo '<input type="text" id="size" class="form-control input-sm />"'; 
+					echo '<input type="text" id="size" name="size" class="form-control input-sm />"';
 			?>
 			<label for="possesion">Possesion</label><br/>
 			<?php 
 			if( count($costume) != 0 ) {
 				$user_in_posesion = $costume->userInPossesion()->getResults();
-				echo '<input type="text" id="possesion" value ="'.$costume->identifier.'" class="form-control input-sm />"';  
+				echo '<input type="text" id="possesion" name="possesion" value ="'.$costume->owner.'" class="form-control input-sm />"';
 			}
 			else 
-				echo '<input type="text" id="possesion" class="form-control input-sm />"';
+				echo '<input type="text" id="possesion" name="possesion" class="form-control input-sm />"';
 			?>
 			
 			</div>
+
+			<div class="form-group">
+				<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+				<button type="submit" class="btn btn-success btn-xs">Save</button>
+			</div>
+
+	<?php echo Form::close(); ?>
+
+
+
+
+
+
 		</div>
         <div class="col-sm-4">
 			<div class="header"><h4>Select Users</h4></div>

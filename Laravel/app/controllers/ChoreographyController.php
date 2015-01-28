@@ -28,7 +28,7 @@ class ChoreographyController extends \BaseController {
 	}
 	
 	
-	public function validate()
+	public function validate($data)
 	{
 
 		$rules = array(
@@ -36,16 +36,9 @@ class ChoreographyController extends \BaseController {
 				'id' =>'sometimes|required|integer|unique:choreogrphy,id',
 				'name' => 'sometimes|alpha_num|max:45',
 				'music' => 'sometimes|alpha_num|max:45',
-				// ???? 'rhythm' => 'sometimes|', ????
+				'rhythm' => 'sometimes|alpha_num|max:45',
 				'tempo' => 'sometimes|alpha_num|max:45',
-				'duration' => 'sometimes|integer',
-				'hard' => 'sometimes|boolean',
-				'soft' => 'sometimes|boolean',
-				'choreography_file.id' =>'somethimes|required|integer|unique:choreography_file,id',
-				'choreography_file.choreography_id' => 'sometimes|integer|required|exists:choreography,id',
-				'choreography_file.file_name' => 'sometimes|required|max:45',
-				'choreography_file.file_type' => 'sometimes|alpha_num|max:10'
-				
+				'duration' => 'sometimes|integer'
 		);
 		
 		return Validator::make($data, $rules);
@@ -99,17 +92,31 @@ class ChoreographyController extends \BaseController {
 	{
 		$validator = $this->validate(Input::except(['id']));
 		if ($validator->passes()){
-		/*
+		
 			$choreography = new ChoreographyModel();
-			$choreography.name = Input::get('');
-			$choreography.music = Input::get('');
-			$choreography.rhythm = Input::get('');
-			$choreography.tempo = Input::get('');
-			$choreography.duration = Input::get('');
-			$choreography.hard = Input::get('');
-			$choreography.soft = Input::get('');
-			*/
+			$choreography->name = Input::get('name');
+			$choreography->music = Input::get('music');
+			
+			$choreography->rhythm = Input::get('rhythm');
+			$choreography->tempo = Input::get('tempo');
+			
+			$hours = Input::get('hours');
+			$minutes = Input::get('minutes');
+			$duration = $hours*60 + $minutes;
+			
+			$choreography->duration = $duration;
+			
+			$hard = Input::get('hard');
+			$soft = Input::get('soft');
+			
+			$choreography->hard = (($hard == 'on')?1:0);
+			$choreography->soft = (($soft == 'on')?1:0);
+			$choreography->save();
+			
+			return Redirect::route('choreographies.show',$choreography->id)->withErrors($validator)->withInput();
 		}else{
+			$id = Input::get('id');
+			return Redirect::route('choreographies.show',$id)->withErrors($validator)->withInput();
 		}
 	
 	}
@@ -125,12 +132,31 @@ class ChoreographyController extends \BaseController {
 	{
 		if (Auth::user()->isAdmin() || Auth::user()->isTrainer())
 		{
-			$choreography = ChoreographyModel::find($id);
+			$choreography = ChoreographyModel::find($id);			
+			
+			if($choreography == null){
+				$choreography = new ChoreographyModel();
+				$choreography->name = '';
+				$choreography->music = '';
+				$choreography->rhythm = '';
+				$choreography->tempo = '';
+				$choreography->duration = 0;
+				$choreography->hard = '';
+				$choreography->soft = '';
+				
+				$choreography->id = $id;
+				
+				$users = [];
+				$files = [];
+				$otherUsers = [];
+			}else{
+				$users = $choreography->users;
+				$files = $choreography->files;
+				$otherUsers = ChoreographyController::getOtherUsers($users);
+			}
+			
 			$choreographies = ChoreographyModel::all();
-			$users = $choreography->users;
-			$files = $choreography->files;
-		
-			$otherUsers = ChoreographyController::getOtherUsers($users);
+			
 		}
 		
 		return View::make('pages.admin_choreography', array('choreography' => $choreography,
@@ -162,7 +188,37 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		//
+		$choreography = ChoreographyModel::find($id);
+		
+		$validator = $this->validate(Input::except(['id']));
+		if ($validator->passes()){
+		
+			$choreography->name = Input::get('name');
+			$choreography->music = Input::get('music');
+			
+			$choreography->rhythm = Input::get('rhythm');
+			$choreography->tempo = Input::get('tempo');
+			
+			$hours = Input::get('hours');
+			$minutes = Input::get('minutes');
+			$duration = $hours*60 + $minutes;
+			
+			$choreography->duration = $duration;
+			
+			$hard = Input::get('hard');
+			$soft = Input::get('soft');
+			
+			$choreography->hard = (($hard == 'on')?1:0);
+			$choreography->soft = (($soft == 'on')?1:0);
+			$choreography->save();
+			
+			return Redirect::route('choreographies.show',$choreography->id)->withErrors($validator)->withInput();
+		}else{
+			$id = Input::get('id');
+			return Redirect::route('choreographies.show',$id)->withErrors($validator)->withInput();
+		}
+	
+		
 	}
 
 

@@ -134,7 +134,7 @@
 						foreach($choreographies as $chor){
 							//choreographies.show
 							echo '<option value = "'.route('choreographies.show', $chor->id).'"> '.$chor->name.' </option>';
-						}
+					 	}
 					?>
 					<!--
 					<option>Grand Masters</option>
@@ -155,13 +155,42 @@
                     <td>Tempo:</td><td><span id="tempo"><?php echo $choreography->tempo; ?></span></td>
                 </tr>
 				<tr>
-					<td>Duration:</td><td><span id="duration"><?php echo $choreography->duration; ?></span></td>
+					<td>Duration:</td><td><span id="duration">
+						<?php 
+							if($choreography->duration != 0){
+								$hours = (int)($choreography->duration / 60);
+								$minutes = $choreography->duration - $hours*60;
+								
+								echo $hours.'h '.$minutes.'m';
+							}
+						?>
+					</span></td>
                 </tr>
 				<tr>
-					<td>Soft:</td><td><span id="soft"><?php echo ($choreography->soft ? 'Yes' : 'No'); ?></span></td>
+					<td>Soft:</td><td><span id="soft">
+						<?php 
+							$output = '';
+							if($choreography->soft == 1){
+								$output = 'Yes';
+							}else if($choreography->soft !== ''){
+								$output = 'No';
+							}
+							echo $output; 
+						?>
+					</span></td>
                 </tr>
 				<tr>
-					<td>Hard:</td><td><span id="hard"><?php echo ($choreography->hard ? 'Yes' : 'No'); ?></span></td>
+					<td>Hard:</td><td><span id="hard">
+						<?php 
+							$output = '';
+							if($choreography->hard == 1){
+								$output = 'Yes';
+							}else if($choreography->hard !== ''){
+								$output = 'No';
+							}
+							echo $output; 
+						?>
+					</span></td>
                 </tr>
 				
             </table>
@@ -245,9 +274,7 @@
                             <button type="submit" class="btn btn-default">Remove</button>
                         </div>
 						</div>
-				</form>
-					
-					
+				</form>			
 				</div>
 				
 				
@@ -319,62 +346,84 @@
 		</div>
 		<div id="new_choreography" class="white_content">
                 <div class="panel-body" align="center">
-					<form  id="registrationForm" method="POST" class="form-horizontal" action="<?php echo URL::route('choreographies.store'); ?>>
+					<form  id="registrationForm" method="POST" class="form-horizontal" action="<?php echo URL::route('choreographies.store'); ?>">
 					<label for="_name" class="control-label">Name:</label><br>
 					<input type="text" name="name" id="name" class="form-control" /><br>
 					<label for="music" class="control-label">Music:</label><br>
-					<input type="text" id="judges" class="form-control" /><br>
+					<input type="text" name="music" class="form-control" /><br>
+					<label for="rhythm" class="control-label">Rhythm:</label><br>
+					<input type="text" name="rhythm" class="form-control" /><br>
 					<label for="tempo" class="control-label">Tempo:</label><br>
-					<input type="text" id="musician" class="form-control" /><br>
-					<label for="duration" class="control-label">Duration:</label><br>
-					<input type="text" id="ogranizer" class="form-control" /><br>
+					<input type="text" name="tempo" class="form-control" /><br>
+					<label for="duration" class="control-label">Duration</label><br>
+					<label for="hours" class="control-label"> Hours:</label>
+					<input type="number" name="hours" min="0" max="59"/>
+					<br>
+					<label for="minutes" class="control-label">Minutes:</label>
+					<input type="number" name="minutes" min="0" max="59"/>
+					<br>
 					<div class="checkbox">
 						<label>
-							<input  type="checkbox" />Hard
+							<input name="soft"  type="checkbox" />Soft
 						</label>
 					</div>
 					<br>
 					<div class="checkbox">
 						<label>
-							<input  type="checkbox" />Soft
+							<input name="hard"  type="checkbox" />Hard
 						</label>
 					</div>
 					<br>
-					<button type="submit" class="btn btn-success btn-xs">Save Competition</button>
+					
+					<input type="hidden" name="id" value="<?php echo $choreography->id;?>" />
+					
+					<button type="submit" class="btn btn-success btn-xs">Add Competition</button>
 					<a href = "javascript:void(0)" onclick = "document.getElementById('new_choreography').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
 					</form>
                 </div>
-			
-			
 		</div>
 		
 		<div id="edit_choreography" class="white_content">
                 <div class="panel-body" align="center">
-					<form  id="registrationForm" method="POST" class="form-horizontal" action="<?php echo URL::route('choreographies.store'); ?>>
+					<?php echo Form::open(['method' => 'PUT', 'style' => "margin: 15px;", 'class'=>"form-horizontal", 'route' => ['choreographies.update', $choreography->id]]); ?>
+
+				<!--	<form  id="registrationForm" method="PUT" class="form-horizontal" action="<?php echo URL::route('choreographies.update', $choreography->id); ?>> -->
+					
 					<label for="_name" class="control-label">Name:</label><br>
-					<input type="text" name="name" id="name" class="form-control" /><br>
+					<input type="text" name="name" id="name" class="form-control" value="<?php echo $choreography->name; ?>"/><br>
 					<label for="music" class="control-label">Music:</label><br>
-					<input type="text" id="judges" class="form-control" /><br>
+					<input type="text" name="music" class="form-control" value="<?php echo $choreography->music; ?>" /><br>
+					<label for="rhythm" class="control-label">Rhythm:</label><br>
+					<input type="text" name="rhythm" class="form-control" value="<?php echo $choreography->rhythm ?>"/><br>
 					<label for="tempo" class="control-label">Tempo:</label><br>
-					<input type="text" id="musician" class="form-control" /><br>
-					<label for="duration" class="control-label">Duration:</label><br>
-					<input type="text" id="ogranizer" class="form-control" /><br>
+					<input type="text" name="tempo" class="form-control" value="<?php echo $choreography->tempo; ?>" /><br>
+					<label for="duration" class="control-label">Duration</label><br>
+					<label for="hours" class="control-label"> Hours:</label>
+					<input type="number" name="hours" min="0" max="59" value="<?php echo (int)($choreography->duration/60) ?>"/>
+					<br>
+					<label for="minutes" class="control-label">Minutes:</label>
+					<input type="number" name="minutes" min="0" max="59" value="<?php echo (int)($choreography->duration%60) ?>"/>
+					<br>
+					
+					
 					<div class="checkbox">
 						<label>
-							<input  type="checkbox" />Hard
+							<input  name="soft" type="checkbox" <?php echo ($choreography->soft == 1? 'checked' : '') ?> />Soft
 						</label>
 					</div>
 					<br>
 					<div class="checkbox">
 						<label>
-							<input  type="checkbox" />Soft
+							<input  name="hard" type="checkbox" <?php echo ($choreography->hard == 1? 'checked' : '') ?> />Hard
 						</label>
 					</div>
 					<br>
-					<button type="submit" class="btn btn-success btn-xs">Update Competition</button>
+					<button type="submit" class="btn btn-success btn-xs">Update Choreography</button>
 					<a href = "javascript:void(0)" onclick = "document.getElementById('edit_choreography').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
-					</form>
-                </div>
+					<!-- </form> -->
+					<?php echo Form::close(); ?>
+
+				</div>
 			
 			
 		</div>

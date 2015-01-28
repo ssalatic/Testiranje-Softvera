@@ -118,7 +118,10 @@
 			<div class="col-lg-6">
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_choreography').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Add New</a>
 				<a href = "javascript:void(0)" onclick = "document.getElementById('edit_choreography').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
-				<a href="#" class="btn btn-danger btn-xs">Delete</a>
+				{{ Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("Are you sure??");', 'route' => ['choreographies.destroy', $choreography->id]]) }}
+                {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) }}
+                {{ Form::close() }}
+				
 			</div>
 		</div>
 		<div class="row">
@@ -201,7 +204,7 @@
 				<div class="col-sm-4"><h4>Files</h4></div>
 				<?php
 				 if($choreography->id !=0)
-					echo '<div class="col-sm-2 col-sm-offset-1"><a href = "javascript:void(0)" onclick = "document.getElementById("new_file").style.display="block";document.getElementById("fade").style.display="block"" class="btn btn-info btn-xs">Add new file</a></div>';
+					echo '<div class="col-sm-2 col-sm-offset-1"><a href = "javascript:void(0)" onclick = "document.getElementById(\'new_file\').style.display=\'block\';document.getElementById(\'fade\').style.display=\'block\'" class="btn btn-info btn-xs">Add new file</a></div>';
 				?>
 			</div>
 			<table class="table table-striped table-hover ">
@@ -221,9 +224,12 @@
 					echo'<td>'.$file->id.'</td>';
 					echo '<td><a href='. route('download', $file->file_name.'.'.$file->file_type ) .'>'.$file->file_name.'</a></td>';
 					echo'<td><span class="label label-success">'.$file->file_type.'</span></td>';
-				?> <input type="hidden" name="id" value="<?php echo $choreography->id; ?>" />
+				 
 					echo '<td>'.Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("Are you sure??");', 'route' => ['choreographies.destroyFile', $file->id]]);
+				?>	
+					<input type="hidden" name="id" value="<?php echo $choreography->id;?>" />
 				<?php
+					
 					echo Form::submit('Delete', ['class' => 'btn btn-danger btn-xs'])."
 
                                          ".Form::close();

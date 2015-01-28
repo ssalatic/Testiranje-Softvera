@@ -227,8 +227,26 @@ class ChoreographyController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
-	}
+		$choreography = ChoreographyModel::find($id);
+		
+		foreach($choreography->files as $file) {
+			unlink(public_path().'/files/'.$file->file_name.'.'.$file->file_type);
+			$file->delete();
+		}
+		$choreography->users()->detach();
+		
+		$choreography->delete();
+		$choreography_id =0;
+		if(count(ChoreographyModel::first())>0){
+			$choreography_id = ChoreographyModel::first()->id;
+		}
+		
+		return Redirect::route('choreographies.show', $choreography_id);
+
+		
+		}
+
+	
 	
 	
 	// remove from other to knows

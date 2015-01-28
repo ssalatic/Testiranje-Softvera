@@ -280,6 +280,39 @@ class ChoreographyController extends \BaseController {
 		
 		return $otherUsers;
 	}
+	
+	public function uploadFile(){
+		$fileName = Input::get('fileName');
+		$fileType = Input::file('fileToUpload')->getClientOriginalExtension();
+		$file = Input::file('fileToUpload')->getClientOriginalName();
+		$choreography_id = Input::get('id');
+		
+		$destinationPath = public_path().'/files/';
+		
+		$uploadedFile = Input::file('fileToUpload')->move($destinationPath, $fileName.'.'.$fileType);
+	
+		
+		$newFile = new ChoreographyFileModel();
+		$newFile->file_name = $fileName;
+		$newFile->file_type = Input::file('fileToUpload')->getClientOriginalExtension();
+		$newFile->choreography_id = $choreography_id;
+		
+		$newFile->save();
+		
+		return Redirect::route('choreographies.show', $choreography_id);
+	}
+	
+	public function destroyFile($id){	
+		$choreography_id = Input::get('id');
+		$file = ChoreographyFileModel::find($id);
+		
+		echo $choreography_id;
+		
+		unlink(public_path().'/files/'.$file->file_name.'.'.$file->file_type);
+		$file->delete();
+		
+		return Redirect::route('choreographies.show', $choreography_id);
+	}
 
 	private function getEmptyObject(){
 		$choreography = new ChoreographyModel();

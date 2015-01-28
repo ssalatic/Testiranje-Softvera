@@ -199,7 +199,10 @@
 			
 			<div class="header">
 				<div class="col-sm-4"><h4>Files</h4></div>
-				<div class="col-sm-2 col-sm-offset-1"><a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-info btn-xs">Add new file</a></div>
+				<?php
+				 if($choreography->id !=0)
+					echo '<div class="col-sm-2 col-sm-offset-1"><a href = "javascript:void(0)" onclick = "document.getElementById("new_file").style.display="block";document.getElementById("fade").style.display="block"" class="btn btn-info btn-xs">Add new file</a></div>';
+				?>
 			</div>
 			<table class="table table-striped table-hover ">
                 <thead>
@@ -207,20 +210,27 @@
                     <th>#</th>
                     <th>Name</th>
                     <th>Type</th>
-                </tr>
+					<th>Actions</th>
+				</tr>
                 </thead>
                 <tbody>
 				
 				<?php 
-					foreach($files as $file){
-					 echo'<tr>';
-					 echo'<td>'.$file->id.'</td>';
-					 echo'<td>'.$file->file_name.'</td>';
-					 echo'<td><span class="label label-success">'.$file->file_type.'</span></td>';
-                    //<td><a href="#">Opening ceremony</a></td>
-                    //<td><span class="label label-success">Video</span></td>
-					 echo'</tr>';
-					}
+				 foreach($files as $file){
+					echo'<tr>';
+					echo'<td>'.$file->id.'</td>';
+					echo '<td><a href='. route('download', $file->file_name.'.'.$file->file_type ) .'>'.$file->file_name.'</a></td>';
+					echo'<td><span class="label label-success">'.$file->file_type.'</span></td>';
+				?> <input type="hidden" name="id" value="<?php echo $choreography->id; ?>" />
+					echo '<td>'.Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("Are you sure??");', 'route' => ['choreographies.destroyFile', $file->id]]);
+				<?php
+					echo Form::submit('Delete', ['class' => 'btn btn-danger btn-xs'])."
+
+                                         ".Form::close();
+					echo '</td>';
+					
+					echo'</tr>';
+				 }
 				?>
                 </tbody>
             </table>
@@ -297,37 +307,19 @@
 
     </div>
 	</div>
-	
+		
+		
 		<div id="new_file" class="white_content">
-			<table class="table table-striped table-hover" style="width:100%;">
-				<tr>
-					<td>
-						<span class="label label-info">Change file</span>
-					</td>
-					<td>
-						<p>/User/Desktop/Competition/video.mpg</p>
-					</td>
-					</td>
-					<td><span class="label label-success">Video</span></td>
-				</tr>
-				<tr>
-						<td>
-							<span class="label label-info">Change file</span>
-						</td>
-						<td>
-							<p>/User/Desktop/Competition/coreographies.mpg</p>
-						</td>
-						</td>
-						<td><span class="label label-info">PDF</span></td>
-					</tr>
-					<tr>
-						<td><a href="#" class="btn btn-info btn-xs">Select file</a></td>
-						<td></td>
-						<td></td>
-					</tr>
-				</table>
-				<a href="#" class="btn btn-success btn-xs">Add File</a>
-				<a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
+			<form action="{{ URL::route('uploadChoreographyFile') }}" method="POST" enctype="multipart/form-data">
+				
+				<input type="hidden" name="id" value="<?php echo $choreography->id;?>" />
+				<label for="_name" class="control-label">File Name:</label><br>
+				<input type="text" name="fileName" id="fileName" class="form-control" /><br>
+				<input type="file" name="fileToUpload" id="fileToUpload"/><br>
+				
+				<button type="submit" class="btn btn-success btn-xs">Add File</button>
+				<a href = "javascript:void(0)" onclick = "document.getElementById('new_file').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>	
+			</form>
 		</div>
 		<div id="new_choreography" class="white_content">
                 <div class="panel-body" align="center">
@@ -362,7 +354,7 @@
 					
 					<input type="hidden" name="id" value="<?php echo $choreography->id;?>" />
 					
-					<button type="submit" class="btn btn-success btn-xs">Add Competition</button>
+					<button type="submit" class="btn btn-success btn-xs">Add Choreography</button>
 					<a href = "javascript:void(0)" onclick = "document.getElementById('new_choreography').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
 					</form>
                 </div>

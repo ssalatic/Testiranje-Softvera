@@ -36,7 +36,6 @@
  @stop
 
  @section('content')
-
 		<div class="row">
 		<div class="col-sm-3">
 			<div class="header"><h4>Series</h4></div>

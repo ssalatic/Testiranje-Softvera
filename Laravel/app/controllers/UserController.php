@@ -107,10 +107,10 @@ class UserController extends \BaseController {
 
 		$validator = $this->validate(Input::except(['id']));
 		
-		if ($validator->passes()) 
+		if ($validator->passes())
 		{
 			$user = new UserModel();
-			
+
 			$user->username = Input::get('username');
 			$user->first_name = Input::get('first_name');
 			$user->last_name = Input::get('last_name');
@@ -118,29 +118,57 @@ class UserController extends \BaseController {
 			$user->phone_number = Input::get('phone_number');
 			$user->email = Input::get('email');
 			$user->sex = Input::get('gender');
-			$user->user_type = Input::get('user_type');
+
+
+			$dencer = Input::get('dancer');
+			$designer = Input::get('designer');
+			$trainer = Input::get('trainer');
+			$admin = Input::get('admin');
+
+			if($dencer == 'on' && $designer == 'on' && $trainer == 'on' && $admin == 'on') $user->user_type = 14;
+			else if($admin == 'on' && $trainer == 'on' && $designer == 'on') $user->user_type = 10;
+			else if($admin == 'on' && $trainer == 'on' && $dencer == 'on') $user->user_type = 11;
+			else if($admin == 'on' && $designer == 'on' && $dencer == 'on') $user->user_type = 12;
+			else if($trainer == 'on' && $designer == 'on' && $dencer == 'on') $user->user_type = 13;
+
+			else if($admin == 'on' && $trainer == 'on') $user->user_type = 4;
+			else if($admin == 'on' && $designer == 'on') $user->user_type = 5;
+			else if($admin == 'on' && $dencer == 'on') $user->user_type = 6;
+			else if($trainer == 'on' && $designer == 'on') $user->user_type = 7;
+			else if($trainer == 'on' && $dencer == 'on') $user->user_type = 8;
+			else if($designer == 'on' && $dencer == 'on') $user->user_type = 9;
+
+			else if($admin == 'on') $user->user_type = 0;
+			else if($trainer == 'on') $user->user_type = 1;
+			else if($designer == 'on') $user->user_type = 2;
+			else if($dencer == 'on') $user->user_type = 3;
+
+			//echo $user->user_type;
+			//$user->user_type = Input::get('user_type');
+
+
 			$user->height = Input::get('height');
 			$user->password = Input::get('social_number');
 			$user->shoe_size = Input::get('shoe_size');
 			$user->sneakers_size = Input::get('sneakers_size');
 			$user->ballet_shoe_size = Input::get('ballet_shoe_size');
 			$user->validated = Session::token();
-			
+
 		    $user->save();
-		    
+
 		    Mail::queue('emails.welcome', array('token' => Session::token()), function($message)
 		    {
 		    	$message->to(Input::get('email'), Input::get('username'))->subject('Welcome!');
 		    });/*
 			return Redirect::route('users.update',$user->id)->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
 		    */
-			
+
 			//return Redirect::back()->with('msg', 'Radiiiii!');
-			return Redirect::route('users.show',Auth::user()->id)->withErrors($validator)->withInput();
-		     //return Redirect::back()->withErrors(['Thanks for registering! Validation e-mail was sent to provided address!']);
+			//return Redirect::route('users.show',Auth::user()->id)->withErrors($validator)->withInput();
+		     return Redirect::back()->withErrors(['Thanks for registering! Validation e-mail was sent to provided address!']);
 			 //return Redirect::route('practices.update')->with('msg', 'Thanks for registering! Validation e-mail was sent to provided address!');
-		} 
-		else 
+		}
+		else
 		{	
 			//return Redirect::route('users.show',Auth::user()->id)->withErrors(['Ne valja']);
 			return Redirect::route('users.show',Auth::user()->id)->withErrors($validator)->withInput();

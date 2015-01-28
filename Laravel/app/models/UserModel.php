@@ -247,30 +247,69 @@ class UserModel extends \Eloquent implements UserInterface {
 	}
 	
 	public function isAdmin(){
-		return $this->attributes['user_type'] == 0;
+		return $this->attributes['user_type'] == 0 ||
+		$this->attributes['user_type'] == 4 ||
+		$this->attributes['user_type'] == 5 ||
+		$this->attributes['user_type'] == 6 ||
+		$this->attributes['user_type'] == 10 ||
+		$this->attributes['user_type'] == 11 ||
+		$this->attributes['user_type'] == 12 ||
+		$this->attributes['user_type'] == 14;
 	}
 	
 	public function isTrainer(){
-		return $this->attributes['user_type'] == 1;
+		return $this->attributes['user_type'] == 1 ||
+		$this->attributes['user_type'] == 4 ||
+		$this->attributes['user_type'] == 7 ||
+		$this->attributes['user_type'] == 8 ||
+		$this->attributes['user_type'] == 10 ||
+		$this->attributes['user_type'] == 11 ||
+		$this->attributes['user_type'] == 13 ||
+		$this->attributes['user_type'] == 14;
 	}
 	
 	
 	public function isDesigner(){
-		return $this->attributes['user_type'] == 2;
+		return $this->attributes['user_type'] == 2 ||
+		$this->attributes['user_type'] == 5 ||
+		$this->attributes['user_type'] == 7 ||
+		$this->attributes['user_type'] == 9 ||
+		$this->attributes['user_type'] == 10 ||
+		$this->attributes['user_type'] == 12 ||
+		$this->attributes['user_type'] == 13 ||
+		$this->attributes['user_type'] == 14;
 	}
 	
 	public function isDancer(){
-		return $this->attributes['user_type'] == 3;
+		return $this->attributes['user_type'] == 3 ||
+		$this->attributes['user_type'] == 6 ||
+		$this->attributes['user_type'] == 8 ||
+		$this->attributes['user_type'] == 9 ||
+		$this->attributes['user_type'] == 11 ||
+		$this->attributes['user_type'] == 12 ||
+		$this->attributes['user_type'] == 13 ||
+		$this->attributes['user_type'] == 14;
 	}
 	
 	public static function getUsers($userType){
 		
-		$users = UserModel::where('user_type', '=', $userType)->get(); //DB::table('user')->where('user_type', $userType)->get();
+		$users = UserModel::all(); //DB::table('user')->where('user_type', $userType)->get();
 		
 		echo '<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value" size = "3" >'; 
 				
 		foreach($users as $user){
-			echo '<option value ="'.route('users.update',$user->id).'">'.$user->username.'</option>';
+			if($userType == 0)
+				if($user->isAdmin())
+					echo '<option value ="'.route('users.update',$user->id).'">'.$user->username.'</option>';
+			if($userType == 1)
+				if($user->isTrainer())
+					echo '<option value ="'.route('users.update',$user->id).'">'.$user->username.'</option>';
+			if($userType == 2)
+				if($user->isDesigner())
+					echo '<option value ="'.route('users.update',$user->id).'">'.$user->username.'</option>';
+			if($userType == 3)
+				if($user->isDancer())
+					echo '<option value ="'.route('users.update',$user->id).'">'.$user->username.'</option>';
 		} 
 		
 		echo '</select>';
@@ -281,6 +320,17 @@ class UserModel extends \Eloquent implements UserInterface {
 		if($id == 1) echo "Trainer";
 		if($id == 2) echo "Designer";
 		if($id == 3) echo "Dancer";
+		if($id == 4) echo "Admin, Trainer";
+		if($id == 5) echo "Admin, Designer";
+		if($id == 6) echo "Admin, Dancer";
+		if($id == 7) echo "Trainer, Designer";
+		if($id == 8) echo "Trainer, Dancer";
+		if($id == 9) echo "Designer, Dancer";
+		if($id == 10) echo "Admin, Trainer, Designer";
+		if($id == 11) echo "Admin, Trainer, Dancer";
+		if($id == 12) echo "Admin, Designer, Dancer";
+		if($id == 13) echo "Trainer, Designer, Dancer";
+		if($id == 14) echo "Admin, Trainer, Designer, Dancer";
 	}
 	
 	/*public static function getUserWithId($id){

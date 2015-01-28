@@ -545,26 +545,27 @@
 			<div class="btn-toolbar">
 				<div class="btn-group1" id="user_type">
 					<div class="col-sm-5">
-					<div class="radio">
-                                <label>
-                                    <input type="checkbox" name="user_type" value="3" /> Dancer
-                                </label>
-                            </div>
-							<div class="radio">
-                                <label>
-                                    <input type="checkbox" name="user_type" value="2" /> Designer
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input type="checkbox" name="user_type" value="1" /> Trainer
-                                </label>
-                            </div>
-							 <div class="radio">
-                                <label>
-                                    <input type="checkbox" name="user_type" value="0" /> Admin
-                                </label>
-                            </div>
+
+						<div class="checkbox">
+							<label>
+								<input name="dancer"  type="checkbox" />Dancer
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input name="designer"  type="checkbox" />Designer
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input name="trainer"  type="checkbox" />Trainer
+							</label>
+						</div>
+						<div class="checkbox">
+							<label>
+								<input name="admin"  type="checkbox" />Admin
+							</label>
+						</div>
 					</div>
 			<!--		<a href="#" class="btn btn-primary btn-xs">Dancer</a>
 					<a href="#" class="btn btn-primary btn-xs">Trainer</a>

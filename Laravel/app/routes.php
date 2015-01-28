@@ -101,7 +101,7 @@ Route::group(array('before' => 'secure'), function()
 	
 	Route::get('emptyPage/{id}', array('before' => 'secure|auth', 'https' => true , 'as' => 'emptyPage', 'uses' => 'CostumeController@emptyPage'), function($id){
 		return $id;
-	}	
+	}
 	);
 	
 	Route::post('addToKnows', array('before' => 'secure|auth', 'https' => true , 'as' => 'addToKnows', 'uses' => 'ChoreographyController@addToKnows'));
@@ -116,10 +116,6 @@ Route::group(array('before' => 'secure'), function()
 	Route::get('function', array('before' => 'secure|auth', 'https' => true , 'as' => 'function', 'uses' => 'PagesController@get_user_func'));
 	Route::delete('competitions.destroyFile/{id}', array('before' => 'secure|auth', 'https' => true , 'as' => 'competitions.destroyFile', 'uses' => 'CompetitionController@destroyFile'));
 	Route::post('competitions.upload/{id}', array('before' => 'secure|auth', 'https' => true , 'as' => 'competitions.upload', 'uses' => 'CompetitionController@upload'));
-	Route::get('download/{path}', array('before' => 'secure|auth', 'https' => true , 'as' => 'download', function($path)
-	{
-		return Response::download(public_path().'/files/'.$path);
-	}));
 
 	Route::put('password.new/{id}', array('https' => true , 'as' => 'password.new', 'uses' => 'UserController@new_password'));
 

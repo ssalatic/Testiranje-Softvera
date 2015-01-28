@@ -107,6 +107,9 @@ Route::group(array('before' => 'secure'), function()
 	Route::post('addToKnows', array('before' => 'secure|auth', 'https' => true , 'as' => 'addToKnows', 'uses' => 'ChoreographyController@addToKnows'));
 	Route::post('removeFromKnows', array('before' => 'secure|auth', 'https' => true , 'as' => 'removeFromKnows', 'uses' => 'ChoreographyController@removeFromKnows'));
 	
+	Route::post('addToCanWear', array('before' => 'secure|auth', 'https' => true , 'as' => 'addToCanWear', 'uses' => 'CostumeController@addToCanWear'));
+	Route::post('removeFromCanWear', array('before' => 'secure|auth', 'https' => true , 'as' => 'removeFromCanWear', 'uses' => 'CostumeController@removeFromCanWear'));
+	
 	
 	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 	Route::get('gallery', array('before' => 'secure|auth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));

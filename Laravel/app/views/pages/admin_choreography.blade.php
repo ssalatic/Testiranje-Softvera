@@ -222,23 +222,6 @@
 					 echo'</tr>';
 					}
 				?>
-				<!--
-                <tr>
-                    <td>1</td>
-                    <td><a href="#">Opening ceremony</a></td>
-                    <td><span class="label label-success">Video</span></td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td><a href="#">Photos</a></td>
-                    <td><span class="label label-danger">Photo</span></td>
-                </tr>
-                <tr>
-                    <td>1</td>
-                    <td><a href="#">Coreography</a></td>
-                    <td><span class="label label-info">PDF</span></td>
-                </tr>
-				-->
                 </tbody>
             </table>
         </div>

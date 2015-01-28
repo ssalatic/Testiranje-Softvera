@@ -50,6 +50,10 @@ class UserModel extends \Eloquent implements UserInterface {
 		return $this->belongsToMany('ChoreographyModel', 'user_choreography', 'user_id', 'choreography_id');
 	}
 	
+	public function costumes(){
+		return $this->belongsToMany('CostumeModel', 'user_costume', 'user_id', 'costume_id');
+	}
+	
 	public function trainerInTrainings()
 	{
 		return $this->hasMany('TrainingModel', 'trainer_id');

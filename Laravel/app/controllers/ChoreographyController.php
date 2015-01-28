@@ -142,18 +142,7 @@ class ChoreographyController extends \BaseController {
 			if($choreography == null){
 				
 				$choreography = $this->getEmptyObject();
-				/*
-				$choreography = new ChoreographyModel();
-				$choreography->name = '';
-				$choreography->music = '';
-				$choreography->rhythm = '';
-				$choreography->tempo = '';
-				$choreography->duration = 0;
-				$choreography->hard = '';
-				$choreography->soft = '';
 				
-				$choreography->id = $id;
-				*/
 				$users = [];
 				$files = [];
 				$otherUsers = [];

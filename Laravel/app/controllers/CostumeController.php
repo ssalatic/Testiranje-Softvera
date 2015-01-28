@@ -111,11 +111,18 @@ class CostumeController extends \BaseController {
 		$costumeType = $costume->type()->getResults();
 		//echo $costumeType->name;
 		$costumes = $costumeType->costumes()->getResults();
+		
+		$wearUsers = $costume->users;
+		$otherUsers = CostumeController::getOtherUsers($wearUsers);
+		
+		
 		return View::make('pages.costumes', array(	'costume' => $costume,
 													'costumes' => $costumes,
-													'costumeType' => $costumeType			
+													'costumeType' => $costumeType,
+													'wearUsers' => $wearUsers,
+													'otherUsers' => $otherUsers
 												));
-
+	
 	}
 
 
@@ -193,9 +200,14 @@ class CostumeController extends \BaseController {
 			$costumeType = [];
 		$costume = [];
 		$costumes = [];
+		$wearUsers = [];
+		$otherUsers = [];
+		
 		return View::make('pages.costumes', array(	'costume' => $costume,
 													'costumes' => $costumes,
-													'costumeType' => $costumeType			
+													'costumeType' => $costumeType,
+													'wearUsers' => $wearUsers,
+													'otherUsers' => $otherUsers													
 												));
 	
 	
@@ -213,6 +225,53 @@ class CostumeController extends \BaseController {
 	{
 		//
 	}
-
-
+	
+	
+	public function addToCanWear(){
+		
+		$costume_id = Input::get('id');
+		
+		$costume = CostumeModel::find($costume_id);
+		$costume->users()->attach(Input::get('other'));
+		
+		return Redirect::route('costumes.show', $costume_id);
+		
+	}
+	
+	public function removeFromCanWear(){
+		$costume_id = Input::get('id');
+		
+		$costume = CostumeModel::find($costume_id);
+		$costume->users()->detach(Input::get('know'));
+		
+		return Redirect::route('costumes.show', $costume_id);
+	}
+	
+	public static function getOtherUsers($kUsers){
+		$allUsers = UserModel::all();
+		
+		$otherUsers = array();
+		
+		foreach($allUsers as $user){
+			if($user->isAdmin()){
+				continue;
+			}		
+			
+			$found = false;
+			
+			foreach($kUsers as $targetUser){
+				
+				if($user->id == $targetUser->id){
+					$found = true;
+					break;
+				}
+			}
+			if(!$found){
+				array_push($otherUsers, $user);
+			}
+		}
+		
+		return $otherUsers;
+	}
+	
 }

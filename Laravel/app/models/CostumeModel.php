@@ -36,4 +36,9 @@ class CostumeModel extends \Eloquent {
 		return $this->hasMany('ConcertChoreographyUserModel', 'costume_id');
 	}
 	
+	public function users()
+	{
+		return $this->belongsToMany('UserModel', 'user_costume', 'costume_id', 'user_id');
+	}
+	
 }

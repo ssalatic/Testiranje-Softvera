@@ -27,4 +27,28 @@ class TrainingModel extends \Eloquent {
 		return $this->belongsTo('GroupModel');
 	}
 	
+	public static function getTrainings(){
+		$trainings = TrainingModel::all();
+		return $trainings;
+	}
+	
+	public static function getVisibleTrainings(){
+		$trainings = TrainingModel::all();
+		
+		$currentDate = new DateTime();
+		$visibleTrainings = array();
+		
+		foreach($trainings as $training){
+			$training_date = new DateTime($training->date);
+			$interval = $currentDate->diff($training_date);
+			
+			$day = $interval->format('%d');
+			$yar = $interval->format('%y');
+			$mon = $interval->format('%m');
+			if($yar == 0 && $mon == 0 && $day < 14)
+				array_push($visibleTrainings,$training);
+			
+		}
+		return $visibleTrainings;
+	}
 }

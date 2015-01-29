@@ -166,51 +166,59 @@
 		<div class="col-sm-3">
 			<div class="header"><h4>Upcoming Practices</h4></div>
 			<ul class="nav nav-tabs">
-                <li class="active"><a href="#regular" data-toggle="tab" aria-expanded="true">Regular</a></li>
-            </ul>
-			<?php
-			// OVDE TREBA DA SE SREDI PERSONAL (NEMA U BAZI NISTA ZA TO)
-			/*<ul class="nav nav-tabs">
 				<li class="active"><a href="#regular" data-toggle="tab" aria-expanded="true">Regular</a></li>
 				<li class=""><a href="#personal" data-toggle="tab" aria-expanded="true">Personal</a></li>
 			</ul>
-			*/
-			?>
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="regular">
-
-					<select name="type1" class="form-control" multiple>
+					<form role="search">
+						<div class="form-group">
+                            <input type="text" placeholder="Search" class="form-control">
+                        </div>
+                    </form>
+					<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value" size = "3" >
 						<?php
-						if($trainings != null){
-                            foreach($trainings as $trn){
-                                if($training != null)
-                                if ($trn->id == $training->id)
-                                    echo'<option selected value = "'.route('trainings.show', $trn->id) .'">'. $trn->date.'</option>';
-                                else
-                                    echo'<option value = "'.route('trainings.show', $trn->id) .'"> '.$trn->date.' </option>';
-                            }
-						}else{
-						        echo'<option value = "">  </option>';
-
-						}
+							$trainings = TrainingModel::getVisibleTrainings();
+							foreach($trainings as $training){
+								if($training->group_id != null){
+									$training_date = new DateTime($training->date);
+									echo '<option  value ="'.route('trainings.update',$training->id).'"> Group: '.GroupModel::find($training->group_id)->name.' ('.$training_date->format('d F').')</option>';
+								}
+							}
+						
 						?>
+						<!--
+						<option>Kvazimodo ooo</option>
+						<option>Kvazimodko oooo</option>
+						-->
 					</select>
 				</div>
-
-
+				
+				
 				<div class="tab-pane fade" id="personal">
 					<form role="search">
 						<div class="form-group">
                             <input type="text" placeholder="Search" class="form-control">
                         </div>
                     </form>
-					<select class="form-control" multiple="">
-						<?php /*
-                        <option>Trainer #1</option>
-						<option>Trainer #2</option>*/?>
+					<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value" size = "3" >
+						<?php
+							$trainings = TrainingModel::getVisibleTrainings();
+							foreach($trainings as $training){
+								if($training->group_id == null){
+									$training_date = new DateTime($training->date);
+									echo '<option  value ="'.route('trainings.update',$training->id).'"> Trainer: '.UserModel::find($training->trainer_id)->first_name.' ('.$training_date->format('d F').')</option>';
+								}
+							}
+							
+						?>
+						<!--
+						<option>Trainer #1</option>
+						<option>Trainer #2</option>
+						-->
 					</select>
 				</div>
-			</div>
+			</div>	
 		</div>
 		<div class="col-sm-5">
 			<table class="user-info hidden-xs">

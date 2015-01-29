@@ -134,10 +134,7 @@
 			if(egender == 'male') document.getElementById('edit_male').checked = true;
 			else document.getElementById('edit_female').checked = true;
 			
-			if(eutype == 0) document.getElementById('edit_admin').checked = true;
-			if(eutype == 1) document.getElementById('edit_trainer').checked = true;
-			if(eutype == 2) document.getElementById('edit_designer').checked = true;
-			if(eutype == 3) document.getElementById('edit_dancer').checked = true;
+
 			
 			
 			showPopup(id);
@@ -197,10 +194,7 @@
 	</div>
     <div class="row">
 		<div class="col-sm-3">
-			<div class="header"><h4 id="name"></h4></div>
-			<div id="pic">
-				<img src="img/user.jpg" width="200" height="200"/>
-			</div>
+			<div class="header"><h4 id="name">Username: <?php echo $user->username; ?></h4></div>
 			
 			<div class="header"><h4>Select User</h4></div>
 			<ul class="nav nav-tabs">
@@ -293,7 +287,16 @@
 				</tr>
 				<tr></tr>
 				<tr>
-					<td>Dues:</td> <td><span>Paid</span></td>
+					<td>Dues:</td> <td><span>
+							<?php
+								$dues = PaymentModel::where('user_id','=',$user->id)->first();
+								if(count($dues) != 0){
+									$date = new DateTime($dues->date_payed);
+									echo $date->format('d.m.Y').' - '.$dues->amount.' din';
+								}
+
+							?>
+						</span></td>
 				</tr>
 				<tr></tr>
             </table>
@@ -435,35 +438,47 @@
 			
 			<label for="usernam">Username:</label><br>
 			<input type="text" id="edit_username" name="username" class="form-control" readonly/><br>
-		
-			<div id="pic">
-				<img src="img/user.jpg" width="200" height="200"/>
-			</div>
+
 			<label for="user_type">User type:</label>
 			<div class="btn-toolbar">
 				<div class="btn-group1" id="user_type">
 					<div class="col-sm-5">
-					<div class="radio">
-                                <label>
-                                    <input id = "edit_dancer" type="checkbox" name="user_type" value="3" /> Dancer
-                                </label>
-                            </div>
-							<div class="radio">
-                                <label>
-                                    <input id = "edit_designer" type="checkbox" name="user_type" value="2" /> Designer
-                                </label>
-                            </div>
-                            <div class="radio">
-                                <label>
-                                    <input  id = "edit_trainer" type="checkbox" name="user_type" value="1" /> Trainer
-                                </label>
-                            </div>
-							 <div class="radio">
-                                <label>
-                                    <input id = "edit_admin" type="checkbox" name="user_type" value="0" /> Admin
-                                </label>
-                            </div>
-					</div>
+
+							<div class="checkbox">
+								<label>
+									<?php
+										if($user->isDancer())
+										echo '<input id = "dancer" name="dancer"  type="checkbox" checked/>Dancer';
+										else echo '<input id = "dancer" name="dancer"  type="checkbox" />Dancer';
+									?>
+								</label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<?php
+									if($user->isDesigner())
+										echo '<input id = "dancer" name="designer"  type="checkbox" checked/>Designer';
+									else echo '<input id = "dancer" name="designer"  type="checkbox" />Designer';
+								?></label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<?php
+								if($user->isTrainer())
+									echo '<input id = "dancer" name="trainer"  type="checkbox" checked/>Trainer';
+								else echo '<input id = "dancer" name="trainer"  type="checkbox" />Trainer';
+								?></label>
+							</div>
+							<div class="checkbox">
+								<label>
+								<?php
+								if($user->isAdmin())
+									echo '<input id = "dancer" name="admin"  type="checkbox" checked/>Admin';
+								else echo '<input id = "dancer" name="admin"  type="checkbox" />Admin';
+								?>
+									</label>
+							</div>
+						</div>
 			<!--		<a href="#" class="btn btn-primary btn-xs">Dancer</a>
 					<a href="#" class="btn btn-primary btn-xs">Trainer</a>
 					<a href="#" class="btn btn-primary btn-xs">Admin</a> -->
@@ -505,7 +520,20 @@
 			<label for="email">Email:</label><br>
 			<input type="email" id="edit_email" name="email" class="form-control"/><br>
 			<label for="group">Group:</label>
-			<?php GroupModel::getGroups(); ?>
+			<?php
+				$groups = GroupModel::all(); //DB::table('user')->where('user_type', $userType)->get();
+
+				echo '<select name="groups[]" class="form-control" id="group" multiple size = "3">';
+
+				foreach($groups as $group){
+				if($user->inGroup($group->id))
+					echo '<option selected value="'.$group->id.'">'.$group->name.'</option>';
+				else
+					echo '<option value="'.$group->id.'">'.$group->name.'</option>';
+				}
+
+				echo '</select>';
+			?>
 			<br><br><br>
 			<div class="form-group">
                         <div> <!-- FRAME STYLE -->
@@ -534,9 +562,7 @@
 			<label for="usernam">Username:</label><br>
 			<input type="text" id="username" name="username" class="form-control"/><br>
 		
-			<div id="pic">
-				<img src="img/user.jpg" width="200" height="200"/>
-			</div>
+
 			<label for="user_type">User type:</label>
 			<div class="btn-toolbar">
 				<div class="btn-group1" id="user_type">

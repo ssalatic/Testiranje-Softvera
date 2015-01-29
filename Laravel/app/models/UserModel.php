@@ -78,6 +78,18 @@ class UserModel extends \Eloquent implements UserInterface {
 	{
 		return $this->belongsToMany('GroupModel', 'user_group', 'user_id', 'group_id');
 	}
+
+
+	public function inGroup($id)
+	{
+		$groups = $this->groups()->getResults();
+		foreach($groups as $group){
+			if($group->id == $id){
+				return true;
+			}
+		}
+		return false;
+	}
 	
 	public function defaultTrainerInGroups()
 	{

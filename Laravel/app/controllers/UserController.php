@@ -216,35 +216,59 @@ class UserController extends \BaseController {
 	 */
 	public function update($id)
 	{
-		$usr = UserModel::find($id);
+		$user = UserModel::find($id);
 		
 		$validator = $this->validate(Input::except(['id','username']));
 		
 		if ($validator->passes()) 
 		{
-			
-			$usr->username = Input::get('username');
-			$usr->first_name = Input::get('first_name');
-			$usr->last_name = Input::get('last_name');
-			$usr->birth_date = Input::get('birth_date');
-			$usr->phone_number = Input::get('phone_number');
-			$usr->email = Input::get('email');
-			$usr->sex = Input::get('gender');
-			$usr->user_type = Input::get('user_type');
-			$usr->height = Input::get('height');
-			$usr->shoe_size = Input::get('shoe_size');
-			$usr->sneakers_size = Input::get('sneakers_size');
-			$usr->ballet_shoe_size = Input::get('ballet_shoe_size');
-			
-			$usr->groups()->attach(Input::get('groups'));
-			
-		    $usr->save();
+
+			$user->username = Input::get('username');
+			$user->first_name = Input::get('first_name');
+			$user->last_name = Input::get('last_name');
+			$user->birth_date = Input::get('birth_date');
+			$user->phone_number = Input::get('phone_number');
+			$user->email = Input::get('email');
+			$user->sex = Input::get('gender');
+
+			$dencer = Input::get('dancer');
+			$designer = Input::get('designer');
+			$trainer = Input::get('trainer');
+			$admin = Input::get('admin');
+
+			if($dencer == 'on' && $designer == 'on' && $trainer == 'on' && $admin == 'on') $user->user_type = 14;
+			else if($admin == 'on' && $trainer == 'on' && $designer == 'on') $user->user_type = 10;
+			else if($admin == 'on' && $trainer == 'on' && $dencer == 'on') $user->user_type = 11;
+			else if($admin == 'on' && $designer == 'on' && $dencer == 'on') $user->user_type = 12;
+			else if($trainer == 'on' && $designer == 'on' && $dencer == 'on') $user->user_type = 13;
+
+			else if($admin == 'on' && $trainer == 'on') $user->user_type = 4;
+			else if($admin == 'on' && $designer == 'on') $user->user_type = 5;
+			else if($admin == 'on' && $dencer == 'on') $user->user_type = 6;
+			else if($trainer == 'on' && $designer == 'on') $user->user_type = 7;
+			else if($trainer == 'on' && $dencer == 'on') $user->user_type = 8;
+			else if($designer == 'on' && $dencer == 'on') $user->user_type = 9;
+
+			else if($admin == 'on') $user->user_type = 0;
+			else if($trainer == 'on') $user->user_type = 1;
+			else if($designer == 'on') $user->user_type = 2;
+			else if($dencer == 'on') $user->user_type = 3;
+
+			$user->height = Input::get('height');
+			$user->shoe_size = Input::get('shoe_size');
+			$user->sneakers_size = Input::get('sneakers_size');
+			$user->ballet_shoe_size = Input::get('ballet_shoe_size');
+
+			$user->groups()->detach();
+			$user->groups()->attach(Input::get('groups'));
+
+			$user->save();
 			//$usr->groups()->sync(Input::get('groups'));
-			return Redirect::route('users.show', $usr->id)->withErrors("Updated");
+			return Redirect::route('users.show', $user->id)->withErrors("Updated");
 		}
 		else
 		{
-			return Redirect::route('users.show', $usr->id)->withErrors($validator);
+			return Redirect::route('users.show', $user->id)->withErrors($validator);
 		}
 	}
 

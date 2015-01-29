@@ -223,7 +223,19 @@ class CostumeController extends \BaseController {
 	 */
 	public function destroy($id)
 	{
-		//
+		$costume = CostumeModel::find($id);
+	
+		$costume->users()->detach();
+		
+		/*
+		$costumeType = $costume->type();
+		$costumes = $costumeType->costumes();
+		foreach($costumes as $cst){
+			if($cst->id == $id)
+				$cst->delete();
+		} */
+		$costume->delete(); 
+		return Redirect::route('costumes.index');
 	}
 	
 	

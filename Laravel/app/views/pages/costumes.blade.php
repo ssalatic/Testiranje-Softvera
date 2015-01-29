@@ -164,10 +164,13 @@
 			<div class="form-group">
 				<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
 				<button type="submit" class="btn btn-success btn-xs">Save</button>
+				
 			</div>
-
+			
 	{{ Form::close() }}
-
+			{{ Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("Are you sure??");', 'route' => ['costumes.destroy', ($costume == [] ? 0 : $costume->id) ]]) }}
+                {{ Form::submit('Delete', ['class' => 'btn btn-danger btn-xs']) }}
+                {{ Form::close() }}
 
 
 

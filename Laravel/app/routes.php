@@ -129,6 +129,7 @@ Route::group(array('before' => 'secure'), function()
 	Route::put('password.new/{id}', array('https' => true , 'as' => 'password.new', 'uses' => 'UserController@new_password'));
 
 	Route::put('update.dues/{id}', array('https' => true , 'as' => 'update.dues', 'uses' => 'UserController@update_dues'));
+	Route::put('update.about/{id}', array('https' => true , 'as' => 'update.about', 'uses' => 'UserController@add_about'));
 	
 	Route::get('logout', array('as' => 'logout', 'uses' => 'PagesController@logout'));
 	

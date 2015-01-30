@@ -100,21 +100,21 @@
  @stop
 
  @section('content')
-	
-	<div class="row">
-		<div id="notifications">
-			<div class="alert alert-dismissable alert-info">
-				<button type="button" class="close" data-dismiss="alert">×</button>
-				<strong>Alert</strong>Ubacujte obavjestenja ovdje. Npr. ako se resetuje password. 
-			</div>
-		</div>
-	</div>
+
+	 <?php
+	 if($errors->any())
+		 echo 	'<div class="row">
+					<div id="notifications">
+					<div class="alert alert-dismissable alert-info">
+					<button type="button" class="close" data-dismiss="alert">×</button>
+					<strong>Alert</strong>'."   ".$errors->first().'</div>
+					</div>
+					</div>';
+	 ?>
     <div class="row">
 		<div class="col-sm-3">
-			<div class="header"><h4 id="name">Marko Markovic</h4></div>
-			<div id="pic">
-				<img src="img/user.jpg" width="200" height="200"/>
-			</div>
+			<div class="header"><h4 id="name">Username: <?php echo $user->username; ?></h4></div>
+			<br/><br/>
 			
 			<div class="header"><h4>Select User</h4></div>
 			<ul class="nav nav-tabs">
@@ -179,62 +179,62 @@
 			</div>
 
 			
-		</div>	
+		</div>
 		<div class="col-sm-5">
-			<table class="user-info hidden-xs">
+			<table id = "table" class="user-info hidden-xs">
 				<tr>
-					<td>First name:</td><td><span id="first_name">Marko</span></td>
-                </tr>
+					<td>First name:</td><td><span id="first_name"> <?php echo $user->first_name; ?></span></td>
+				</tr>
 				<tr>
-					<td>Last name:</td><td><span id="last_name">Markovic</span></td>
-                </tr>
-                <tr>
-                    <td>Birth date:</td><td><span id="birth_date">1. 1. 1990.</span></td>
-                </tr>
+					<td>Last name:</td><td><span id="last_name"><?php echo $user->last_name; ?></span></td>
+				</tr>
 				<tr>
-					<td>Social number:</td><td><span id="social_number">12345674890</span></td>
-                </tr>
+					<td>Birth date:</td><td><span id="birth_date"><?php echo $user->birth_date; ?></span></td>
+				</tr>
 				<tr>
-					<td>Phone number:</td><td><span id="phone_number">12345674890</span></td>
-                </tr>
+					<td>Phone number:</td><td><span id="phone_number"><?php echo $user->phone_number; ?></span></td>
+				</tr>
 				<tr>
-					<td>Email:</td><td><span id="email">marko@markovic.com</span></td>
-                </tr>
+					<td>Email:</td><td><span id="email"><?php echo $user->email; ?></span></td>
+				</tr>
 				<tr>
-                    <td>User type:</td><td><span id="user_type">Dancer</span></td>
-                </tr>
+					<td>User type:</td><td><span id="user_type"><?php UserModel::printUserType($user->user_type); ?></span></td>
+				</tr>
 				<tr>
-					<td>Gender:</td><td><span id="gener">Male</span></td>
-                </tr>
-				
+					<td>Gender:</td><td><span id="gener"><?php echo $user->sex; ?></span></td>
+				</tr>
+
 				<tr>
-					<td>Group:</td><td><span id="group">101</span></td>
-                </tr>
+					<td>Group(s):</td>
+				</tr>
+				<?php $groups = $user->groups;
+				foreach($groups as $group){
+					echo '<tr><td></td><td><span id="group">'.$group->name.'</span></td></tr>';
+				}
+				?>
+
 				<tr>
 					<td>Size:</td>
 				</tr>
 				<tr>
-					<td><span>Shoe</span></td><td><span id="group">45.5</span></td>
+					<td><span>Shoe</span></td><td><span id="group"><?php echo $user->shoe_size; ?></span></td>
 				</tr>
 				<tr>
-					<td><span>Ballet</span></td><td><span id="group">45.5</span></td>
+					<td><span>Ballet</span></td><td><span id="group"><?php echo $user->ballet_shoe_size; ?></span></td>
 				</tr>
 				<tr>
-					<td><span> Sneakers</span><td><span id="group">45.5</span></td>
+					<td><span> Sneakers</span><td><span id="group"><?php echo $user->sneakers_size; ?></span></td>
 				</tr>
-				<tr>	</tr>
-				</table>
+				<tr></tr>
+				<tr></tr>
+			</table>
 				<table class="user-info hidden-xs">
-					<tr>
-	
-						<td><a href = "javascript:void(0)" onclick = "showPopup('reset_message')" class="btn btn-danger btn-xs">Reset password</a></td>
-					</tr>
-				
+
 					<tr>
 						<td>About:</td>
 					</tr>
 					<tr>
-						<td><span >Ku*** palac i mali kriminalac</span></td>
+						<td><span ><?php echo $user->about; ?></span></td>
 					</tr>
 				<tr>
 						<!--<td><textarea type="text" id="about" class="text-control"></textarea>About</td> -->
@@ -242,34 +242,34 @@
 						<td><a href = "javascript:void(0)" onclick = "showPopup('about_message')" class="btn btn-danger btn-xs">Edit</a></td>
 				</tr>
 				</table>
-            
+
 		</div>
-        <div class="col-sm-3">
+		<div class="col-sm-3">
 			<div class="panel panel-success">
 				<div class="panel-heading">
 					<h3 class="panel-title">Skill level</h3>
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-hover ">
-					<thead>
+						<thead>
 						<tr>
 							<th>Type</th><th>Level</th>
 						</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>Light jig</td>
-						<td>Medium</td>      
-					</tr>
-					<tr>
-						<td>Jig</td>
-						<td>Interm.</td>
-					</tr>
-					<tr>
-						<td>Jig</td>
-						<td>Begginer</td>
-					</tr>
-					</tbody>
+						</thead>
+						<tbody>
+						<tr>
+							<td>Light jig</td>
+							<td>Medium</td>
+						</tr>
+						<tr>
+							<td>Jig</td>
+							<td>Interm.</td>
+						</tr>
+						<tr>
+							<td>Jig</td>
+							<td>Begginer</td>
+						</tr>
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -279,22 +279,37 @@
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-hover ">
-					<thead>
+						<thead>
 						<tr>
 							<th>Costume</th>
 						</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>Blue small #1</td>     
-					</tr>
-					<tr>
-						<td>Blue small #2</td>
-					</tr>
-					<tr>
-						<td>Blue small #3</td>
-					</tr>
-					</tbody>
+						</thead>
+						<tbody>
+
+						<?php
+
+						/*OVO NECE DA RADI!*/
+						$costumes = $user->costumes;
+						foreach($costumes as $costume){
+
+							echo '<tr>
+								<td>'.$costume->identifier.'</td>
+								</tr>';
+
+						}
+
+
+						?>
+						<!--<tr>
+                            <td>Blue small #1</td>
+                        </tr>
+                        <tr>
+                            <td>Blue small #2</td>
+                        </tr>
+                        <tr>
+                            <td>Blue small #3</td>
+                        </tr>-->
+						</tbody>
 					</table>
 				</div>
 			</div>
@@ -304,48 +319,53 @@
 				</div>
 				<div class="panel-body">
 					<table class="table table-striped table-hover ">
-					<thead>
+						<thead>
 						<tr>
 							<th>Coreography</th>
 						</tr>
-					</thead>
-					<tbody>
-					<tr>
-						<td>Chor #1</td>     
-					</tr>
-					<tr>
-						<td>Chor #2</td>
-					</tr>
-					<tr>
-						<td>Chor #3</td>
-					</tr>
-					</tbody>
+						</thead>
+						<tbody>
+
+						<?php
+						$coreographies = $user->choreographys();
+						foreach($coreographies as $coreography){
+
+							echo '<tr>
+								<td>'.$coreography->name.'</td>
+								</tr>';
+
+						}
+
+
+						?>
+						<!--<tr>
+                            <td>Chor #1</td>
+                        </tr>
+                        <tr>
+                            <td>Chor #2</td>
+                        </tr>
+                        <tr>
+                            <td>Chor #3</td>
+                        </tr>-->
+						</tbody>
 					</table>
 				</div>
 			</div>
-        </div>
-    </div>
+		</div>
+	</div>
 	
 @stop
-<div id="reset_message" class="white_content">
-	<form>
-		<label for="old_password" class="control-label">Old password:</label><br>
-		<input type="password" id="old_password"  class="form-control"/><br>
-		<label for="new_password" class="control-label">New password:</label><br>
-		<input type="password" id="new_password" class="form-control" /><br>
-		<a href="#" class="btn btn-success btn-xs" >Confirm</a>
-		<a href = "javascript:void(0)" onclick = "hidePopup('reset_message')" class="btn btn-danger btn-xs">Cancel</a>
-	</form>
- 
-</div>
 
 <div id="about_message" class="white_content">
-	<form>
+	{{ Form::open(['method' => 'PUT', 'route' => ['update.about', $user->id]]) }}
 		<label for="old_password" class="control-label">About</label><br/>
-		<textarea rows="6" class="form-control" style="resize:none;"></textarea><br/>
-		<a href="#" class="btn btn-success btn-xs" >Confirm</a>
-		<a href = "javascript:void(0)" onclick = "hidePopup('about_message')" class="btn btn-danger btn-xs">Cancel</a>
-	</form>
+		<textarea rows="6" class="form-control" name = "text" style="resize:none;"><?php echo $user->about; ?></textarea><br/>
+		<div class="form-group">
+			<!-- Do NOT use name="submit" or id="submit" for the Submit button -->
+			<button type="submit" class="btn btn-success btn-xs">Confirm</button>
+			<a href = "javascript:void(0)" onclick = "hidePopup('about_message')" class="btn btn-danger btn-xs">Cancel</a>
+		</div>
+	{{ Form::close() }}
  
 </div>
 

@@ -321,4 +321,13 @@ class UserController extends \BaseController {
 	}
 
 
+	public function add_about($id){
+		$user = UserModel::find($id);
+		$user->about = Input::get('text');
+		$user->save();
+		return Redirect::route('users.show', $id);
+
+	}
+
+
 }

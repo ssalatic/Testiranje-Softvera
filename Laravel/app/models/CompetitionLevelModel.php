@@ -2,7 +2,7 @@
 
 class CompetitionLevelModel extends \Eloquent {
 	
-	protected $fillable = ['name'];
+	protected $fillable = ['name', 'age_cat'];
 	
 	protected $guarded = ['id'];
 	

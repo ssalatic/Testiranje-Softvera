@@ -113,7 +113,7 @@ Route::group(array('before' => 'secure'), function()
 	
 	Route::post('addToCanWear', array('before' => 'secure|auth', 'https' => true , 'as' => 'addToCanWear', 'uses' => 'CostumeController@addToCanWear'));
 	Route::post('removeFromCanWear', array('before' => 'secure|auth', 'https' => true , 'as' => 'removeFromCanWear', 'uses' => 'CostumeController@removeFromCanWear'));
-	
+	Route::post('addNewUser/{id}', array('before' => 'secure|auth', 'https' => true , 'as' => 'addNewUser', 'uses' => 'CompetitionController@add_new_user'));
 	
 	Route::get('login', array('before' => 'secure|isAuth', 'https' => true , 'as' => 'login', 'uses' => 'PagesController@login'));
 	Route::get('gallery', array('before' => 'secure|auth', 'https' => true , 'as' => 'gallery', 'uses' => 'PagesController@gallery'));

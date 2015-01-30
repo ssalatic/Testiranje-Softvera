@@ -58,8 +58,13 @@
 		left: 35%;
 		top: 15%;
 	}
-	
-	#new_file{
+
+     #edit_competition {
+         left: 35%;
+         top: 15%;
+     }
+
+     #new_file{
 		left: 30%;
 		top: 35%;
 	}
@@ -102,6 +107,12 @@
         });
 
 
+        function setPossesion(id)
+        {
+            document.getElementById('user_id').value = id;
+        }
+
+
     </script>
 @stop
 
@@ -109,7 +120,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Add New</a>
-				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
+				<a href = "javascript:void(0)" onclick = "document.getElementById('edit_competition').style.display='block';document.getElementById('fade').style.display='block'" class="btn btn-success btn-xs">Edit</a>
                 @if($comp != null)
 				{{ Form::open(['method' => 'DELETE', 'onSubmit' => 'return confirm("You sure??");', 'route' => ['competitions.destroy', $comp->id]]) }}
 
@@ -321,9 +332,37 @@
                 <tbody>
                     <?php
                     if($parts != null){
-                        foreach($parts as $participation)
-                            foreach($participation->users as $user){
-                                echo '
+                        foreach($parts as $participation){
+                            $user = UserModel::find($participation->user_id);
+
+
+                            echo '
+                                    <tr>
+                                        <td><a href="'.route('users.show', $user->id).'">'. $user->first_name .' '.$user->last_name .'</a> </td>
+                                        <td><span class="label label-primary"> '. $participation->competitionType['name'].' </span></td>
+                                        <td>'.$participation->competitionLevel['name'].'</td>
+                                        <td>'.$participation->result.'</td>
+                                       <td>
+                                             <div class="checkbox">
+                                                <label>';
+                                    if($participation->star){
+                                        echo '<input  type="checkbox" disabled="" checked><p></p>';
+                                    }
+                                    else{
+                                        echo '<input type="checkbox" disabled=""><p></p>';
+                                    }
+                                    echo '
+                                                                </label>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ';
+                            //foreach($participation->users as $user){
+
+                               // echo 'asd<br/>';
+
+
+                            /*    echo '
                                     <tr>
                                         <td><a href="'.route('users.show', $user->id).'">'. $user->first_name .' '.$user->last_name .'</a> </td>
                                         <td><span class="label label-primary"> '. $participation->competitionType['name'].' </span></td>
@@ -343,7 +382,7 @@
                                             </div>
                                         </td>
                                     </tr>
-                                ';
+                                ';*/
                             }
                     }
                     ?>
@@ -362,48 +401,80 @@
                          <input type="text" placeholder="Search" class="form-control">
                     </div>
                 </form>
-				<select class="form-control" multiple="">
-					<option>Petar Petrovic</option>
-					<option>Marko Markovic</option>
-					<option>Pera Peric</option>
-				</select>
+
+
+                <?php
+                        $users = UserModel::all();
+                        echo '<select class="form-control"  size = "4" onchange="setPossesion(this.options[this.selectedIndex].value)" >';
+
+                        foreach($users as $usr)
+                            echo '<option value="'.$usr->id.'">'.$usr->first_name.' '.$usr->last_name.'</option>';
+
+                        echo '</select>';
+
+                ?>
 			</div>
         <div class="col-sm-6">
             <div class="panel panel-success">
                 <div class="panel-body" align="center">
-					<div class="btn-toolbar">
-						<label>
-							<div class="btn-group">
-								<a href="#" class="btn btn-primary btn-xs">Solo</a>
-								<a href="#" class="btn btn-primary btn-xs">Team</a>
-							</div>
-						</label>
-					</div>
-					<form>
-					<label for="name" class="control-label">Age Category:</label><br>
-					<input type="text" id="name" class="form-control" /><br>
-					<label for="music" class="control-label">Level:</label><br>
-					<input type="text" id="music" class="form-control" /><br>
-					<label for="rythn" class="control-label">Type:</label><br>
-					<input type="text" id="rythm" class="form-control" /><br>
-					<label for="tempo" class="control-label">Result:</label><br>
-					<input type="text" id="tempo" class="form-control" /><br>
-					<div class="checkbox">
-						<label>
-							<input type="checkbox"> Star
-						</label>
-					</div>
-					</form>
+                    {{ Form::open(['method' => 'POST', 'class'=>"form-horizontal", 'route' => ['addNewUser', $comp!=[] ? $comp->id : 0]]) }}
+
+                        <!--<div class="btn-group">
+                            <div class="radio">
+                                <label>
+                                    <input  type="radio" name="gender" id="edit_male" value="1" /> Solo
+                                </label>
+                                <label>
+                                    <input type="radio" name="gender" id="edit_female" value="0" /> Team
+                                </label>
+                            </div>
+                        </div>-->
+                        <label for="music" class="control-label">Level:</label><br>
+                            <?php
+
+                            $users = CompetitionLevelModel::all();
+                            echo '<div align="center">
+                            <select name="level" class="form-control">';
+                            foreach($users as $usr)
+                                        echo '<option selected value="'.$usr->id.'">'.$usr->name.'</option>';
+                            echo '</select>';
+                            echo '</div>';
+                            ?>
+                        <label for="rythn" class="control-label">Type:</label>
+
+                            <?php
+
+                            $users = CompetitionTypeModel::all();
+                            echo '<div align="center">
+                                    <select name="type" class="form-control">';
+                            foreach($users as $usr)
+                                echo '<option selected value="'.$usr->id.'">'.$usr->name.'</option>';
+                            echo '</select>';
+                            echo '</div>';
+                            ?>
+                        <label for="tempo" class="control-label">Result:</label><br>
+                        <input type="text" id="tempo" name = "result" class="form-control" />
+                        <input type="hidden" id="user_id" name="user_id" class="form-control" />
+
+                        <div class="checkbox">
+                            <label>
+                                <input name = "star" type="checkbox"> Star
+                            </label>
+                        </div>
+
+
+                    <div class="row">
+                        <div class="col-sm-12">
+                            <button type="submit" class="btn btn-success btn-xs">Add Competitor</button>
+                            <a href = "javascript:void(0)" onclick = "document.getElementById('new_competitor').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
+                        </div>
+                    </div>
+                    {{ Form::close() }}
                 </div>
             </div>
         </div>
 		</div>
-		<div class="row">
-			<div class="col-sm-12">
-				<a href="#" class="btn btn-success btn-xs">Add Competitor</a>
-				<a href = "javascript:void(0)" onclick = "document.getElementById('new_competitor').style.display='none';document.getElementById('fade').style.display='none'" class="btn btn-danger btn-xs">Cancel</a>
-		</div>
-		</div>
+
 
     </div>
 
@@ -446,25 +517,51 @@
 		<div id="new_competition" class="white_content">
 			
                 <div class="panel-body" align="center">
-					<form>
+                    {{ Form::open(['method' => 'POST', 'class'=>"form-horizontal", 'route' => ['competitions.store']]) }}
 					<label for="name" class="control-label">Name:</label><br>
-					<input type="text" id="name" class="form-control" /><br>
-					<label for="date" class="control-label">Date:</label><br>
-					<input type="date" id="date"  class="form-control"/><br>
+					<input type="text" id="name" name="name" class="form-control" /><br>
+					<label for="date" class="control-label">Date starts:</label><br>
+					<input type="datetime" name="date_start"  class="form-control"/><br>
+                    <label for="date" class="control-label">Date ends:</label><br>
+                    <input type="datetime" name="date_end"  class="form-control"/><br>
 					<label for="location" class="control-label">Location:</label><br>
-					<input type="text" id="location" class="form-control" /><br>
+					<input type="text" name="location" class="form-control" /><br>
 					<label for="judges" class="control-label">Judges:</label><br>
-					<input type="text" id="judges" class="form-control" /><br>
-					<label for="musisician" class="control-label">Musician:</label><br>
-					<input type="text" id="musician" class="form-control" /><br>
-					<label for="organizer" class="control-label">Organizer:</label><br>
-					<input type="text" id="ogranizer" class="form-control" /><br>
-                    <p>[Ages missing here. Will be added later]</p>
-					</form>
+					<input type="text" name="judges" class="form-control" /><br>
+					<label for="musician" class="control-label">Musician:</label><br>
+					<input type="text" name="musician" class="form-control" /><br>
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success btn-xs">Save Competition</button>
+                        <a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
+                    </div>
+                    {{ Form::close() }}
                 </div>
-			<a href="#" class="btn btn-success btn-xs">Save Competition</a>
-			<a href = "javascript:void(0)" onclick = "document.getElementById('new_competition').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
-</div>
+        </div>
+
+        <div id="edit_competition" class="white_content">
+
+            <div class="panel-body" align="center">
+                {{ Form::open(['method' => 'PUT', 'class'=>"form-horizontal", 'route' => ['competitions.update', $comp != [] ? $comp->id : 0]]) }}
+                <label for="name" class="control-label">Name:</label><br>
+                <input type="text" id="name" name="name" class="form-control" value="<?php if($comp!=null) echo $comp->name; ?>"/><br>
+                <label for="date" class="control-label">Date starts:</label><br>
+                <input type="datetime" name="date_start"  class="form-control" value="<?php if($comp!=null) echo $comp->date_start; ?>"/><br>
+                <label for="date" class="control-label">Date ends:</label><br>
+                <input type="datetime" name="date_end"  class="form-control" value="<?php if($comp!=null) echo $comp->date_end; ?>"/><br>
+                <label for="location" class="control-label">Location:</label><br>
+                <input type="text" name="location" class="form-control" value="<?php if($comp!=null) echo $comp->location; ?>"/><br>
+                <label for="judges" class="control-label">Judges:</label><br>
+                <input type="text" name="judges" class="form-control" value="<?php if($comp!=null) echo $comp->judges; ?>"/><br>
+                <label for="musician" class="control-label">Musician:</label><br>
+                <input type="text" name="musician" class="form-control" value="<?php if($comp!=null) echo $comp->musician; ?>"/><br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success btn-xs">Save Competition</button>
+                    <a href = "javascript:void(0)" onclick = "document.getElementById('edit_competition').style.display='none';document.getElementById('fade').style.display='none' " class="btn btn-danger btn-xs">Cancel</a>
+                </div>
+                {{ Form::close() }}
+            </div>
+        </div>
+
 	<div id="fade" class="black_overlay"></div>
 @stop
 

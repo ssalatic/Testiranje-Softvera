@@ -74,7 +74,14 @@ class CompetitionController extends \BaseController {
 	 */
 	public function index()
 	{
-		return Redirect::route('competitions.show', 1);
+
+		$comp = CompetitionModel::first();
+
+		if($comp == null){
+			$comp = $this->getEmptyObject();
+		}
+
+		return Redirect::route('competitions.show', $comp->id);
 	}
 
 
@@ -96,14 +103,22 @@ class CompetitionController extends \BaseController {
 	 */
 	public function store()
 	{
-		$comp = Auth::user()->competitions()->first()->id;
+		//$comp = Auth::user()->competitions()->first()->id;
 		
-		$validator = $this->validate(Input::all());
+		//$validator = $this->validate(Input::all());
 		
-		if ($validator->passes())
-		{
+		//if ($validator->passes())
+		//{
 			$cmp = new CompetitionModel();
-				
+			$cmp->name = Input::get('name');
+			$cmp->date_start = Input::get('date_start');
+			$cmp->date_end = Input::get('date_end');
+			$cmp->location = Input::get('location');
+			$cmp->judges = Input::get('judges');
+			$cmp->musician = Input::get('musician');
+
+			$cmp->save();
+
 // 			$trn->date = Input::get('practice_date').' '.Input::get('time');
 // 			$trn->trainer_id = Input::get('teacher');
 // 			$trn->group_id = Input::get('group');
@@ -112,12 +127,12 @@ class CompetitionController extends \BaseController {
 				
 // 			$trn->users()->sync(Input::get('users'));
 		
-			return Redirect::route('competitions.show', $comp);
-		}
-		else
-		{
-			return Redirect::route('competitions.show', $comp)->withErrors($validator);
-		}
+			return Redirect::route('competitions.show', $cmp->id);
+		//}
+		//else
+		//{
+		//	return Redirect::route('competitions.show', $comp)->withErrors($validator);
+		//}
 	}
 
 
@@ -150,6 +165,8 @@ class CompetitionController extends \BaseController {
 			$part = $cm->participations;
 		else 
 			$part = null;
+
+		//echo count($part);
 		
 		if (Auth::user()->isAdmin())
 			return View::make('pages.admin_competitions', array('comp' => $cm,
@@ -187,26 +204,24 @@ class CompetitionController extends \BaseController {
 	public function update($id)
 	{
 		$cmp = CompetitionModel::find($id);
-		
-		$validator = $this->validate(Input::all());
-		
-		if ($validator->passes())
-		{
-		
+		$cmp->name = Input::get('name');
+		$cmp->date_start = Input::get('date_start');
+		$cmp->date_end = Input::get('date_end');
+		$cmp->location = Input::get('location');
+		$cmp->judges = Input::get('judges');
+		$cmp->musician = Input::get('musician');
+
+		$cmp->save();
+
 // 			$trn->date = Input::get('practice_date').' '.Input::get('time');
 // 			$trn->trainer_id = Input::get('teacher');
 // 			$trn->group_id = Input::get('group');
 // 			$trn->changed_by = Auth::user()->id;
 // 			$trn->save();
-		
-// 			$trn->users()->sync(Input::get('users'), false);
-		
-			return Redirect::route('competitions.show', $cmp->id);
-		}
-		else
-		{
-			return Redirect::route('competitions.show', $cmp->id)->withErrors($validator);
-		}
+
+// 			$trn->users()->sync(Input::get('users'));
+
+		return Redirect::route('competitions.show', $cmp->id);
 	}
 	
 	public function upload($id)
@@ -239,23 +254,9 @@ class CompetitionController extends \BaseController {
 	public function destroy($id)
 	{
 		$cm = CompetitionModel::find($id);
-		
-		foreach($cm->files as $file) {
-			unlink(public_path().'/files/'.$file->file_name);
-			$file->delete();
-		}
-		
-		foreach($cm->participations as $part) {
-			$part->users()->sync([], true);
-			
-			$part->delete();
-		}
-		
 		$cm->delete();
-		
-		$cmp = Auth::user()->competitions()->first()->id;
-		
-		return Redirect::route('competitions.show', $cmp);	
+
+		return Redirect::route('competitions.index');
 	}
 
 	public function destroyFile($id)
@@ -268,6 +269,36 @@ class CompetitionController extends \BaseController {
 		$cmp = Auth::user()->competitions()->first()->id;
 		
 		return Redirect::route('competitions.show', $cmp);
+	}
+
+	private function getEmptyObject(){
+		$cmp = new ChoreographyModel();
+		$cmp->name = '';
+		$cmp->date_start = '';
+		$cmp->date_end = '';
+		$cmp->location = '';
+		$cmp->judges = '';
+		$cmp->musician = '';
+		$cmp->id = 0;
+		return $cmp;
+	}
+
+
+	public function add_new_user($id){
+
+		$user = new ParticipationModel();
+		$user->user_id = Input::get('user_id');
+		$user->competition_id = $id;
+		$user->result = Input::get('result');
+		$star =  Input::get('star');
+		if($star == 'on') $user->star = 1;
+		else $user->star = 0;
+		$user->competition_level_id = Input::get('level');
+		$user->competition_type_id = Input::get('type');
+		$user->save();
+
+		return Redirect::route('competitions.show', $id);
+
 	}
 
 }

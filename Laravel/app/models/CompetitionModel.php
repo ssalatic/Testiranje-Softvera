@@ -3,7 +3,7 @@
 class CompetitionModel extends \Eloquent {
 	
 	protected $fillable = [
-			'name', 'date', 'judges', 'musician', 'location', 'solo'
+			'name', 'date_start', 'date_end', 'judges', 'musician', 'location', 'solo'
 	];
 	
 	protected $guarded = [

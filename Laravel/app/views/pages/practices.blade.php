@@ -178,11 +178,11 @@
                     </form>
 					<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value" size = "3" >
 						<?php
-							$trainings = TrainingModel::getVisibleTrainings();
-							foreach($trainings as $training){
-								if($training->group_id != null){
-									$training_date = new DateTime($training->date);
-									echo '<option  value ="'.route('trainings.update',$training->id).'"> Group: '.GroupModel::find($training->group_id)->name.' ('.$training_date->format('d F').')</option>';
+							$trainings = TrainingController::getVisibleTrainings();
+							foreach($trainings as $tr){
+								if($tr->group_id != null){
+									$training_date = new DateTime($tr->date);
+									echo '<option  value ="'.route('trainings.update',$tr->id).'"> Group: '.GroupModel::find($tr->group_id)->name.' ('.$training_date->format('d F').')</option>';
 								}
 							}
 						
@@ -203,19 +203,24 @@
                     </form>
 					<select class="form-control" multiple="" onchange="location=this.options[this.selectedIndex].value" size = "3" >
 						<?php
-							$trainings = TrainingModel::getVisibleTrainings();
-							foreach($trainings as $training){
-								if($training->group_id == null){
-									$training_date = new DateTime($training->date);
-									echo '<option  value ="'.route('trainings.update',$training->id).'"> Trainer: '.UserModel::find($training->trainer_id)->first_name.' ('.$training_date->format('d F').')</option>';
+							$trainings = TrainingController::getVisibleTrainings();
+							foreach($trainings as $tr){
+								
+								if($tr->group_id == null){
+									$training_date = new DateTime($tr->date);
+									echo '<option  value ="'.route('trainings.update',$tr->id).'"> Trainer(s): ';
+									$counter = 0;
+									foreach($tr->trainers as $trainer){
+										echo $trainer->first_name; 
+										if($counter < count($tr->trainers)-1)
+											echo ',';
+										$counter++;
+									}
+									echo '('.$training_date->format('d F').')</option>';
 								}
 							}
 							
 						?>
-						<!--
-						<option>Trainer #1</option>
-						<option>Trainer #2</option>
-						-->
 					</select>
 				</div>
 			</div>	
@@ -223,11 +228,46 @@
 		<div class="col-sm-5">
 			<table class="user-info hidden-xs">
 				<tr>
-					<td>Date:</td><td><span id="p_date"><?php if($training != null) echo $training->date; ?></span></td>
-                </tr>
+					<td>Date:</td><td><span id="p_date"><?php if($training != null) echo (new DateTime($training->date))->format('d F y');  ?></span></td>		
+				</tr>
 				<tr>
-					<td>Teacher:</td><td><a href="@if($training != null)){{route('users.show', $training->trainer_id)}} @endif"><span id="teacher"><?php if($training != null && UserModel::find($training->trainer_id) != null) echo UserModel::find($training->trainer_id)->first_name .' '. UserModel::find($training->trainer_id)->last_name;  ?></span></a></td>
-                </tr>
+					<td>Time:</td>
+					<td><span id="time">
+					<?php 
+							if($training != null)
+								 echo (new DateTime($training->date))->format('H:i');
+					?>
+					</span></td>	
+				</tr>
+				<tr>
+					<td>Duration:</td><td><span id="duration">
+						<?php 
+							if($training != null && $training->duration != 0){
+								$hours = (int)($training->duration / 60);
+								$minutes = $training->duration - $hours*60;
+								
+								echo $hours.':'.$minutes;
+							}
+						?>
+					</span></td>
+				</tr>
+				<tr>
+					<td>Teacher(s):</td><td>
+					<?php 
+						$counter = 0;
+						if($training!=null)
+						foreach($training->trainers as $trainer){
+							?><a href="{{route('users.show',$trainer->id)}}"><span id="teacher">
+							<?php
+							if($training != null && $trainer != null) 
+								echo $trainer->first_name .' '. $trainer->last_name. '</span></a>';
+							if( $counter < count($training->trainers)-1)
+								echo ',';
+							$counter++;
+						}
+					?>
+					</td>
+				</tr>
                 <tr>
                     <td>Group:</td><td><span id="group"><?php if($training != null && GroupModel::find($training->group_id) != null){ echo GroupModel::find($training->group_id)->name;} ?></span></td>
                 </tr>
@@ -271,17 +311,46 @@
 
 
             <form id="Form_Edit" method="POST" class="row" action="{{ URL::route('trainings.store') }}" style="margin: 15px;">
-            <table>
-
+			
+			<input type="hidden" name="id" value="<?php if($training != null) echo $training->id;?>" />
+			
+			<table>
+		
 
             <tr>
             <td><label for="practice_date">Date:</label><br><input type="date" name="practice_date"><br/>
 
-            <label for="time">Time:</label><br><input type="time" name="time"><br/>
-            <div class="row"></div>
+            <label for="time">Time:</label><br>
+			<label for="hours" class="control-label"> Hours:</label>
+					<input type="number" name="time_hours" min="0" max="59"/>
+					<br>
+					<label for="minutes" class="control-label">Minutes:</label>
+					<input type="number" name="time_minutes" min="0" max="59"/>
+			<br>
+			<label for="duration" class="control-label">Duration</label><br>
+					<label for="hours" class="control-label"> Hours:</label>
+					<input type="number" name="hours" min="0" max="59"/>
+					<br>
+					<label for="minutes" class="control-label">Minutes:</label>
+					<input type="number" name="minutes" min="0" max="59"/>
+					<br>
+					<div class="checkbox">
+					<label>
+						<input name="personal"  type="checkbox" />Personal
+					</label>
+					</div>
+					<div class="checkbox">
+						<label>
+							<input name="repeated"  type="checkbox" />Repeated
+						</label>
+					</div>
+					<label for="minutes" class="control-label">Number of weeks:</label>
+					<input type="number" name="weeks" min="0" max="100"/>
+					<br>
+			<div class="row"></div>
 			<label >Teacher:</label></br>
                     <div class="btn-group" style="margin-bottom: 20px; clear: both;">
-                                <select name="teacher">
+                                <select size="3" name="trainers[]" class="form-control" style="margin-left: 10px;" multiple>
                                             <?php
 
                                                 foreach(UserModel::where('user_type', '=', 1)->get() as $trainer){
@@ -297,25 +366,22 @@
 
                             </div>
                             <div class="row"></div>
+							<div class="checkbox">
 			<div class="btn-group" style="margin-bottom: 20px; clear: both;">
-			            <label >Group:</label></br>
-                        <select name="group">
-                                    <?php
-
-                                        foreach(GroupModel::all() as $group){
-                                           if($group != null)
-                                           echo '
-                                              <option value = "'.$group->id.'">'.$group->name.'</option>
-
-                                            ';
-                                        }
-                                    ?>
-
+			            <label >Groups:</label></br>
+                        <select size="3" name="groups[]" class="form-control" style="margin-left: 10px;" multiple>
+                           <?php
+                           foreach(GroupModel::all() as $group){
+                                if($group != null)
+									echo '<option value = "'.$group->id.'"> '.$group->name.' </option>';
+                           }
+                           ?>
                         </select>
 
                     </div>
                     </td>
                     <td>
+						<label >Dancers:</label></br>
                         <select name="users[]" class="form-control" style="margin-left: 10px;" multiple>
                            <?php
                            foreach(UserModel::all() as $usr){
@@ -338,6 +404,7 @@
 
                     </form>
 			</div>
+			
 
 </div>
 
@@ -360,7 +427,6 @@
                         <tr>
                         <td><label for="practice_date">Date:</label><br><input type="date" name="practice_date" value="<?php if($training != null) echo explode(" ", $training->date)[0];?>"><br/>
 
-                        <label for="time">Time:</label><br><input type="time" name="time" value="<?php if($training != null) echo explode(" ", $training->date)[1];?>"><br/>
                         <div class="row"></div>
             			<label >Teacher:</label></br>
                                 <div class="btn-group" style="margin-bottom: 20px; clear: both;">

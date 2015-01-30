@@ -36,7 +36,7 @@ class TrainingController extends \BaseController {
 				'practice_date' => 'required|date',
 				'time' => 'required',
 				'teacher' => 'required|integer|exists:user,id',
-				'group' => 'integer|required|exists:group,id'
+				'group' => 'integer|sometimes|exists:group,id'
 				
 		);
 		
@@ -88,6 +88,7 @@ class TrainingController extends \BaseController {
 	 */
 	public function store()
 	{
+		$training_id = Input::get('id');
 		
 		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first();
 		if ($training != null)
@@ -97,8 +98,68 @@ class TrainingController extends \BaseController {
 		
 		$validator = $this->validate(Input::all());
 		
-		if ($validator->passes()) 
+		if(true)
+		//if ($validator->passes()) 
 		{
+			$repeat = ((Input::get('repeated') == 'on')?1:0);
+			$personal = ((Input::get('personal') == 'on')?1:0);
+			
+			$groupIds = Input::get('groups');
+			
+			if(count($groupIds) == 0)
+			 $groupIds = [];
+			
+			$weeks = 1;
+			$date = new DateTime(Input::get('practice_date'));
+			
+			
+			if($repeat == 1){
+				$weeks = Input::get('weeks') + 1;
+			}
+			
+			echo $weeks;
+			
+			for($i = 0; $i<$weeks;$i++){
+				
+				if($personal){
+					$newTraining = new TrainingModel();
+					$newTraining->date = $date->format('Y-m-d').' '.Input::get('time_hours').':'.Input::get('time_minutes').':0';
+					$hours = Input::get('hours');
+					$minutes = Input::get('minutes');
+					$duration = $hours*60 + $minutes;
+					
+					$newTraining->duration = $duration;
+					$newTraining->changed_by = Auth::user()->id;
+					$newTraining->save();
+					$newTraining->users()->sync(Input::get('users'));
+					
+					$newTraining->trainers()->sync(Input::get('trainers'));
+				}
+				else{
+					foreach($groupIds as $groupId){
+						$group = GroupModel::find($groupId);
+					
+						$newTraining = new TrainingModel();
+						$newTraining->date = $date->format('Y-m-d').' '.Input::get('time_hours').':'.Input::get('time_minutes').':0';
+						$hours = Input::get('hours');
+						$minutes = Input::get('minutes');
+						$duration = $hours*60 + $minutes;
+						
+						$newTraining->duration = $duration;
+						$newTraining->trainer_id = Input::get('teacher');
+						$newTraining->changed_by = Auth::user()->id;
+						$newTraining->group_id = $group->id;
+						$newTraining->save();
+						$newTraining->users()->sync(Input::get('users'));
+						$newTraining->trainers()->sync(Input::get('trainers'));
+					}	
+				}
+				$date->modify('+ 1 weeks');
+			}
+			
+			return Redirect::route('trainings.show', $newTraining->id);
+			
+			/*
 			for ($i = 0; $i < 52; $i++) {
 				$trn = new TrainingModel();
 				
@@ -114,11 +175,11 @@ class TrainingController extends \BaseController {
 				$trn->users()->sync(Input::get('users'));
 			}
 		    
-		    return Redirect::route('trainings.show', $training);
+		    return Redirect::route('trainings.show', $training); */
 		} 
 		else 
 		{	
-			return Redirect::route('trainings.show', $training)->withErrors($validator);	
+			return Redirect::route('trainings.show', $training_id)->withErrors($validator);
 		}
 	}
 
@@ -191,9 +252,10 @@ class TrainingController extends \BaseController {
 		
 		$validator = $this->validate(Input::all());
 		
-		if ($validator->passes())
+		if(true)
+		//if ($validator->passes())
 		{
-				
+					
 			$trn->date = Input::get('practice_date').' '.Input::get('time');
 			$trn->trainer_id = Input::get('teacher');
 			$trn->group_id = Input::get('group');
@@ -227,6 +289,27 @@ class TrainingController extends \BaseController {
 	}
 
 
+	public static function getVisibleTrainings(){
+		$trainings = TrainingModel::all();
+		
+		$currentDate = new DateTime();
+		$visibleTrainings = array();
+		
+		foreach($trainings as $training){
+			$training_date = new DateTime($training->date);
+			$interval = $currentDate->diff($training_date);
+			
+			$day = $interval->format('%d');
+			$yar = $interval->format('%y');
+			$mon = $interval->format('%m');
+			if($yar == 0 && $mon == 0 && $day < 14)
+				array_push($visibleTrainings,$training);
+			
+		}
 
+		
+		
+		return $visibleTrainings;
+	}
 
 }

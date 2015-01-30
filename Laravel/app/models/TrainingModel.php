@@ -22,6 +22,11 @@ class TrainingModel extends \Eloquent {
 		return $this->belongsToMany('UserModel', 'user_training', 'training_id', 'user_id');
 	}
 	
+	public function trainers()
+	{
+		return $this->belongsToMany('UserModel', 'trainer_training', 'training_id', 'user_id');
+	}
+	
 	public function group()
 	{
 		return $this->belongsTo('GroupModel');
@@ -30,25 +35,5 @@ class TrainingModel extends \Eloquent {
 	public static function getTrainings(){
 		$trainings = TrainingModel::all();
 		return $trainings;
-	}
-	
-	public static function getVisibleTrainings(){
-		$trainings = TrainingModel::all();
-		
-		$currentDate = new DateTime();
-		$visibleTrainings = array();
-		
-		foreach($trainings as $training){
-			$training_date = new DateTime($training->date);
-			$interval = $currentDate->diff($training_date);
-			
-			$day = $interval->format('%d');
-			$yar = $interval->format('%y');
-			$mon = $interval->format('%m');
-			if($yar == 0 && $mon == 0 && $day < 14)
-				array_push($visibleTrainings,$training);
-			
-		}
-		return $visibleTrainings;
 	}
 }

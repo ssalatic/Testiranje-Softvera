@@ -51,7 +51,7 @@ class UserModel extends \Eloquent implements UserInterface {
 	}
 	
 	public function costumes(){
-		return $this->belongsToMany('CostumeModel', 'user_costume', 'user_id', 'costume_id');
+		return $this->hasMany('CostumeModel','owner');
 	}
 	
 	public function trainerInTrainings()

@@ -44,6 +44,19 @@
 }
     </style>
 
+    <script>
+
+            $(document).ready(function() {
+                $('select[name=type2]').change(function(event) {
+
+                    window.open($('select[name=type2] option:selected').val(),"_self")
+
+                });
+            });
+
+
+        </script>
+
  <?php $__env->stopSection(); ?>
 
  <?php $__env->startSection('content'); ?>
@@ -53,40 +66,69 @@
             <div class="panel panel-success">
                 <div class="panel-heading btn-group-wrap">
                     <div class="btn-group">
-                        <a href="#" class="btn btn-success btn-lg" style="width:80%">Irish top 100</a>
-                        <a href="#" class="btn btn-success btn-lg dropdown-toggle" data-toggle="dropdown"><span class="caret"></span></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">Competition 2</a></li>
-                        </ul>
+                    <select name="type2" class="btn btn-success btn-lg" style="width:80%">
+                        <?php
+                            foreach($comps as $cmps){
+
+                                if ($cmps->id == $comp->id)
+                                    echo'<option class="btn btn-success btn-lg" style="width:80%" selected value = "'.route('competitions.show', $cmps->id) .'">'. $cmps->name.'</option>';
+                                else
+                                    echo'<option class="btn btn-success btn-lg" style="width:80%" value = "'.route('competitions.show', $cmps->id) .'"> '.$cmps->name.' </option>';
+                            }
+                        ?>
+                     </select>
                     </div>
                 </div>
                 <div class="panel-body" align="center">
                     <table class="comp-info">
-                        <tr>
-                            <td>Date:</td><td><span id="comp_date">15.10.2014.</span></td>
-                        </tr>
-                        <tr>
-                            <td>Location:</td><td><span id="comp_location">Belgrade</span></td>
-                        </tr>
-                        <tr>
-                            <td>Judges:</td><td><span id="comp_judges">Will Smith</span></td>
-                        </tr>
-                        <tr>
-                            <td>Musician:</td><td><span id="comp_musician">Madonna</span></td>
-                        </tr>
-                        <tr>
-                            <td>Organizer:</td><td><span id="comp_organizer">Neki organizator</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ages:</td>
-                            <td><span id="comp_ages">
-                                <ul>
-                                    <li>10-15</li>
-                                    <li>20-25</li>
-                                    <li>23-27</li>
-                                </ul>
-                            </span></td>
-                        </tr>
+                        <?php
+                        						    echo '
+                                                        <tr>
+                                                            <td>Start date:</td>
+                                                            <td>' .$comp->date_start. '</td>
+                                                        </tr>
+                        							';
+                        							echo '
+                                                        <tr>
+                                                            <td>End date:</td>
+                                                            <td>' .$comp->date_end. '</td>
+                                                        </tr>
+                                                    ';
+                        							echo '
+                                                        <td>Location:</td>
+                                                            <td>' .$comp->location. '</td>
+                                                        <tr>
+                        							';
+                        							echo '
+                                                        <td>Judges:</td>
+                                                            <td>
+                                                                <ul>';
+                                                                $judges = explode( ';', $comp->judges);
+                                                                foreach($judges as $judge){
+                                                                    echo '<li>'. $judge .'</li>';
+                                                                }
+                                                        echo'
+                                                        </ul>
+                                                            </td>
+                                                        </tr>
+                        							';
+                                                echo '
+                                                    <td>Musicians:</td>
+                                                        <td>
+                                                            <ul>';
+                                                            $musicians = explode( ';', $comp->musician);
+                                                            foreach($musicians as $musician){
+                                                                echo '<li>'. $musician .'</li>';
+                                                            }
+                                                    echo'
+                                                    </ul>
+                                                        </td>
+                                                    </tr>
+                                                ';
+                        							//<td>Organizer:</td>
+                        							//	<td>Random lik</td>
+                        							//</tr>
+                        							?>
                     </table>
                 </div>
             </div>
@@ -100,21 +142,22 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="#">Opening ceremony</a></td>
-                        <td><span class="label label-success">Video</span></td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td><a href="#">Photos</a></td>
-                        <td><span class="label label-danger">Photo</span></td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td><a href="#">Coreography</a></td>
-                        <td><span class="label label-info">PDF</span></td>
-                    </tr>
+                    <?php
+                        foreach($files as $file){
+
+                                echo '
+                                    <tr>
+                                        <td>1</td>
+                                        <td><a href='. route('download', $file->file_name ) .'>'.$file->file_name.'</a></td>
+                                        <td><span class="label label-success">'.$file->file_type.'</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                    </tr>
+                                ';
+
+                        }
+                    ?>
                 </tbody>
             </table>
         </div>
@@ -131,58 +174,32 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>John Boo</td>
-                        <td><span class="label label-primary">Reel</span></td>
-                        <td>Open</td>
-                        <td>3</td>
-                        <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled=""><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Michael Robinson</td>
-                        <td><span class="label label-primary">Reel</span></td>
-                        <td>Primary</td>
-                        <td>2</td>
-                       <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled="" checked="true"><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Alexander Robson</td>
-                        <td><span class="label label-warning">2 Hand</span></td>
-                        <td>Begginers</td>
-                        <td>4</td>
-                       <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled=""><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
-                    <tr>
-                        <td><img src="img/user.jpg" width="30" height="30" class="hidden-xs"/>Jannifer Pinkser</td>
-                        <td><span class="label label-primary">Single jig</span></td>
-                        <td>Open</td>
-                        <td>1</td>
-                        <td>
-							 <div class="checkbox">
-								<label>
-									<input type="checkbox" disabled="" checked="true"><p></p>
-								</label>
-							</div>
-						</td>
-                    </tr>
+                    <?php
+                        foreach($parts as $participation){
+                            $user = UserModel::find($participation->user_id);
+                                echo '
+                                    <tr>
+                                        <td><a href="'.route('users.show', $user->id).'">'. $user->first_name .' '.$user->last_name .'</a> </td>
+                                        <td><span class="label label-primary"> '. $participation->competitionType['name'].' </span></td>
+                                        <td>'.$participation->competitionLevel['name'].'</td>
+                                        <td>'.$participation->result.'</td>
+                                       <td>
+                                             <div class="checkbox">
+                                                <label>';
+                                                    if($participation->star){
+                                                        echo '<input  type="checkbox" disabled="" checked><p></p>';
+                                                    }
+                                                    else{
+                                                        echo '<input type="checkbox" disabled=""><p></p>';
+                                                    }
+                                echo '
+                                                </label>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                ';
+                            }
+                    ?>
                 </tbody>
             </table>
         </div>

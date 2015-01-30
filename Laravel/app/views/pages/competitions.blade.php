@@ -177,14 +177,14 @@
                 </thead>
                 <tbody>
                     <?php
-                        foreach($parts as $participation)
-                            foreach($participation->users as $user){
+                        foreach($parts as $participation){
+                            $user = UserModel::find($participation->user_id);
                                 echo '
                                     <tr>
                                         <td><a href="'.route('users.show', $user->id).'">'. $user->first_name .' '.$user->last_name .'</a> </td>
                                         <td><span class="label label-primary"> '. $participation->competitionType['name'].' </span></td>
                                         <td>'.$participation->competitionLevel['name'].'</td>
-                                        <td>'.$user->pivot->result.'</td>
+                                        <td>'.$participation->result.'</td>
                                        <td>
                                              <div class="checkbox">
                                                 <label>';

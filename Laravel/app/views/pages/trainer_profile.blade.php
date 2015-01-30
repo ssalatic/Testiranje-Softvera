@@ -148,8 +148,19 @@
 				</div>
 			</div>	
 
-		<br/><br/> 
-		<div class="panel panel-success">
+		<br/><br/>
+
+	<?php
+
+			$last0 = TrainingModel::where( DB::raw('MONTH(date)'), '=', date('n'))->where('trainer_id', '=', $user->id)->get();
+			$last1 = TrainingModel::where( DB::raw('MONTH(date)-1'), '=', date('n'))->where('trainer_id', '=', $user->id)->get();
+			$last2 = TrainingModel::where( DB::raw('MONTH(date)-2'), '=', date('n'))->where('trainer_id', '=', $user->id)->get();
+			$last3 = TrainingModel::where( DB::raw('MONTH(date)-3'), '=', date('n'))->where('trainer_id', '=', $user->id)->get();
+
+			$a = new DateTime();
+
+				if($user->isTrainer())
+			echo '<div class="panel panel-success">
 				<div class="panel-heading">
 					<h3 class="panel-title">Efficiency</h3>
 				</div>
@@ -162,22 +173,26 @@
 					</thead>
 					<tbody>
 					<tr>
-						<td>December</td>
-						<td>10</td>      
+						<td>'.$a->format('F').'</td>
+						<td>'.count($last0).'</td>
 					</tr>
 					<tr>
-						<td>November</td>
-						<td>12</td>
+						<td>'.$a->modify('-1 month')->format('F').'</td>
+						<td>'.count($last1).'</td>
 					</tr>
 					<tr>
-						<td>Oktober</td>
-						<td>14</td>
+						<td>'.$a->modify('-1 month')->format('F').'</td>
+						<td>'.count($last2).'</td>
+					</tr>
+					<tr>
+						<td>'.$a->modify('-1 month')->format('F').'</td>
+						<td>'.count($last3).'</td>
 					</tr>
 					</tbody>
 					</table>
 				</div>
-			</div>
-
+			</div>';
+	?>
 			
 		</div>
 		<div class="col-sm-5">

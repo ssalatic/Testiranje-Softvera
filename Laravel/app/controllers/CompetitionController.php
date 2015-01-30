@@ -266,9 +266,7 @@ class CompetitionController extends \BaseController {
 		unlink(public_path().'/files/'.$cfm->file_name);
 		$cfm->delete();
 		
-		$cmp = Auth::user()->competitions()->first()->id;
-		
-		return Redirect::route('competitions.show', $cmp);
+		return Redirect::route('competitions.index');
 	}
 
 	private function getEmptyObject(){

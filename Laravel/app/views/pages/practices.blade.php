@@ -70,7 +70,7 @@
 			overflow: auto;
 		}
 
-		#new_practice {
+		#new_practice, #edit_practice {
 			left:43%;
 			top:20%;
 			width:15%;
@@ -413,9 +413,7 @@
 
 
 
-<div id="edit_practice" class="white_content" style="width: intrinsic; position: fixed; /* or absolute */
-                                                                         top: 25%;
-                                                                         left: 37.5%;" >
+<div id="edit_practice" class="white_content" style="width: intrinsic" >
 
 	<div class="row">
 	    <div class="col-sm-12">
@@ -426,59 +424,68 @@
 
                         <tr>
                         <td><label for="practice_date">Date:</label><br><input type="date" name="practice_date" value="<?php if($training != null) echo explode(" ", $training->date)[0];?>"><br/>
-
+						<label for="time">Time:</label><br>
+						<label for="hours" class="control-label"> Hours:</label>
+								<input type="number" name="time_hours" min="0" max="59" value="<?php echo (new DateTime($training->date))->format('H') ?>"/>
+								<br>
+								<label for="minutes" class="control-label">Minutes:</label>
+								<input type="number" name="time_minutes" min="0" max="59" value="<?php echo (new DateTime($training->date))->format('i') ?>"/>
+						<br>
+						<label for="duration" class="control-label">Duration</label><br>
+								<label for="hours" class="control-label"> Hours:</label>
+								<input type="number" name="hours" min="0" max="59" value="<?php echo (int)($training->duration/60) ?>"/>
+								<br>
+								<label for="minutes" class="control-label">Minutes:</label>
+								<input type="number" name="minutes" min="0" max="59" value="<?php echo (int)($training->duration%60) ?>"/>
+								<br>
                         <div class="row"></div>
             			<label >Teacher:</label></br>
-                                <div class="btn-group" style="margin-bottom: 20px; clear: both;">
-                                            <select name="teacher" >
-                                                        <?php
-                                                            if(UserModel::where('user_type', '=', 1)->get() != null)
-                                                            foreach(UserModel::where('user_type', '=', 1)->get() as $trainer){
-                                                               if($trainer != null && $training != null){
-                                                                   if($training->trainer_id == $trainer->id){
+						<div class="btn-group" style="margin-bottom: 20px; clear: both;">
+                                <select size="3" name="trainers[]" class="form-control" style="margin-left: 10px;" multiple>
+                                            <?php
+												$techrs = array();
+												if($training != null)
+													foreach($training->trainers as $tech)
+														$techrs[] = $tech->id;
+												
+                                                foreach(UserModel::where('user_type', '=', 1)->get() as $trainer){
+                                                   if($trainer != null){
+													 if(in_array( $trainer->id, $techrs)){
+														echo
+														 '<option value = "'.$trainer->id.'" selected>'.$trainer->first_name.' '.$trainer->last_name.'</option>';
+													 }else{
+														 echo '<option value = "'.$trainer->id.'">'.$trainer->first_name.' '.$trainer->last_name.'</option>';
+													}
+												   }
+                                                }
+                                            ?>
 
-                                                                        echo '
-                                                                            <option value = "'.$trainer->id.'" selected>'.$trainer->first_name.' '.$trainer->last_name.'</option>
-                                                                        ';
+                                </select>
 
-                                                                   }else{
-                                                                            echo '
-                                                                                <option value = "'.$trainer->id.'">'.$trainer->first_name.' '.$trainer->last_name.'</option>
-
-                                                                            ';
-                                                                        }
-                                                               }
-                                                            }
-                                                        ?>
-
-                                            </select>
-
-                                        </div>
+                            </div>
                                         <div class="row"></div>
             			<div class="btn-group" style="margin-bottom: 20px; clear: both;">
-            			            <label >Group:</label></br>
-                                    <select name="group">
-                                                <?php
-
-                                                    foreach(GroupModel::all() as $group){
-                                                        if($group != null && $training != null)
-                                                       if($training->group_id == $group->id){
-
-                                                            echo '
-                                                                <option value = "'.$group->id.'" selected>'.$group->name.'</option>
-                                                            ';
-                                                       }else{
-                                                            echo '
-                                                                <option value = "'.$group->id.'">'.$group->name.'</option>
-
-                                                            ';
-                                                        }
-                                                    }
-                                                ?>
-
-                                    </select>
-
-                                </div>
+			            		
+							   <?php
+									//if($training->group != null){
+										echo '<label >Groups:</label></br>';
+										echo '<select name="group" class="form-control" style="margin-left: 10px;">';
+									//}
+											
+								if($training != null)
+								echo '<option value= ""></option>';
+								foreach(GroupModel::all() as $group){
+									if($group != null)
+										
+										if($training->group != null && $group->id == $training->group->id)
+											echo '<option value= "'.$group->id.'" selected> '.$group->name.' </option>';
+										else
+											echo '<option value= "'.$group->id.' "> '.$group->name.' </option>';
+								}
+								//if($training->group != null)
+									echo '</select>';
+							   ?>
+						</div>
                                 </td>
                                 <td>
 

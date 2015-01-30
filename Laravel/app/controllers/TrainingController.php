@@ -158,24 +158,6 @@ class TrainingController extends \BaseController {
 			}
 			
 			return Redirect::route('trainings.show', $newTraining->id);
-			
-			/*
-			for ($i = 0; $i < 52; $i++) {
-				$trn = new TrainingModel();
-				
-				$trn->date = Input::get('practice_date').' '.Input::get('time');
-				$date = new DateTime($trn->date);
-				$date->modify('+'.$i.' weeks');
-				date_add($date, date_interval_create_from_date_string($i.' weeks'));
-				$trn->trainer_id = Input::get('teacher');
-				$trn->group_id = Input::get('group');
-				$trn->changed_by = Auth::user()->id;
-				$trn->save();
-				
-				$trn->users()->sync(Input::get('users'));
-			}
-		    
-		    return Redirect::route('trainings.show', $training); */
 		} 
 		else 
 		{	
@@ -255,15 +237,24 @@ class TrainingController extends \BaseController {
 		if(true)
 		//if ($validator->passes())
 		{
-					
-			$trn->date = Input::get('practice_date').' '.Input::get('time');
+			$date = new DateTime(Input::get('practice_date'));
+		
+			$trn->date = $date->format('Y-m-d').' '.Input::get('time_hours').':'.Input::get('time_minutes').':0';
+			$hours = Input::get('hours');
+			$minutes = Input::get('minutes');
+			$duration = $hours*60 + $minutes;
+			
+			$trn->duration = $duration;
 			$trn->trainer_id = Input::get('teacher');
-			$trn->group_id = Input::get('group');
+			if(Input::get('group') != '')
+				$trn->group_id = Input::get('group');
+			else
+				$trn->group_id = null;
 			$trn->changed_by = Auth::user()->id;
 			$trn->save();
-				
-			$trn->users()->sync(Input::get('users'), false);
-		
+			$trn->users()->sync(Input::get('users'));
+			$trn->trainers()->sync(Input::get('trainers'));		
+			
 			return Redirect::route('trainings.show', $trn->id);
 		}
 		else
@@ -281,11 +272,18 @@ class TrainingController extends \BaseController {
 	 */
 	public function destroy($id)
 	{	
-		TrainingModel::find($id)->delete();
+		$training = TrainingModel::find($id);
+		$training->trainers()->detach();
+		$training->users()->detach();
+		$training->delete();
 		
-		$training = Auth::user()->trainings()->where('date', '>=', date("Y-m-d H:i:s"))->first()->id;
+		$trainings = TrainingController::getVisibleTrainings();
+		$id = 1;
+		if(count($trainings) != 0){
+			$id = $trainings[0]->id;
+		}
 		
-		return Redirect::route('trainings.show', $training);
+		return Redirect::route('trainings.show', $id);
 	}
 
 
